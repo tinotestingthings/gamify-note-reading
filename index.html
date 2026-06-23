@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -61,6 +62,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100svh;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--body-bg);
       color: var(--text);
@@ -68,7 +70,7 @@
       justify-content: center;
       padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
     }
-    .app { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 5px; }
+    .app { width: 100%; max-width: 480px; min-height: 0; display: flex; flex-direction: column; gap: 5px; }
     header { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; }
     h1 { margin: 0; font-size: 19px; letter-spacing: -0.045em; line-height: 1; }
     .subtitle { margin-top: 1px; color: var(--muted); font-size: 10px; font-weight: 700; }
@@ -103,6 +105,8 @@
     .stat { background: rgba(255,255,255,0.68); border-radius: 14px; padding: 4px; text-align: center; min-height: 36px; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgba(0,0,0,0.04); }
     .stat .label { color: var(--muted); font-size: 8px; font-weight: 850; text-transform: uppercase; letter-spacing: 0.04em; }
     .stat .value { margin-top: 1px; font-size: 16px; font-weight: 900; letter-spacing: -0.04em; }
+    .test-mode-stat { grid-column: span 3; }
+    .test-mode-stat .value { font-size: clamp(14px, 4vw, 18px); letter-spacing: -0.035em; }
     .stage { padding: 6px 6px 7px; overflow: hidden; }
     .staff-wrap { background: var(--staff-bg); border-radius: 17px; min-height: 138px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,0,0,0.06); position: relative; }
     .staff-wrap.grand { min-height: 204px; }
@@ -129,6 +133,7 @@
     .answers.letterchoices .answer { flex: 0 0 calc((100% - 15px) / 4); min-width: 0; }
     @media (max-width: 360px) { .answers.letterchoices .answer { flex-basis: calc((100% - 10px) / 3); } }
     .actions { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; padding: 0 6px 6px; }
+    .actions.test-hidden { display: none; }
     .secondary { border: 0; border-radius: 14px; background: var(--control-bg); color: var(--blue); font-weight: 900; font-size: 12px; min-height: 32px; border: 1px solid rgba(0,0,0,0.06); }
 
 
@@ -155,16 +160,48 @@
     @media (max-width: 360px) { .pattern-grid { grid-template-columns: 1fr; } }
     .hint { display: none; }
     .hidden { display: none !important; }
-    .overlay { position: fixed; inset: 0; background: rgba(245,245,247,0.88); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 20; }
-    .start-box { width: 100%; max-width: 390px; background: rgba(255,255,255,0.88); border-radius: 32px; padding: 24px; box-shadow: var(--shadow); text-align: center; border: 1px solid rgba(255,255,255,0.8); }
-    .start-box h2 { margin: 0 0 8px; font-size: 31px; letter-spacing: -0.05em; }
-    .start-box p { margin: 0 0 18px; color: var(--muted); font-weight: 650; line-height: 1.35; }
-    .path-grid { display: grid; grid-template-columns: 1fr; gap: 9px; margin-top: 14px; }
-    .path-btn { width: 100%; min-height: 64px; text-align: left; border: 1px solid rgba(0,0,0,0.07); border-radius: 19px; background: rgba(255,255,255,0.78); color: var(--text); padding: 12px 13px; box-shadow: 0 8px 18px rgba(0,0,0,0.06); }
-    .path-btn strong { display: block; font-size: 17px; line-height: 1.05; letter-spacing: -0.035em; }
-    .path-btn span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 750; line-height: 1.28; }
+    .settings-panel, .cheat-sheet { max-height: calc(100vh - 18px); max-height: calc(100svh - 18px); overflow-y: auto; }
+    .overlay { position: fixed; inset: 0; background: rgba(245,245,247,0.88); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); display: flex; align-items: flex-start; justify-content: center; padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)); z-index: 20; overflow-y: auto; }
+    .start-box { width: 100%; max-width: 410px; max-height: calc(100vh - 16px); max-height: calc(100svh - 16px); overflow-y: auto; background: rgba(255,255,255,0.90); border-radius: 26px; padding: 16px; box-shadow: var(--shadow); text-align: center; border: 1px solid rgba(255,255,255,0.8); margin: auto 0; }
+    .start-box h2 { margin: 0 0 5px; font-size: clamp(22px, 7vw, 29px); letter-spacing: -0.05em; }
+    .start-box p { margin: 0 0 10px; color: var(--muted); font-weight: 650; font-size: 12px; line-height: 1.25; }
+    .path-grid { display: grid; grid-template-columns: 1fr; gap: 7px; margin-top: 9px; }
+    .path-btn { width: 100%; min-height: 54px; text-align: left; border: 1px solid rgba(0,0,0,0.07); border-radius: 17px; background: rgba(255,255,255,0.78); color: var(--text); padding: 9px 11px; box-shadow: 0 7px 14px rgba(0,0,0,0.055); }
+    .path-btn strong { display: block; font-size: 15.5px; line-height: 1.05; letter-spacing: -0.035em; }
+    .path-btn span { display: block; margin-top: 3px; color: var(--muted); font-size: 10.5px; font-weight: 750; line-height: 1.2; overflow-wrap: anywhere; }
     .path-btn.not-fun { border-color: rgba(255,59,48,0.18); }
     .path-btn:active { transform: scale(0.985); }
+    .start-section-title { margin: 10px 2px 0; text-align: left; color: var(--muted); font-size: 9.5px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; }
+    .path-btn.test { border-color: rgba(0,122,255,0.16); }
+    .path-btn.survival { border-color: rgba(255,149,0,0.22); }
+    .path-btn .highscore { margin-top: 3px; color: var(--blue); font-size: 9.8px; font-weight: 900; }
+    .test-result { margin: 0 0 8px; border-radius: 16px; background: rgba(0,122,255,0.08); color: var(--text); padding: 9px 10px; text-align: left; border: 1px solid rgba(0,122,255,0.12); }
+    .test-result strong { display: block; font-size: 14.5px; letter-spacing: -0.03em; }
+    .test-result span { display: block; margin-top: 3px; color: var(--muted); font-size: 10.5px; font-weight: 750; line-height: 1.2; }
+    .storage-note { margin: 8px 2px 0; color: var(--muted); font-size: 9.6px; font-weight: 650; line-height: 1.22; text-align: left; }
+    @media (max-height: 760px) {
+      .start-box { padding: 13px; border-radius: 22px; }
+      .start-box h2 { font-size: 23px; margin-bottom: 3px; }
+      .start-box p { font-size: 10.8px; margin-bottom: 7px; }
+      .path-grid { gap: 5px; margin-top: 6px; }
+      .path-btn { min-height: 46px; padding: 7px 9px; border-radius: 14px; }
+      .path-btn strong { font-size: 14px; }
+      .path-btn span { font-size: 9.5px; line-height: 1.12; margin-top: 2px; }
+      .path-btn .highscore { font-size: 9px; margin-top: 2px; }
+      .start-section-title { margin-top: 7px; font-size: 8.8px; }
+      .storage-note { font-size: 8.9px; margin-top: 6px; line-height: 1.16; }
+    }
+    @media (max-height: 650px) {
+      .overlay { padding-top: 4px; padding-bottom: 4px; }
+      .start-box { padding: 10px; max-height: calc(100vh - 8px); max-height: calc(100svh - 8px); }
+      .start-box h2 { font-size: 21px; }
+      .start-box p { display: none; }
+      .path-grid { gap: 4px; }
+      .path-btn { min-height: 41px; padding: 6px 8px; }
+      .path-btn strong { font-size: 13.2px; }
+      .path-btn span { font-size: 8.9px; }
+      .storage-note { font-size: 8.4px; }
+    }
     @media (max-height: 710px) {
       .subtitle, .mode-summary { display: none; }
       h1 { font-size: 18px; }
@@ -302,9 +339,10 @@
 
     <section class="card stats" aria-label="Stats">
       <div class="stat"><div class="label">Score</div><div class="value" id="scoreEl">0</div></div>
-      <div class="stat"><div class="label">Streak</div><div class="value" id="streakEl">0</div></div>
-      <div class="stat"><div class="label">Best</div><div class="value" id="bestEl">0</div></div>
-      <div class="stat"><div class="label">Avg time</div><div class="value" id="avgEl">–</div></div>
+      <div class="stat practice-stat" id="streakCard"><div class="label">Streak</div><div class="value" id="streakEl">0</div></div>
+      <div class="stat practice-stat" id="bestCard"><div class="label">Best</div><div class="value" id="bestEl">0</div></div>
+      <div class="stat practice-stat" id="avgCard"><div class="label">Avg time</div><div class="value" id="avgEl">–</div></div>
+      <div class="stat test-mode-stat hidden" id="testModeStat"><div class="label">Mode</div><div class="value" id="testModeName">TEST MODE</div></div>
     </section>
 
     <section class="card stage" aria-label="Question">
@@ -318,7 +356,7 @@
 
     <section class="card">
       <div class="answers" id="answers"></div>
-      <div class="actions">
+      <div class="actions" id="actionsRow">
         <button class="secondary" id="playPreviousBtn" type="button">Previous</button>
         <button class="secondary" id="playAgainBtn" type="button">Play again</button>
         <button class="secondary" id="skipBtn" type="button">Skip</button>
@@ -345,7 +383,8 @@
   <div class="overlay" id="overlay">
     <div class="start-box">
       <h2>Choose your path</h2>
-      <p>Choose a preset path, or use Custom to open settings first.</p>
+      <p>Choose a preset path, start a scored test, or use Custom to open settings first.</p>
+      <div class="test-result hidden" id="resultBox"></div>
       <div class="path-grid" aria-label="Difficulty paths">
         <button class="path-btn" data-preset="easy" type="button">
           <strong>Easy</strong>
@@ -363,10 +402,34 @@
           <strong>Not fun</strong>
           <span>5 notes · 5 below / 3 above · 90% ledger focus · 4s timer</span>
         </button>
+
+        <div class="start-section-title">Testing modes</div>
+
+        <button class="path-btn test" data-test="quick" type="button">
+          <strong>Quick Test</strong>
+          <span>25 notes · fixed test · no smart practice · no timer</span>
+          <span class="highscore" data-highscore="quick">Best: –</span>
+        </button>
+        <button class="path-btn test" data-test="rush" type="button">
+          <strong>Rush Test</strong>
+          <span>60 seconds · score as many notes as possible</span>
+          <span class="highscore" data-highscore="rush">Best: –</span>
+        </button>
+        <button class="path-btn test survival" data-test="survival" type="button">
+          <strong>Survival</strong>
+          <span>3 lives · 4s timer · ends when lives are gone</span>
+          <span class="highscore" data-highscore="survival">Best: –</span>
+        </button>
+
+        <div class="start-section-title">Other</div>
+
         <button class="path-btn" id="customPathBtn" type="button">
           <strong>Custom</strong>
           <span>Open settings first and build your own drill</span>
         </button>
+      </div>
+      <div class="storage-note">
+        This app uses local browser storage to save your high scores on this device. The data is not sent to a server and is not used for tracking. You can clear it by clearing site data in your browser.
       </div>
     </div>
   </div>
@@ -426,13 +489,22 @@
     stepStartedAt: 0,
     locked: false,
     audio: null,
-    started: false
+    started: false,
+    testMode: "practice",
+    testTargetNotes: 0,
+    testAnsweredNotes: 0,
+    testCorrectNotes: 0,
+    testWrongNotes: 0,
+    testLives: 0,
+    testEndsAt: 0,
+    testClock: null
   };
 
   const $ = id => document.getElementById(id);
   const els = {
-    overlay: $("overlay"), customPathBtn: $("customPathBtn"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
+    overlay: $("overlay"), resultBox: $("resultBox"), customPathBtn: $("customPathBtn"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
     feedback: $("feedback"), noteInfo: $("noteInfo"), score: $("scoreEl"), streak: $("streakEl"), best: $("bestEl"), avg: $("avgEl"),
+    streakCard: $("streakCard"), bestCard: $("bestCard"), avgCard: $("avgCard"), testModeStat: $("testModeStat"), testModeName: $("testModeName"),
     openSettingsBtn: $("openSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"), settingsBackdrop: $("settingsBackdrop"),
     cheatBtn: $("cheatBtn"), closeCheatBtn: $("closeCheatBtn"), cheatBackdrop: $("cheatBackdrop"), cheatContent: $("cheatContent"),
     settingsSummary: $("settingsSummary"), summaryText: $("summaryText"), noteModeBtn: $("noteModeBtn"), multiModeBtn: $("multiModeBtn"), chordModeBtn: $("chordModeBtn"),
@@ -443,7 +515,7 @@
     timerRail: $("timerRail"), timerFill: $("timerFill"),
     multiCountCard: $("multiCountCard"), timerSecCard: $("timerSecCard"), rangeHelp: $("rangeHelp"), chordSettings: $("chordSettings"), firstInvBtn: $("firstInvBtn"),
     secondInvBtn: $("secondInvBtn"), seventhBtn: $("seventhBtn"), solfegeBtn: $("solfegeBtn"), smartBtn: $("smartBtn"), timerBtn: $("timerBtn"),
-    soundBtn: $("soundBtn"), playPreviousBtn: $("playPreviousBtn"), playAgainBtn: $("playAgainBtn"), skipBtn: $("skipBtn")
+    soundBtn: $("soundBtn"), actionsRow: $("actionsRow"), playPreviousBtn: $("playPreviousBtn"), playAgainBtn: $("playAgainBtn"), skipBtn: $("skipBtn")
   };
 
   function parseNote(note) {
@@ -984,6 +1056,7 @@
       const baseText = state.inputMode === "piano" ? "Tap piano key" : (state.showSolfege ? "Choose note / solfege" : "Choose note");
       els.noteInfo.textContent = `${baseText} · ${clefText} · ${rangeLabel}${focusText} · ${smartText}`;
     }
+    renderTestStatus();
     if (playSound) playQuestionSound();
     startTimer();
   }
@@ -1002,6 +1075,7 @@
     els.streak.textContent = state.streak;
     els.best.textContent = state.best;
     els.avg.textContent = state.correctCount === 0 ? "–" : (state.totalCorrectMs / state.correctCount / 1000).toFixed(1) + "s";
+    if (els.testModeName && isTesting()) els.testModeName.textContent = testModeDisplayName();
   }
   function ledgerText(value) { return value === 1 ? "1 ledger" : `${value} ledgers`; }
   function updateRangeLabels() {
@@ -1120,7 +1194,22 @@
   function playWrong() { playTone(220, 0.18, "sine", 0.09); setTimeout(() => playTone(185, 0.20, "sine", 0.07), 90); }
   function skip() { if (state.locked) return; stopTimer(); state.streak = 0; updateStats(); nextQuestion(false); }
   function resetSession() {
-    stopTimer(); state.score = 0; state.streak = 0; state.best = 0; state.correctCount = 0; state.totalCorrectMs = 0; state.learning = {}; state.previous = null; state.multiMarks = []; state.multiHadMistake = false; state.replayToken += 1; updateStats();
+    stopTimer();
+    clearTestClock();
+    state.score = 0;
+    state.streak = 0;
+    state.best = 0;
+    state.correctCount = 0;
+    state.totalCorrectMs = 0;
+    state.learning = {};
+    state.previous = null;
+    state.multiMarks = [];
+    state.multiHadMistake = false;
+    state.testAnsweredNotes = 0;
+    state.testCorrectNotes = 0;
+    state.testWrongNotes = 0;
+    state.replayToken += 1;
+    updateStats();
   }
   function toggleButtonState(button, on) { button.classList.toggle("on", on); }
 
@@ -1147,9 +1236,15 @@
     notFun: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 3, belowLedgers: 5, ledgerFocusPercent: 90, multiCount: 5, smartPractice: true, timerMode: true, timerSeconds: 4 }
   };
 
-  function applyPreset(name) {
-    const preset = PRESETS[name];
-    if (!preset) return;
+  const TEST_PRESETS = {
+    quick: { label: "Quick Test", targetNotes: 25, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush: { label: "Rush Test", durationMs: 60000, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    survival: { label: "Survival", lives: 3, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: true, timerSeconds: 4 } }
+  };
+
+  const SCORE_KEY = "noteReaderTestScoresV1";
+
+  function applyPresetData(preset) {
     Object.assign(state, preset);
     state.current = null;
     state.previous = null;
@@ -1162,13 +1257,208 @@
     updateSummary();
   }
 
+  function applyPreset(name) {
+    const preset = PRESETS[name];
+    if (!preset) return;
+    applyPresetData(preset);
+  }
+
+  function clearTestClock() {
+    if (state.testClock) clearInterval(state.testClock);
+    state.testClock = null;
+  }
+
+  function resetTestState() {
+    clearTestClock();
+    state.testMode = "practice";
+    state.testTargetNotes = 0;
+    state.testAnsweredNotes = 0;
+    state.testCorrectNotes = 0;
+    state.testWrongNotes = 0;
+    state.testLives = 0;
+    state.testEndsAt = 0;
+  }
+
+  function isTesting() {
+    return state.testMode !== "practice";
+  }
+
+  function updateTestControls() {
+    const testing = isTesting();
+    if (els.actionsRow) els.actionsRow.classList.toggle("test-hidden", testing);
+    if (els.streakCard) els.streakCard.classList.toggle("hidden", testing);
+    if (els.bestCard) els.bestCard.classList.toggle("hidden", testing);
+    if (els.avgCard) els.avgCard.classList.toggle("hidden", testing);
+    if (els.testModeStat) els.testModeStat.classList.toggle("hidden", !testing);
+    if (els.testModeName && testing) els.testModeName.textContent = testModeDisplayName();
+    if (els.openSettingsBtn) els.openSettingsBtn.disabled = testing;
+    if (els.settingsSummary) els.settingsSummary.disabled = testing;
+    if (testing) closeSettings();
+  }
+
+  function loadScores() {
+    try { return JSON.parse(localStorage.getItem(SCORE_KEY) || "{}") || {}; }
+    catch { return {}; }
+  }
+
+  function saveScores(scores) {
+    try { localStorage.setItem(SCORE_KEY, JSON.stringify(scores)); }
+    catch {}
+  }
+
+  function updateHighScoreUI() {
+    const scores = loadScores();
+    document.querySelectorAll("[data-highscore]").forEach(el => {
+      const score = scores[el.dataset.highscore];
+      el.textContent = score ? `Best: ${score.score} · ${score.accuracy}%` : "Best: –";
+    });
+  }
+
   function startPractice(presetName = null) {
+    resetTestState();
     if (presetName) applyPreset(presetName);
+    if (els.resultBox) els.resultBox.classList.add("hidden");
+    updateTestControls();
+    els.playAgainBtn.disabled = false;
+    els.playPreviousBtn.disabled = false;
+    els.skipBtn.disabled = false;
     ensureAudio();
     els.overlay.style.display = "none";
     state.started = true;
     resetSession();
     nextQuestion(false);
+  }
+
+  function startTest(mode) {
+    const test = TEST_PRESETS[mode];
+    if (!test) return;
+    resetTestState();
+    applyPresetData(test.settings);
+    if (els.resultBox) els.resultBox.classList.add("hidden");
+    state.testMode = mode;
+    state.testTargetNotes = test.targetNotes || 0;
+    state.testLives = test.lives || 0;
+    state.testEndsAt = test.durationMs ? performance.now() + test.durationMs : 0;
+    updateTestControls();
+    ensureAudio();
+    els.overlay.style.display = "none";
+    state.started = true;
+    resetSession();
+    state.testMode = mode;
+    state.testTargetNotes = test.targetNotes || 0;
+    state.testLives = test.lives || 0;
+    state.testEndsAt = test.durationMs ? performance.now() + test.durationMs : 0;
+    updateTestControls();
+    startTestClock();
+    nextQuestion(false);
+  }
+
+  function startTestClock() {
+    clearTestClock();
+    if (state.testMode !== "rush") return;
+    state.testClock = setInterval(() => {
+      if (state.testMode !== "rush" || !state.started) { clearTestClock(); return; }
+      if (performance.now() >= state.testEndsAt) {
+        endTest("time");
+      } else {
+        renderTestStatus();
+      }
+    }, 250);
+  }
+
+  function testLabel(mode = state.testMode) {
+    return TEST_PRESETS[mode]?.label || "Test";
+  }
+
+  function testModeDisplayName(mode = state.testMode) {
+    if (mode === "quick") return "QUICK TEST MODE";
+    if (mode === "rush") return "60 SECONDS RUSH MODE";
+    if (mode === "survival") return "SURVIVAL MODE";
+    return "TEST MODE";
+  }
+
+  function testAccuracy() {
+    return state.testAnsweredNotes ? Math.round((state.testCorrectNotes / state.testAnsweredNotes) * 100) : 0;
+  }
+
+  function testStatusText() {
+    if (state.testMode === "quick") return `Quick Test · ${state.testAnsweredNotes}/${state.testTargetNotes} notes · ${testAccuracy()}%`;
+    if (state.testMode === "rush") {
+      const seconds = Math.max(0, Math.ceil((state.testEndsAt - performance.now()) / 1000));
+      return `Rush · ${seconds}s left · score ${state.score} · ${testAccuracy()}%`;
+    }
+    if (state.testMode === "survival") return `Survival · ${Math.max(0, state.testLives)} lives · score ${state.score} · ${testAccuracy()}%`;
+    return "";
+  }
+
+  function renderTestStatus() {
+    if (state.testMode !== "practice") els.noteInfo.textContent = testStatusText();
+  }
+
+  function recordTestNotes(correct, wrong) {
+    if (state.testMode === "practice") return false;
+    state.testCorrectNotes += correct;
+    state.testWrongNotes += wrong;
+    state.testAnsweredNotes += correct + wrong;
+
+    if (state.testMode === "survival" && wrong > 0) {
+      state.testLives -= wrong;
+      if (state.testLives <= 0) {
+        endTest("out of lives");
+        return true;
+      }
+    }
+
+    if (state.testMode === "quick" && state.testAnsweredNotes >= state.testTargetNotes) {
+      endTest("complete");
+      return true;
+    }
+
+    if (state.testMode === "rush" && performance.now() >= state.testEndsAt) {
+      endTest("time");
+      return true;
+    }
+
+    renderTestStatus();
+    return false;
+  }
+
+  function endTest(reason) {
+    if (state.testMode === "practice") return;
+    const mode = state.testMode;
+    const label = testLabel(mode);
+    clearTestClock();
+    stopTimer();
+    state.locked = true;
+    state.started = false;
+    disableAnswers(true);
+
+    const accuracy = testAccuracy();
+    const detail = `${state.testCorrectNotes}/${state.testAnsweredNotes} correct`;
+    const scores = loadScores();
+    const finalScore = Math.max(0, Math.round(state.score + state.testCorrectNotes * 2 - state.testWrongNotes * 3 + (mode === "survival" ? Math.max(0, state.testLives) * 30 : 0)));
+    const old = scores[mode];
+    const isBest = !old || finalScore > old.score;
+    if (isBest) {
+      scores[mode] = { score: finalScore, accuracy, correct: state.testCorrectNotes, answered: state.testAnsweredNotes, at: new Date().toISOString() };
+      saveScores(scores);
+    }
+
+    if (els.resultBox) {
+      const reasonText = reason === "time" ? "Time is up" : reason === "out of lives" ? "No lives left" : "Finished";
+      els.resultBox.innerHTML = `<strong>${label}: ${finalScore} ${isBest ? "★ new best" : ""}</strong><span>${reasonText} · ${detail} · ${accuracy}% accuracy</span>`;
+      els.resultBox.classList.remove("hidden");
+    }
+
+    state.testMode = "practice";
+    updateTestControls();
+    els.playAgainBtn.disabled = false;
+    els.playPreviousBtn.disabled = false;
+    els.skipBtn.disabled = false;
+    updateHighScoreUI();
+    closeSettings();
+    closeCheatSheet();
+    els.overlay.style.display = "flex";
   }
 
   function stopTimer(hide = true) {
@@ -1266,6 +1556,7 @@
       els.feedback.className = "feedback bad";
     }
     updateStats();
+    if (recordTestNotes(correctSoFar, wrongSoFar)) return;
     setTimeout(() => nextQuestion(false), 760);
   }
 
@@ -1362,12 +1653,18 @@
   function openCheatSheet() { buildCheatSheet(); els.cheatBackdrop.classList.remove("hidden"); }
   function closeCheatSheet() { els.cheatBackdrop.classList.add("hidden"); }
 
-  function openSettings() { els.settingsBackdrop.classList.remove("hidden"); }
+  function openSettings() { if (isTesting()) return; els.settingsBackdrop.classList.remove("hidden"); }
   function closeSettings() { els.settingsBackdrop.classList.add("hidden"); }
   function showHome() {
     stopTimer();
+    resetTestState();
+    updateTestControls();
     state.started = false;
     state.locked = false;
+    els.playAgainBtn.disabled = false;
+    els.playPreviousBtn.disabled = false;
+    els.skipBtn.disabled = false;
+    if (els.resultBox) els.resultBox.classList.add("hidden");
     closeSettings();
     closeCheatSheet();
     els.overlay.style.display = "flex";
@@ -1382,6 +1679,9 @@
   els.customPathBtn.addEventListener("click", startCustom);
   document.querySelectorAll("[data-preset]").forEach(btn => {
     btn.addEventListener("click", () => startPractice(btn.dataset.preset));
+  });
+  document.querySelectorAll("[data-test]").forEach(btn => {
+    btn.addEventListener("click", () => startTest(btn.dataset.test));
   });
   els.openSettingsBtn.addEventListener("click", openSettings);
   els.cheatBtn.addEventListener("click", openCheatSheet);
@@ -1411,13 +1711,15 @@
   els.smartBtn.addEventListener("click", () => { state.smartPractice = !state.smartPractice; toggleButtonState(els.smartBtn, state.smartPractice); refreshAfterSettingChange(); });
   els.timerBtn.addEventListener("click", () => setTimerMode(!state.timerMode));
   els.soundBtn.addEventListener("click", () => { state.soundOn = !state.soundOn; els.soundBtn.textContent = state.soundOn ? "🔊" : "🔇"; if (state.soundOn) ensureAudio(); });
-  els.playPreviousBtn.addEventListener("click", () => playPreviousSound());
-  els.playAgainBtn.addEventListener("click", () => playQuestionSound());
-  els.skipBtn.addEventListener("click", skip);
+  els.playPreviousBtn.addEventListener("click", () => { if (!isTesting()) playPreviousSound(); });
+  els.playAgainBtn.addEventListener("click", () => { if (!isTesting()) playQuestionSound(); });
+  els.skipBtn.addEventListener("click", () => { if (!isTesting()) skip(); });
 
   updateModeControls();
   updateRangeLabels();
   updateSummary();
+  updateHighScoreUI();
+  updateTestControls();
   drawStaff(null);
 })();
 </script>
