@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v54</title>
+  <title>NoteSprint v57</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -56,6 +56,23 @@
       --blue: #8b5e34; --green: #2f855a; --red: #b84032; --shadow: 0 14px 28px rgba(61,38,17,0.16);
       --body-bg: linear-gradient(135deg, #f6efe5, #d9c3a6); --staff-bg: linear-gradient(180deg, #fffdf7, #f1e6d6); --staff-ink: #1f1710;
       --answer-bg: #fffdf7; --control-bg: rgba(255,252,246,0.80); --active-bg: #f1ddc2;
+    }
+    body.theme-night {
+      --bg: #1b1414;
+      --card: rgba(39,28,27,0.94);
+      --text: #e5d2c3;
+      --muted: #a89184;
+      --line: rgba(190,150,128,0.18);
+      --blue: #c07a61;
+      --green: #8fa879;
+      --red: #d08a78;
+      --shadow: 0 14px 30px rgba(0,0,0,0.26);
+      --body-bg: radial-gradient(circle at top left, rgba(160,75,58,0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(115,58,48,0.18), transparent 38%), #1b1414;
+      --staff-bg: linear-gradient(180deg, #2a2020, #211818);
+      --staff-ink: #e8d6c9;
+      --answer-bg: rgba(47,35,33,0.96);
+      --control-bg: rgba(47,35,33,0.84);
+      --active-bg: rgba(160,86,68,0.24);
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -173,6 +190,8 @@
     .timer-fill { position: absolute; left: 0; bottom: 0; width: 100%; height: 0%; border-radius: 999px; background: linear-gradient(180deg, var(--green), var(--blue), var(--red)); transition: height 0.06s linear; }
     body.theme-neon .card, body.theme-neon .answer, body.theme-neon .secondary, body.theme-neon .icon-btn { border-color: rgba(34,211,238,0.22); }
     body.theme-neon .answer { box-shadow: 0 0 14px rgba(34,211,238,0.12); }
+    body.theme-night .card, body.theme-night .answer, body.theme-night .secondary, body.theme-night .icon-btn { border-color: rgba(190,150,128,0.16); }
+    body.theme-night .answer { box-shadow: 0 7px 16px rgba(0,0,0,0.20); }
     body.theme-retro .answer, body.theme-retro .secondary, body.theme-retro .icon-btn, body.theme-retro .card { border: 2px solid var(--text); }
     body.theme-paper .card, body.theme-paper .cheat-card, body.theme-paper .staff-wrap { border-color: rgba(124,74,30,0.16); }
 
@@ -308,6 +327,7 @@
     .test-result { margin: 0; }
     .storage-note { margin-top: 0; padding: 0 2px; }
     body.theme-neon .home-hero, body.theme-neon .continue-card, body.theme-neon .path-btn.path-card, body.theme-neon .home-look-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
+    body.theme-night .home-hero, body.theme-night .continue-card, body.theme-night .path-btn.path-card, body.theme-night .home-look-card { background: rgba(39,28,27,0.90); border-color: rgba(190,150,128,0.15); }
     body.theme-retro .brand-mark { background: var(--text); color: var(--bg); }
     body.theme-retro .home-hero, body.theme-retro .continue-card, body.theme-retro .path-btn.path-card, body.theme-retro .home-look-card { border: 2px solid var(--text); }
     @media (max-width: 390px), (max-height: 720px) {
@@ -345,6 +365,7 @@
     .panel-topline { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 2px; }
     .mini-back { border: 0; border-radius: 999px; padding: 7px 10px; background: rgba(118,118,128,0.12); color: var(--blue); font-size: 11px; font-weight: 950; }
     body.theme-neon .home-choice-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
+    body.theme-night .home-choice-card { background: rgba(39,28,27,0.90); border-color: rgba(190,150,128,0.15); }
     body.theme-retro .home-choice-card { border: 2px solid var(--text); }
     @media (max-width: 390px), (max-height: 720px) {
       .home-choice-grid { gap: 5px; }
@@ -547,15 +568,16 @@
       </section>
 
       <section class="home-look-card" aria-label="Look setting">
-        <label for="themeSelect">Look <span class="range-value" id="themeValue">Apple Clean</span></label>
+        <label for="themeSelect">Look <span class="range-value" id="themeValue">Default</span></label>
         <select id="themeSelect" class="select-control" aria-label="Visual style">
-          <option value="apple">Apple Clean</option>
-          <option value="retro">Retro Game Boy</option>
-          <option value="neon">Dark Neon</option>
-          <option value="paper">Paper Sheet Music</option>
-          <option value="duo">Duolingo-ish</option>
-          <option value="piano">Piano Practice Room</option>
-        </select>
+            <option value="apple">Default</option>
+            <option value="night">Night mode</option>
+            <option value="retro">Retro Game Boy</option>
+            <option value="neon">Dark Neon</option>
+            <option value="paper">Paper Sheet Music</option>
+            <option value="duo">Duolingo-ish</option>
+            <option value="piano">Piano Practice Room</option>
+          </select>
       </section>
 
       <div class="test-result hidden" id="resultBox"></div>
@@ -635,7 +657,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 54.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 57.
       </div>
     </div>
   </div>
@@ -1782,7 +1804,7 @@
   }
   function toggleButtonState(button, on) { button.classList.toggle("on", on); }
 
-  const THEME_VALUES = ["apple", "retro", "neon", "paper", "duo", "piano"];
+  const THEME_VALUES = ["apple", "retro", "neon", "paper", "duo", "piano", "night"];
   const THEME_KEY = "noteSprintThemeV1";
   function validTheme(value) { return THEME_VALUES.includes(value); }
   function loadTheme() {
@@ -1797,10 +1819,10 @@
   }
 
   function themeLabel(value) {
-    return ({ apple: "Apple Clean", retro: "Retro Game Boy", neon: "Dark Neon", paper: "Paper Sheet Music", duo: "Duolingo-ish", piano: "Piano Practice Room" })[value] || "Apple Clean";
+    return ({ apple: "Default", night: "Night mode", retro: "Retro Game Boy", neon: "Dark Neon", paper: "Paper Sheet Music", duo: "Duolingo-ish", piano: "Piano Practice Room" })[value] || "Default";
   }
   function applyTheme() {
-    document.body.classList.remove("theme-apple", "theme-retro", "theme-neon", "theme-paper", "theme-duo", "theme-piano");
+    document.body.classList.remove("theme-apple", "theme-retro", "theme-neon", "theme-paper", "theme-duo", "theme-piano", "theme-night");
     document.body.classList.add(`theme-${state.theme}`);
     if (els.themeSelect) els.themeSelect.value = state.theme;
     if (els.themeValue) els.themeValue.textContent = themeLabel(state.theme);
