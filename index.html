@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -89,6 +90,8 @@
     .segmented.three { grid-template-columns: repeat(3,1fr); }
     .segmented.five { grid-template-columns: repeat(5,1fr); }
     .segmented.five button { font-size: 11px; padding: 9px 3px; }
+    .segmented.six { grid-template-columns: repeat(6,1fr); }
+    .segmented.six button { font-size: 10.5px; padding: 9px 2px; }
     .segmented button { border: 0; border-radius: 13px; padding: 10px 6px; background: transparent; color: var(--muted); font-weight: 850; font-size: 13px; }
     .segmented button.active { background: var(--active-bg); color: var(--text); box-shadow: 0 4px 13px rgba(0,0,0,0.08); }
     .segmented button:disabled { opacity: 0.42; }
@@ -140,6 +143,17 @@
     .realpiano .answer.black-key small { color: rgba(255,255,255,0.72); font-size: 8px; }
     .realpiano .answer.correct, .realpiano .answer.black-key.correct { background: var(--green); color: white; }
     .realpiano .answer.wrong, .realpiano .answer.black-key.wrong { background: var(--red); color: white; }
+    .answers.fullpiano { display: block; position: relative; height: 134px; padding: 8px; overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; }
+    .fullpiano .full-piano-wrap { position: relative; width: 1040px; min-width: 1040px; height: 112px; }
+    .fullpiano .white-row-88 { position: absolute; left: 0; right: 0; bottom: 0; height: 108px; display: flex; gap: 0; }
+    .fullpiano .answer.white-key-88 { width: 20px; min-width: 20px; height: 108px; min-height: 108px; border-radius: 0 0 7px 7px; justify-content: flex-end; padding: 0 0 6px; background: #fff; color: #111827; border: 1px solid rgba(0,0,0,0.20); box-shadow: inset 0 -7px 12px rgba(0,0,0,0.05); font-size: 7px; line-height: 1; }
+    .fullpiano .black-row-88 { position: absolute; left: 0; top: 0; height: 66px; pointer-events: none; }
+    .fullpiano .answer.black-key-88 { position: absolute; top: 0; width: 13px; height: 66px; min-height: 66px; border-radius: 0 0 5px 5px; background: #111827; color: #fff; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 4px 10px rgba(0,0,0,0.32); font-size: 6px; padding: 0 0 4px; justify-content: flex-end; pointer-events: auto; z-index: 2; line-height: 1; }
+    .fullpiano .answer.black-key-88 small { color: rgba(255,255,255,0.72); font-size: 5px; margin-top: 0; }
+    .fullpiano .answer.correct, .fullpiano .answer.black-key-88.correct { background: var(--green); color: white; }
+    .fullpiano .answer.wrong, .fullpiano .answer.black-key-88.wrong { background: var(--red); color: white; }
+    .fullpiano-card { width: min(1120px, calc(100vw - 12px)); margin-left: 50%; transform: translateX(-50%); }
+    .fullpiano-card .answers.fullpiano { padding-left: 10px; padding-right: 10px; }
     .answers.midi-panel { display: block; padding: 8px; }
     .midi-box { border: 1px solid rgba(0,0,0,0.07); border-radius: 17px; background: rgba(255,255,255,0.68); min-height: 74px; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 10px; text-align: center; }
     .midi-title { font-size: 15px; font-weight: 900; letter-spacing: -0.03em; }
@@ -293,10 +307,11 @@
           <button id="grandBtn" class="active" type="button">Grand</button>
         </div>
 
-        <div class="segmented five" aria-label="Input mode">
+        <div class="segmented six" aria-label="Input mode">
           <button id="choiceInputBtn" class="active" type="button">Choices</button>
           <button id="pianoInputBtn" type="button">ABC</button>
           <button id="realInputBtn" type="button">Piano</button>
+          <button id="fullPianoInputBtn" type="button">88 Key</button>
           <button id="computerInputBtn" type="button">Keybd</button>
           <button id="midiInputBtn" type="button">MIDI</button>
         </div>
@@ -546,7 +561,7 @@
     openSettingsBtn: $("openSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"), settingsBackdrop: $("settingsBackdrop"),
     cheatBtn: $("cheatBtn"), closeCheatBtn: $("closeCheatBtn"), cheatBackdrop: $("cheatBackdrop"), cheatContent: $("cheatContent"),
     settingsSummary: $("settingsSummary"), summaryText: $("summaryText"), noteModeBtn: $("noteModeBtn"), multiModeBtn: $("multiModeBtn"), chordModeBtn: $("chordModeBtn"),
-    choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
+    choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), fullPianoInputBtn: $("fullPianoInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
     keysDisplayCard: $("keysDisplayCard"), keysDisplayValue: $("keysDisplayValue"), keysDisplayLettersBtn: $("keysDisplayLettersBtn"), keysDisplayPianoBtn: $("keysDisplayPianoBtn"),
     trebleBtn: $("trebleBtn"), bassBtn: $("bassBtn"), grandBtn: $("grandBtn"),
@@ -1003,6 +1018,65 @@
     els.answers.appendChild(blackRow);
   }
 
+  function noteNameFromMidiNumber(midi) {
+    const names = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+    return names[((midi % 12) + 12) % 12] + (Math.floor(midi / 12) - 1);
+  }
+  function displayFullPianoLabel(noteName) {
+    return noteName.replace("#", "♯");
+  }
+  function currentFullPianoTarget() {
+    if (!state.current || state.current.type === "empty" || state.current.type === "chord") return "C4";
+    if (state.current.type === "multi") return state.current.notes[state.multiIndex]?.note || state.current.notes[0]?.note || "C4";
+    return state.current.note || "C4";
+  }
+  function scrollFullPianoToCurrent() {
+    if (state.inputMode !== "fullpiano") return;
+    const target = currentFullPianoTarget();
+    const btn = els.answers.querySelector(`[data-answer="${target}"]`);
+    if (!btn) return;
+    const left = Math.max(0, btn.offsetLeft - (els.answers.clientWidth / 2) + (btn.clientWidth / 2));
+    els.answers.scrollLeft = left;
+  }
+  function renderFullPiano() {
+    els.answers.className = "answers fullpiano";
+    if (els.answers.parentElement) els.answers.parentElement.classList.add("fullpiano-card");
+    const whiteW = 20;
+    const blackW = 13;
+    const wrap = document.createElement("div");
+    wrap.className = "full-piano-wrap";
+    const whiteRow = document.createElement("div");
+    whiteRow.className = "white-row-88";
+    const blackRow = document.createElement("div");
+    blackRow.className = "black-row-88";
+    let whiteIndex = 0;
+    for (let midi = 21; midi <= 108; midi++) {
+      const noteName = noteNameFromMidiNumber(midi);
+      const letter = noteName[0];
+      const isBlack = noteName.includes("#");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.answer = noteName;
+      btn.dataset.letter = letter;
+      btn.setAttribute("aria-label", `88 key piano key ${displayFullPianoLabel(noteName)}`);
+      btn.innerHTML = state.realPianoLabels ? displayFullPianoLabel(noteName) : "";
+      btn.addEventListener("click", () => answer(noteName));
+      if (isBlack) {
+        btn.className = "answer black-key-88";
+        btn.style.left = `${Math.round((whiteIndex * whiteW - blackW / 2) * 10) / 10}px`;
+        blackRow.appendChild(btn);
+      } else {
+        btn.className = "answer white-key-88";
+        whiteRow.appendChild(btn);
+        whiteIndex += 1;
+      }
+    }
+    wrap.appendChild(whiteRow);
+    wrap.appendChild(blackRow);
+    els.answers.appendChild(wrap);
+    setTimeout(scrollFullPianoToCurrent, 0);
+  }
+
   function renderMidiPanel() {
     els.answers.className = "answers midi-panel";
     const box = document.createElement("div");
@@ -1020,7 +1094,13 @@
   function renderAnswers() {
     els.answers.innerHTML = "";
     els.answers.className = "answers";
+    if (els.answers.parentElement) els.answers.parentElement.classList.remove("fullpiano-card");
     if (!state.current || state.current.type === "empty") return;
+
+    if (state.inputMode === "fullpiano" && state.gameMode !== "chord") {
+      renderFullPiano();
+      return;
+    }
 
     if (state.inputMode === "real" && state.gameMode !== "chord") {
       renderRealPiano({ clickable: true });
@@ -1066,10 +1146,11 @@
     stopTimer(false);
     if (state.current.type === "multi") return answerMulti(value);
     state.locked = true;
-    const isCorrect = value === state.current.answer;
+    const expected = state.inputMode === "fullpiano" && state.current.type === "note" ? state.current.note : state.current.answer;
+    const isCorrect = value === expected;
     const elapsed = performance.now() - state.questionStartedAt;
     disableAnswers(true);
-    markAnswerButtons(value, state.current.answer, isCorrect);
+    markAnswerButtons(value, expected, isCorrect);
     if (state.current.type === "chord") updateChordLearning(state.current, isCorrect, elapsed);
     else updateNoteLearning(state.current, isCorrect, elapsed);
     if (isCorrect) {
@@ -1085,8 +1166,9 @@
       setTimeout(() => nextQuestion(false), 520);
     } else {
       state.streak = 0;
-      const extra = state.current.type === "chord" ? ` (${state.current.inversion})` : state.showSolfege ? " / " + SOLFEGE[state.current.answer] : "";
-      els.feedback.textContent = `Wrong — it was ${state.current.answer}${extra}`;
+      const exactAnswer = state.inputMode === "fullpiano" && state.current.type === "note" ? state.current.note : state.current.answer;
+      const extra = state.current.type === "chord" ? ` (${state.current.inversion})` : (state.inputMode !== "fullpiano" && state.showSolfege ? " / " + SOLFEGE[state.current.answer] : "");
+      els.feedback.textContent = `Wrong — it was ${exactAnswer}${extra}`;
       els.feedback.className = "feedback bad";
       drawStaff(state.current, true);
       playWrong();
@@ -1095,8 +1177,8 @@
     }
   }
   function answerMulti(value) {
-    const expected = state.current.answerSequence[state.multiIndex];
     const currentNote = state.current.notes[state.multiIndex];
+    const expected = state.inputMode === "fullpiano" ? currentNote.note : state.current.answerSequence[state.multiIndex];
     const elapsedStep = performance.now() - state.stepStartedAt;
     const isCorrect = value === expected;
     markAnswerButtons(value, expected, isCorrect);
@@ -1108,7 +1190,8 @@
     if (!isCorrect) {
       state.multiHadMistake = true;
       state.streak = 0;
-      els.feedback.textContent = `Wrong — #${state.multiIndex + 1} was ${expected}${state.showSolfege ? " / " + SOLFEGE[expected] : ""}`;
+      const expectedLabel = state.inputMode === "fullpiano" ? expected : `${expected}${state.showSolfege ? " / " + SOLFEGE[expected] : ""}`;
+      els.feedback.textContent = `Wrong — #${state.multiIndex + 1} was ${expectedLabel}`;
       els.feedback.className = "feedback bad";
       playWrong();
       updateStats();
@@ -1120,6 +1203,7 @@
     state.multiIndex += 1;
     state.stepStartedAt = performance.now();
     drawStaff(state.current, false);
+    scrollFullPianoToCurrent();
     const total = state.current.notes.length;
     const correctSoFar = state.multiMarks.filter(mark => mark === "correct").length;
     const wrongSoFar = state.multiMarks.filter(mark => mark === "wrong").length;
@@ -1187,6 +1271,7 @@
     if (state.gameMode === "chord") return "Choices";
     if (state.inputMode === "piano") return "ABC";
     if (state.inputMode === "real") return "Piano";
+    if (state.inputMode === "fullpiano") return "88 Key";
     if (state.inputMode === "computer") return "Keybd A-G";
     if (state.inputMode === "midi") return "MIDI";
     return "Choices";
@@ -1195,7 +1280,7 @@
     const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
     const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
     const input = inputModeLabel();
-    const showPianoLabelsSummary = state.gameMode !== "chord" && (state.inputMode === "real" || (state.inputMode === "computer" && state.keysDisplay === "piano"));
+    const showPianoLabelsSummary = state.gameMode !== "chord" && (state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano"));
     const realLabels = showPianoLabelsSummary ? ` · labels ${state.realPianoLabels ? "show" : "hide"}` : "";
     const keysDisplay = state.inputMode === "computer" && state.gameMode !== "chord" ? ` · display ${state.keysDisplay === "piano" ? "Piano" : "Letters"}` : "";
     const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑ · ${state.ledgerFocusPercent}% ledger` : "staff only";
@@ -1245,14 +1330,15 @@
     els.choiceInputBtn.classList.toggle("active", state.inputMode === "choice");
     els.pianoInputBtn.classList.toggle("active", state.inputMode === "piano");
     els.realInputBtn.classList.toggle("active", state.inputMode === "real");
+    els.fullPianoInputBtn.classList.toggle("active", state.inputMode === "fullpiano");
     els.computerInputBtn.classList.toggle("active", state.inputMode === "computer");
     els.midiInputBtn.classList.toggle("active", state.inputMode === "midi");
     els.realLabelsShowBtn.classList.toggle("active", state.realPianoLabels);
     els.realLabelsHideBtn.classList.toggle("active", !state.realPianoLabels);
     els.keysDisplayLettersBtn.classList.toggle("active", state.keysDisplay !== "piano");
     els.keysDisplayPianoBtn.classList.toggle("active", state.keysDisplay === "piano");
-    [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.computerInputBtn, els.midiInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
-    const usesRealPianoView = state.inputMode === "real" || (state.inputMode === "computer" && state.keysDisplay === "piano");
+    [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.fullPianoInputBtn, els.computerInputBtn, els.midiInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
+    const usesRealPianoView = state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano");
     els.realLabelsCard.classList.toggle("hidden", !usesRealPianoView || state.gameMode === "chord");
     els.keysDisplayCard.classList.toggle("hidden", state.inputMode !== "computer" || state.gameMode === "chord");
     els.chordSettings.classList.toggle("hidden", state.gameMode !== "chord");
@@ -1263,9 +1349,11 @@
         ? "MIDI mode works in Chrome/Edge with a USB MIDI keyboard. In this version, natural white keys answer notes; black keys count as wrong until accidentals mode is added."
         : state.inputMode === "real"
           ? "Piano mode shows white and black piano keys. Accidentals can be added later; for now notes are natural."
-          : state.inputMode === "computer"
-            ? (state.keysDisplay === "piano" ? "Keybd mode still answers with the computer keys A, B, C, D, E, F and G, but shows the same real piano key layout. Use Piano labels to show or hide note names." : "Keybd mode lets you answer with the computer keys A, B, C, D, E, F and G.")
-            : state.gameMode === "multi"
+          : state.inputMode === "fullpiano"
+            ? "88 Key mode shows the full piano from A0 to C8. Click the exact key/octave for the note; Piano labels can be shown or hidden."
+            : state.inputMode === "computer"
+              ? (state.keysDisplay === "piano" ? "Keybd mode still answers with the computer keys A, B, C, D, E, F and G, but shows the same real piano key layout. Use Piano labels to show or hide note names." : "Keybd mode lets you answer with the computer keys A, B, C, D, E, F and G.")
+              : state.gameMode === "multi"
               ? "Multiple Notes mode uses ledger focus for each note in the left-to-right row."
               : "Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.";
   }
@@ -1747,6 +1835,7 @@
     state.multiIndex += 1;
     state.stepStartedAt = performance.now();
     drawStaff(state.current, false);
+    scrollFullPianoToCurrent();
     const total = state.current.notes.length;
     if (state.multiIndex >= total) {
       finishMultiSequence();
@@ -1919,6 +2008,7 @@
   els.choiceInputBtn.addEventListener("click", () => setInputMode("choice"));
   els.pianoInputBtn.addEventListener("click", () => setInputMode("piano"));
   els.realInputBtn.addEventListener("click", () => setInputMode("real"));
+  els.fullPianoInputBtn.addEventListener("click", () => setInputMode("fullpiano"));
   els.realLabelsShowBtn.addEventListener("click", () => setRealPianoLabels(true));
   els.realLabelsHideBtn.addEventListener("click", () => setRealPianoLabels(false));
   els.keysDisplayLettersBtn.addEventListener("click", () => setKeysDisplay("letters"));
