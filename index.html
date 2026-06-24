@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v57</title>
+  <title>NoteSprint v1.0</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -657,7 +657,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 57.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.0.
       </div>
     </div>
   </div>
@@ -1398,6 +1398,9 @@
   }
   function answerMulti(value) {
     const currentNote = state.current.notes[state.multiIndex];
+    if (!currentNote) return;
+    state.locked = true;
+    disableAnswers(true);
     const expected = usesFullPianoAnswer() ? currentNote.note : state.current.answerSequence[state.multiIndex];
     const elapsedStep = performance.now() - state.stepStartedAt;
     const isCorrect = value === expected;
@@ -2159,7 +2162,8 @@
     const correctSoFar = state.multiMarks.filter(mark => mark === "correct").length;
     const wrongSoFar = state.multiMarks.filter(mark => mark === "wrong").length;
     const elapsed = performance.now() - state.questionStartedAt;
-    if (!state.multiHadMistake) {
+    const perfectSequence = correctSoFar === total && wrongSoFar === 0 && !state.multiHadMistake;
+    if (perfectSequence) {
       state.correctCount += 1;
       state.totalCorrectMs += elapsed;
       state.streak += 1;
