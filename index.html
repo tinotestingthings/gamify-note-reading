@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Note Reader Game v34</title>
+  <title>NoteSprint v51</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -269,14 +269,104 @@
       .stat .value { font-size: 14px; }
       .answer { font-size: 16px; }
     }
+
+
+    /* Home screen redesign */
+    .home-screen { width: min(100%, 450px); max-width: 450px; padding: 14px; display: grid; gap: 10px; text-align: left; }
+    .home-hero { position: relative; overflow: hidden; border-radius: 24px; padding: 17px 15px 15px; background: linear-gradient(135deg, rgba(0,122,255,0.15), rgba(52,199,89,0.11)), rgba(255,255,255,0.72); border: 1px solid rgba(255,255,255,0.86); text-align: left; }
+    .home-hero:after { content: ""; position: absolute; width: 128px; height: 128px; right: -42px; top: -46px; border-radius: 999px; background: rgba(0,122,255,0.10); }
+    .brand-row { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 16px; background: var(--text); color: var(--answer-bg); font-size: 25px; font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+    .home-hero h2 { margin: 0; font-size: clamp(26px, 8vw, 36px); letter-spacing: -0.065em; line-height: 0.95; }
+    .home-subtitle { position: relative; z-index: 1; margin: 10px 0 0; color: var(--muted); font-size: 13px; font-weight: 800; line-height: 1.28; }
+    .home-subtitle em { color: var(--blue); font-style: italic; }
+    .continue-card { display: grid; gap: 8px; border-radius: 22px; padding: 13px; background: var(--answer-bg); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 10px 22px rgba(0,0,0,0.07); }
+    .section-kicker, .home-section-title { color: var(--muted); font-size: 9.5px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.09em; }
+    .continue-card strong { font-size: 18px; letter-spacing: -0.04em; }
+    .continue-card .setup-line { color: var(--muted); font-size: 11px; font-weight: 800; line-height: 1.25; }
+    .primary-start { border: 0; border-radius: 16px; min-height: 44px; background: var(--blue); color: #fff; font-size: 15px; font-weight: 950; box-shadow: 0 10px 18px rgba(0,122,255,0.20); }
+    .home-section { display: grid; gap: 7px; }
+    .home-section-title { margin: 3px 2px 0; }
+    .path-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin-top: 0; }
+    .path-grid.one { grid-template-columns: 1fr; gap: 7px; margin-top: 0; }
+    .path-btn.path-card { min-height: 82px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; column-gap: 8px; row-gap: 6px; align-items: start; border-radius: 20px; padding: 10px; background: rgba(255,255,255,0.76); }
+    .path-btn.path-card .card-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 12px; background: rgba(118,118,128,0.12); font-size: 17px; }
+    .path-btn.path-card .card-copy { display: block; min-width: 0; }
+    .path-btn.path-card strong { font-size: 14.5px; }
+    .path-btn.path-card .card-copy > span { margin-top: 3px; font-size: 9.7px; line-height: 1.18; color: var(--muted); font-weight: 800; }
+    .path-btn.path-card .card-action { grid-column: 1 / -1; justify-self: start; margin-top: 0; color: var(--blue); font-size: 10px; font-weight: 950; }
+    .path-btn.test.path-card { border-color: rgba(0,122,255,0.18); }
+    .path-btn.survival.path-card, .path-btn.challenge-card { border-color: rgba(255,149,0,0.24); }
+    .path-btn.path-card .highscore { grid-column: 1 / -1; margin: 0; color: var(--blue); font-size: 9px; font-weight: 950; }
+    .utility-row { display: grid; grid-template-columns: 1fr; gap: 7px; }
+    .custom-card { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .custom-card strong { display: inline; }
+    .custom-card span { display: inline; margin: 0; }
+    .test-result { margin: 0; }
+    .storage-note { margin-top: 0; padding: 0 2px; }
+    body.theme-neon .home-hero, body.theme-neon .continue-card, body.theme-neon .path-btn.path-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
+    body.theme-retro .brand-mark { background: var(--text); color: var(--bg); }
+    body.theme-retro .home-hero, body.theme-retro .continue-card, body.theme-retro .path-btn.path-card { border: 2px solid var(--text); }
+    @media (max-width: 390px), (max-height: 720px) {
+      .home-screen { padding: 10px; gap: 7px; }
+      .home-hero { padding: 13px 12px; border-radius: 20px; }
+      .brand-mark { width: 36px; height: 36px; border-radius: 13px; font-size: 22px; }
+      .home-hero h2 { font-size: 26px; }
+      .home-subtitle { font-size: 11.2px; margin-top: 7px; display: block; }
+      .continue-card { padding: 10px; border-radius: 18px; gap: 6px; }
+      .primary-start { min-height: 39px; }
+      .path-grid.two { gap: 5px; }
+      .path-btn.path-card { min-height: 70px; padding: 8px; border-radius: 16px; column-gap: 6px; }
+      .path-btn.path-card .card-icon { width: 26px; height: 26px; font-size: 15px; }
+      .path-btn.path-card strong { font-size: 13.2px; }
+      .path-btn.path-card .card-copy > span { font-size: 8.8px; line-height: 1.13; display: block; }
+      .path-btn.path-card .card-action { font-size: 9px; }
+    }
+    @media (max-width: 340px) {
+      .path-grid.two { grid-template-columns: 1fr; }
+    }
+
+
+    .home-step { display: grid; gap: 7px; }
+    .home-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .home-choice-card { min-height: 162px; display: grid; align-content: start; gap: 8px; border-radius: 22px; padding: 14px; background: var(--answer-bg); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 10px 22px rgba(0,0,0,0.07); text-align: left; }
+    .choice-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 15px; background: rgba(118,118,128,0.12); font-size: 22px; line-height: 1; text-align: center; padding: 0; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+    .home-choice-card .choice-icon { margin-top: 0; color: var(--blue); font-size: 22px; font-weight: 900; line-height: 1; overflow-wrap: normal; }
+    .home-choice-card .choice-copy, .home-choice-card .choice-action { margin-top: 0; }
+    .storage-note strong { color: var(--text); font-weight: 950; }
+    .storage-note a { color: var(--blue); font-weight: 900; text-decoration: none; }
+    .storage-note a:active { opacity: 0.72; }
+    .choice-copy strong { display: block; font-size: 19px; letter-spacing: -0.055em; }
+    .choice-copy span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 800; line-height: 1.22; }
+    .choice-action { align-self: end; color: var(--blue); font-size: 11px; font-weight: 950; }
+    .panel-topline { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 2px; }
+    .mini-back { border: 0; border-radius: 999px; padding: 7px 10px; background: rgba(118,118,128,0.12); color: var(--blue); font-size: 11px; font-weight: 950; }
+    body.theme-neon .home-choice-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
+    body.theme-retro .home-choice-card { border: 2px solid var(--text); }
+    @media (max-width: 390px), (max-height: 720px) {
+      .home-choice-grid { gap: 5px; }
+      .home-choice-card { min-height: 124px; padding: 10px; border-radius: 18px; gap: 6px; }
+      .choice-icon { width: 32px; height: 32px; border-radius: 12px; font-size: 18px; }
+      .home-choice-card .choice-icon { font-size: 18px; }
+      .choice-copy strong { font-size: 16px; }
+      .choice-copy span { font-size: 9.6px; line-height: 1.13; }
+      .choice-action { font-size: 9.5px; }
+    }
+    @media (max-width: 340px) { .home-choice-grid { grid-template-columns: 1fr; } }
+
+    /* Keep the NoteSprint subline visible on the home screen and compact screens. */
+    .subtitle.app-tagline { display: block; }
+    @media (max-height: 710px) { .subtitle.app-tagline { display: block; } }
+    @media (max-height: 650px) { .home-subtitle { display: block; } }
+
   </style>
 </head>
 <body>
   <main class="app">
     <header>
       <div>
-        <h1>Note Reader</h1>
-        <div class="subtitle">Endless smart note, sequence & chord drill</div>
+        <h1>NoteSprint</h1>
+        <div class="subtitle app-tagline">Remember it’s a marathon, <em>note</em> a sprint.</div>
       </div>
       <div class="header-actions">
         <button class="icon-btn" id="homeBtn" type="button" aria-label="Back to home">⌂</button>
@@ -317,6 +407,14 @@
           <button id="fullPianoInputBtn" type="button">88 Key</button>
           <button id="computerInputBtn" type="button">Keybd</button>
           <button id="midiInputBtn" type="button">MIDI</button>
+        </div>
+
+        <div class="range-card wide hidden" id="keyboardInputCard">
+          <label>Keyboard input <span class="range-value" id="keyboardInputValue">On</span></label>
+          <div class="segmented" aria-label="Keyboard input">
+            <button id="keyboardInputOnBtn" class="active" type="button">On</button>
+            <button id="keyboardInputOffBtn" type="button">Off</button>
+          </div>
         </div>
 
         <div class="range-card wide hidden" id="realLabelsCard">
@@ -441,55 +539,93 @@
   </div>
 
   <div class="overlay" id="overlay">
-    <div class="start-box">
-      <h2>Choose your path</h2>
-      <p>Choose a preset path, start a scored test, or use Custom to open settings first.</p>
+    <div class="start-box home-screen">
+      <section class="home-hero" aria-label="Home">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">𝄞</div>
+          <h2>NoteSprint</h2>
+        </div>
+        <p class="home-subtitle">Remember it’s a marathon, <em>note</em> a sprint.</p>
+      </section>
+
       <div class="test-result hidden" id="resultBox"></div>
-      <div class="path-grid" aria-label="Difficulty paths">
-        <button class="path-btn" data-preset="easy" type="button">
-          <strong>Easy</strong>
-          <span>2 notes · ±1 ledger · 50% ledger focus · no timer</span>
-        </button>
-        <button class="path-btn" data-preset="intermediate" type="button">
-          <strong>Intermediate</strong>
-          <span>4 notes · ±3 ledgers · 60% ledger focus · no timer</span>
-        </button>
-        <button class="path-btn" data-preset="hard" type="button">
-          <strong>Hard</strong>
-          <span>5 notes · ±4 ledgers · 70% ledger focus · no timer</span>
-        </button>
-        <button class="path-btn not-fun" data-preset="notFun" type="button">
-          <strong>Not fun</strong>
-          <span>5 notes · 5 below / 3 above · 90% ledger focus · 4s timer</span>
-        </button>
 
-        <div class="start-section-title">Testing modes</div>
+      <section class="home-step" id="homeStartPanel" aria-label="Choose mode">
+        <div class="home-section-title">Choose your run</div>
+        <div class="home-choice-grid">
+          <button class="path-btn home-choice-card" id="practiceHomeBtn" type="button">
+            <span class="choice-icon" aria-hidden="true">🎹</span>
+            <span class="choice-copy"><strong>PRACTISE</strong><span>Warm up, learn notes, and build speed.</span></span>
+            <span class="choice-action">Choose path</span>
+          </button>
+          <button class="path-btn home-choice-card" id="testHomeBtn" type="button">
+            <span class="choice-icon" aria-hidden="true">🏁</span>
+            <span class="choice-copy"><strong>TEST</strong><span>Fixed runs, rush mode, or survival.</span></span>
+            <span class="choice-action">Choose test</span>
+          </button>
+        </div>
+      </section>
 
-        <button class="path-btn test" data-test="quick" type="button">
-          <strong>Quick Test</strong>
-          <span>25 notes · fixed test · no smart practice · no timer</span>
-          <span class="highscore" data-highscore="quick">Best: –</span>
-        </button>
-        <button class="path-btn test" data-test="rush" type="button">
-          <strong>Rush Test</strong>
-          <span>60 seconds · score as many notes as possible</span>
-          <span class="highscore" data-highscore="rush">Best: –</span>
-        </button>
-        <button class="path-btn test survival" data-test="survival" type="button">
-          <strong>Survival</strong>
-          <span>3 lives · 4s timer · ends when lives are gone</span>
-          <span class="highscore" data-highscore="survival">Best: –</span>
-        </button>
+      <section class="home-step hidden" id="practicePanel" aria-label="Practice paths">
+        <div class="panel-topline">
+          <button class="mini-back" id="practiceBackBtn" type="button">← Back</button>
+          <div class="home-section-title">Practise</div>
+        </div>
+        <div class="path-grid two">
+          <button class="path-btn path-card" data-preset="easy" type="button">
+            <span class="card-icon" aria-hidden="true">🌱</span>
+            <span class="card-copy"><strong>Easy</strong><span>2 notes · ±1 ledger · relaxed warm-up</span></span>
+            <span class="card-action">Start</span>
+          </button>
+          <button class="path-btn path-card" data-preset="intermediate" type="button">
+            <span class="card-icon" aria-hidden="true">🎵</span>
+            <span class="card-copy"><strong>Intermediate</strong><span>4 notes · ±3 ledgers · balanced drill</span></span>
+            <span class="card-action">Start</span>
+          </button>
+          <button class="path-btn path-card" data-preset="hard" type="button">
+            <span class="card-icon" aria-hidden="true">🔥</span>
+            <span class="card-copy"><strong>Hard</strong><span>5 notes · ±4 ledgers · smart focus</span></span>
+            <span class="card-action">Start</span>
+          </button>
+          <button class="path-btn path-card challenge-card" data-preset="notFun" type="button">
+            <span class="card-icon" aria-hidden="true">⚡</span>
+            <span class="card-copy"><strong>Challenge</strong><span>5 notes · heavy ledger focus · 4s timer</span></span>
+            <span class="card-action">Start</span>
+          </button>
+        </div>
+      </section>
 
-        <div class="start-section-title">Other</div>
+      <section class="home-step hidden" id="testPanel" aria-label="Testing modes">
+        <div class="panel-topline">
+          <button class="mini-back" id="testBackBtn" type="button">← Back</button>
+          <div class="home-section-title">Test</div>
+        </div>
+        <div class="path-grid two">
+          <button class="path-btn path-card test" data-test="quick" type="button">
+            <span class="card-icon" aria-hidden="true">✅</span>
+            <span class="card-copy"><strong>Quick Test</strong><span>25 notes · fixed score run</span></span>
+            <span class="highscore" data-highscore="quick">Best: –</span>
+          </button>
+          <button class="path-btn path-card test" data-test="rush" type="button">
+            <span class="card-icon" aria-hidden="true">⏱️</span>
+            <span class="card-copy"><strong>Rush Test</strong><span>60 seconds · score as many as possible</span></span>
+            <span class="highscore" data-highscore="rush">Best: –</span>
+          </button>
+          <button class="path-btn path-card test survival" data-test="survival" type="button">
+            <span class="card-icon" aria-hidden="true">❤️</span>
+            <span class="card-copy"><strong>Survival</strong><span>3 lives · 4s timer · stay alive</span></span>
+            <span class="highscore" data-highscore="survival">Best: –</span>
+          </button>
+          <button class="path-btn path-card custom-card" id="customPathBtn" type="button">
+            <span class="card-icon" aria-hidden="true">⚙️</span>
+            <span class="card-copy"><strong>Custom</strong><span>Open settings and build your drill</span></span>
+            <span class="card-action">Tune</span>
+          </button>
+        </div>
+      </section>
 
-        <button class="path-btn" id="customPathBtn" type="button">
-          <strong>Custom</strong>
-          <span>Open settings first and build your own drill</span>
-        </button>
-      </div>
       <div class="storage-note">
-        This app uses local browser storage to save your high scores on this device. The data is not sent to a server and is not used for tracking. You can clear it by clearing site data in your browser.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 51.
       </div>
     </div>
   </div>
@@ -530,6 +666,7 @@
     showSolfege: false,
     realPianoLabels: true,
     keysDisplay: "letters",
+    keyboardInput: true,
     smartPractice: true,
     theme: "apple",
     timerMode: false,
@@ -567,13 +704,14 @@
 
   const $ = id => document.getElementById(id);
   const els = {
-    overlay: $("overlay"), resultBox: $("resultBox"), customPathBtn: $("customPathBtn"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
+    overlay: $("overlay"), resultBox: $("resultBox"), homeStartPanel: $("homeStartPanel"), practicePanel: $("practicePanel"), testPanel: $("testPanel"), practiceHomeBtn: $("practiceHomeBtn"), testHomeBtn: $("testHomeBtn"), practiceBackBtn: $("practiceBackBtn"), testBackBtn: $("testBackBtn"), continuePracticeBtn: $("continuePracticeBtn"), homeSetupText: $("homeSetupText"), customPathBtn: $("customPathBtn"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
     feedback: $("feedback"), noteInfo: $("noteInfo"), score: $("scoreEl"), streak: $("streakEl"), best: $("bestEl"), avg: $("avgEl"),
     streakCard: $("streakCard"), bestCard: $("bestCard"), avgCard: $("avgCard"), testModeStat: $("testModeStat"), testModeName: $("testModeName"),
     openSettingsBtn: $("openSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"), settingsBackdrop: $("settingsBackdrop"),
     cheatBtn: $("cheatBtn"), closeCheatBtn: $("closeCheatBtn"), cheatBackdrop: $("cheatBackdrop"), cheatContent: $("cheatContent"),
     settingsSummary: $("settingsSummary"), summaryText: $("summaryText"), noteModeBtn: $("noteModeBtn"), multiModeBtn: $("multiModeBtn"), chordModeBtn: $("chordModeBtn"),
     choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), fullPianoInputBtn: $("fullPianoInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
+    keyboardInputCard: $("keyboardInputCard"), keyboardInputValue: $("keyboardInputValue"), keyboardInputOnBtn: $("keyboardInputOnBtn"), keyboardInputOffBtn: $("keyboardInputOffBtn"),
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
     keysDisplayCard: $("keysDisplayCard"), keysDisplayValue: $("keysDisplayValue"), keysDisplayLettersBtn: $("keysDisplayLettersBtn"), keysDisplayPianoBtn: $("keysDisplayPianoBtn"),
     midiDisplayCard: $("midiDisplayCard"), midiDisplayValue: $("midiDisplayValue"), midiDisplayPanelBtn: $("midiDisplayPanelBtn"), midiDisplay88Btn: $("midiDisplay88Btn"),
@@ -866,13 +1004,15 @@
   const TREBLE_CLEF_PATH = `M314 801Q300 854 291.0 906.0Q282 958 282 1012Q282 1059 288.5 1100.5Q295 1142 307 1177Q320 1217 341.0 1252.5Q362 1288 385.5 1311.0Q409 1334 427 1334Q451 1334 493 1249Q514 1206 524.0 1156.0Q534 1106 534 1049Q534 978 515.0 907.5Q496 837 459.5 775.0Q423 713 372 666L407 498Q422 500 432.0 501.0Q442 502 447 502Q508 502 556.0 467.5Q604 433 632.5 377.0Q661 321 661 254Q661 177 621.5 115.5Q582 54 503 25Q508 8 532 -117Q538 -147 541.0 -164.5Q544 -182 545.0 -195.0Q546 -208 546 -225Q546 -275 521.5 -314.5Q497 -354 455.5 -376.0Q414 -398 363 -398Q311 -398 271.0 -378.5Q231 -359 208.0 -324.5Q185 -290 185 -245Q185 -197 211.5 -165.0Q238 -133 287 -133Q329 -133 355.5 -163.5Q382 -194 382 -236Q382 -272 357.0 -299.0Q332 -326 292 -326H282Q308 -365 364 -365Q433 -365 472.0 -320.0Q511 -275 511 -205Q511 -188 507.0 -159.5Q503 -131 493 -91Q483 -51 477.5 -25.0Q472 1 470 12Q436 2 390 2Q304 2 222 52Q142 102 96.0 184.0Q50 266 50 361Q50 451 91 530Q132 609 192.5 675.0Q253 741 314 801ZM341 826Q364 838 390.0 870.5Q416 903 440.0 945.0Q464 987 479.0 1029.5Q494 1072 494 1106Q494 1142 483.0 1163.0Q472 1184 445 1184Q421 1184 398.5 1162.0Q376 1140 358.5 1103.5Q341 1067 331.0 1022.0Q321 977 321 930Q321 898 327.5 872.0Q334 846 341 826ZM398 379Q371 373 347.0 353.5Q323 334 308.5 306.5Q294 279 294 248Q294 223 307.0 196.5Q320 170 339 154Q352 142 365 136Q380 129 380 123Q380 120 370 117Q332 126 301.5 151.0Q271 176 253.5 211.5Q236 247 236 287Q236 330 253.5 370.0Q271 410 302.5 442.0Q334 474 374 490L345 641Q229 547 174.5 456.5Q120 366 120 277Q120 212 154.0 156.0Q188 100 247.0 65.5Q306 31 380 31Q400 31 420.5 35.0Q441 39 464 45ZM495 55Q593 97 593 227Q593 270 571.0 305.5Q549 341 512.0 362.0Q475 383 429 383Z`;
 
   function drawTrebleClef(html, layout, grand) {
-    // Real G-clef outline. The glyph origin is anchored on the G line
-    // (second line from the bottom), so the spiral sits on the correct staff line.
+    // Real G-clef outline. Anchor the rightmost curl point to the treble G line
+    // (second line from the bottom), so the G-clef curl sits on the correct staff line.
     const g = layout.gap;
     const gLineY = yForStaffStep(layout, 2);
     const scale = (grand ? 0.94 : 1.0) * g / 250;
+    const rightmostCurlPathY = 254;
     const x = layout.clefX - 356 * scale;
-    html.push(`<path d="${TREBLE_CLEF_PATH}" transform="translate(${x} ${gLineY}) scale(${scale} ${-scale})" fill="var(--staff-ink)"/>`);
+    const y = gLineY + rightmostCurlPathY * scale;
+    html.push(`<path d="${TREBLE_CLEF_PATH}" transform="translate(${x} ${y}) scale(${scale} ${-scale})" fill="var(--staff-ink)"/>`);
   }
   function drawBassClef(html, layout, grand) {
     // Use a real F-clef outline from the music font, just like the G clef.
@@ -893,7 +1033,6 @@
     }
     if (staff === "treble") drawTrebleClef(html, layout, grand);
     else drawBassClef(html, layout, grand);
-    if (!grand) html.push(`<text x="${layout.clefX}" y="${layout.bottomY + 34}" text-anchor="middle" font-size="10" font-weight="800" fill="var(--muted)">${STAFFS[staff].label}</text>`);
   }
   function drawLedgerLines(html, noteOrNotes, x, layout) {
     const notes = Array.isArray(noteOrNotes) ? noteOrNotes : [noteOrNotes];
@@ -1276,26 +1415,27 @@
     const rangeLabel = `${ledgerText(state.belowLedgers)} below, ${ledgerText(state.aboveLedgers)} above`;
     const focusText = (state.aboveLedgers || state.belowLedgers) ? ` · ${state.ledgerFocusPercent}% ledger` : "";
     const smartText = state.smartPractice ? "smart" : "random";
-    const clefText = state.clef === "grand" ? "Grand Staff" : STAFFS[state.clef].label;
+    const clefText = state.clef === "grand" ? "Grand Staff" : "";
+    const clefPart = clefText ? `${clefText} · ` : "";
     if (state.current.type === "empty") {
       els.noteInfo.textContent = "No chord fits this range. Add ledger lines above/below.";
       return;
     }
     if (state.gameMode === "chord") {
       const seventhText = state.includeSevenths ? "triads + 7ths" : "triads";
-      els.noteInfo.textContent = `Choose chord · ${clefText} · ${seventhText} · inv: ${inversionLabel()} · ${rangeLabel}${focusText} · ${smartText}`;
+      els.noteInfo.textContent = `Choose chord · ${clefPart}${seventhText} · inv: ${inversionLabel()} · ${rangeLabel}${focusText} · ${smartText}`;
     } else if (state.gameMode === "multi") {
-      els.noteInfo.textContent = `Read left to right · ${state.multiCount} notes · ${clefText} · ${rangeLabel}${focusText} · ${smartText}`;
+      els.noteInfo.textContent = `Read left to right · ${state.multiCount} notes · ${clefPart}${rangeLabel}${focusText} · ${smartText}`;
       els.feedback.textContent = `0/${state.current.notes.length}`;
     } else {
-      const baseText = state.inputMode === "piano" ? "Tap ABC button"
-        : state.inputMode === "real" ? "Click the piano"
+      const baseText = state.inputMode === "piano" ? (state.keyboardInput ? "Tap ABC / press A–G" : "Tap ABC button")
+        : state.inputMode === "real" ? (state.keyboardInput ? "Click piano / press A–G" : "Click the piano")
         : state.inputMode === "fullpiano" ? "Click exact 88 key"
         : state.inputMode === "computer" ? "Use keyboard A–G"
         : state.inputMode === "midi" ? (state.midiDisplay === "88key" ? "Play exact MIDI key" : "Play MIDI keyboard")
         : (state.showSolfege ? "Choose note / solfege" : "Choose note");
       const midiText = state.inputMode === "midi" ? ` · ${state.midiStatus}` : "";
-      els.noteInfo.textContent = `${baseText} · ${clefText} · ${rangeLabel}${focusText} · ${smartText}${midiText}`;
+      els.noteInfo.textContent = `${baseText} · ${clefPart}${rangeLabel}${focusText} · ${smartText}${midiText}`;
     }
     renderTestStatus();
     if (playSound) playQuestionSound();
@@ -1311,6 +1451,21 @@
     if (state.inputMode === "midi") return "MIDI";
     return "Choices";
   }
+  function canUseLetterKeyboard() {
+    if (state.gameMode === "chord") return false;
+    if (state.inputMode === "computer") return true;
+    return state.keyboardInput && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real");
+  }
+  function updateHomeSetup() {
+    if (!els.homeSetupText) return;
+    const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
+    const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
+    const input = inputModeLabel();
+    const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑` : "staff only";
+    const smart = state.smartPractice ? "smart" : "random";
+    const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
+    els.homeSetupText.textContent = `${mode} · ${clef} · ${input} · ${range} · ${smart}${timer}`;
+  }
   function updateSummary() {
     const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
     const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
@@ -1319,10 +1474,12 @@
     const realLabels = showPianoLabelsSummary ? ` · labels ${state.realPianoLabels ? "show" : "hide"}` : "";
     const keysDisplay = state.inputMode === "computer" && state.gameMode !== "chord" ? ` · display ${state.keysDisplay === "piano" ? "Piano" : "Letters"}` : "";
     const midiDisplay = state.inputMode === "midi" && state.gameMode !== "chord" ? ` · display ${state.midiDisplay === "88key" ? "88 Key" : "Panel"}` : "";
+    const keyboardText = state.gameMode !== "chord" && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real") ? ` · keyboard ${state.keyboardInput ? "on" : "off"}` : "";
     const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑ · ${state.ledgerFocusPercent}% ledger` : "staff only";
     const smart = state.smartPractice ? "smart" : "random";
     const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
-    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keysDisplay}${midiDisplay} · ${range} · ${smart}${timer}`;
+    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keysDisplay}${midiDisplay}${keyboardText} · ${range} · ${smart}${timer}`;
+    updateHomeSetup();
   }
   function updateStats() {
     els.score.textContent = state.score;
@@ -1343,6 +1500,7 @@
     els.ledgerFocusValue.textContent = `${state.ledgerFocusPercent}%`;
     els.multiCountValue.textContent = state.multiCount === 1 ? "1 note" : `${state.multiCount} notes`;
     els.timerSecValue.textContent = `${state.timerSeconds}s per note`;
+    els.keyboardInputValue.textContent = state.keyboardInput ? "On" : "Off";
     els.realLabelsValue.textContent = state.realPianoLabels ? "Show" : "Hide";
     els.keysDisplayValue.textContent = state.keysDisplay === "piano" ? "Piano" : "Letters";
     els.midiDisplayValue.textContent = state.midiDisplay === "88key" ? "88 Key" : "Panel";
@@ -1370,6 +1528,8 @@
     els.fullPianoInputBtn.classList.toggle("active", state.inputMode === "fullpiano");
     els.computerInputBtn.classList.toggle("active", state.inputMode === "computer");
     els.midiInputBtn.classList.toggle("active", state.inputMode === "midi");
+    els.keyboardInputOnBtn.classList.toggle("active", state.keyboardInput);
+    els.keyboardInputOffBtn.classList.toggle("active", !state.keyboardInput);
     els.realLabelsShowBtn.classList.toggle("active", state.realPianoLabels);
     els.realLabelsHideBtn.classList.toggle("active", !state.realPianoLabels);
     els.keysDisplayLettersBtn.classList.toggle("active", state.keysDisplay !== "piano");
@@ -1378,6 +1538,8 @@
     els.midiDisplay88Btn.classList.toggle("active", state.midiDisplay === "88key");
     [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.fullPianoInputBtn, els.computerInputBtn, els.midiInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
     const usesRealPianoView = state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano") || (state.inputMode === "midi" && state.midiDisplay === "88key");
+    const supportsKeyboardInputToggle = state.gameMode !== "chord" && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real");
+    els.keyboardInputCard.classList.toggle("hidden", !supportsKeyboardInputToggle);
     els.realLabelsCard.classList.toggle("hidden", !usesRealPianoView || state.gameMode === "chord");
     els.keysDisplayCard.classList.toggle("hidden", state.inputMode !== "computer" || state.gameMode === "chord");
     els.midiDisplayCard.classList.toggle("hidden", state.inputMode !== "midi" || state.gameMode === "chord");
@@ -1388,11 +1550,13 @@
       : state.inputMode === "midi"
         ? (state.midiDisplay === "88key" ? "MIDI 88 Key shows the full piano from A0 to C8. Play the exact key/octave on your MIDI keyboard; black keys count as wrong until accidentals mode is added." : "MIDI mode works in Chrome/Edge with a USB MIDI keyboard. In Panel display, natural white keys answer notes; black keys count as wrong until accidentals mode is added.")
         : state.inputMode === "real"
-          ? "Piano mode shows white and black piano keys. Accidentals can be added later; for now notes are natural."
+          ? (state.keyboardInput ? "Piano mode lets you click/tap the piano or press the computer keys A, B, C, D, E, F and G. Accidentals can be added later; for now notes are natural." : "Keyboard input is off. Click/tap the piano keys; accidentals can be added later, so for now notes are natural.")
           : state.inputMode === "fullpiano"
             ? "88 Key mode shows the full piano from A0 to C8. Click the exact key/octave for the note; Piano labels can be shown or hidden."
             : state.inputMode === "computer"
               ? (state.keysDisplay === "piano" ? "Keybd mode still answers with the computer keys A, B, C, D, E, F and G, but shows the same real piano key layout. Use Piano labels to show or hide note names." : "Keybd mode lets you answer with the computer keys A, B, C, D, E, F and G.")
+              : state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real"
+              ? (state.keyboardInput ? "You can click/tap the answers or press the computer keys A, B, C, D, E, F and G." : "Keyboard input is off. Use mouse/finger taps for this mode.")
               : state.gameMode === "multi"
               ? "Multiple Notes mode uses ledger focus for each note in the left-to-right row."
               : "Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.";
@@ -1418,6 +1582,12 @@
     updateModeControls();
     if (state.started) renderAnswers();
   }
+  function setKeyboardInput(on) {
+    state.keyboardInput = !!on;
+    updateRangeLabels();
+    updateSummary();
+    updateModeControls();
+  }
   function setMidiDisplay(display) {
     state.midiDisplay = display === "88key" ? "88key" : "panel";
     updateRangeLabels();
@@ -1436,13 +1606,14 @@
   function setTimerMode(on) { state.timerMode = !!on; toggleButtonState(els.timerBtn, state.timerMode); updateSummary(); if (state.timerMode) startTimer(); else stopTimer(); }
 
   function handleComputerKey(event) {
-    if (!state.started || state.locked || state.gameMode === "chord" || state.inputMode !== "computer") return;
+    if (!state.started || state.locked || !canUseLetterKeyboard()) return;
     if (els.overlay.style.display !== "none") return;
     if (!els.settingsBackdrop.classList.contains("hidden") || !els.cheatBackdrop.classList.contains("hidden")) return;
     const tag = document.activeElement?.tagName;
-    if (["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag)) return;
+    if (["INPUT", "SELECT", "TEXTAREA"].includes(tag) || document.activeElement?.isContentEditable) return;
     const key = event.key ? event.key.toUpperCase() : "";
     if (!LETTERS.includes(key)) return;
+    if (state.inputMode === "choice" && Array.isArray(state.current?.choices) && !state.current.choices.includes(key)) return;
     event.preventDefault();
     answer(key);
   }
@@ -2030,7 +2201,17 @@
     closeSettings();
     closeCheatSheet();
     els.overlay.style.display = "flex";
+    showHomeStart();
   }
+
+  function showHomePanel(panel) {
+    const panels = [els.homeStartPanel, els.practicePanel, els.testPanel].filter(Boolean);
+    panels.forEach(el => el.classList.add("hidden"));
+    if (panel) panel.classList.remove("hidden");
+  }
+  function showHomeStart() { showHomePanel(els.homeStartPanel); }
+  function showPracticeChoices() { showHomePanel(els.practicePanel); }
+  function showTestChoices() { showHomePanel(els.testPanel); }
 
   function startCustom() {
     startPractice();
@@ -2038,7 +2219,12 @@
   }
 
   els.homeBtn.addEventListener("click", showHome);
-  els.customPathBtn.addEventListener("click", startCustom);
+  if (els.practiceHomeBtn) els.practiceHomeBtn.addEventListener("click", showPracticeChoices);
+  if (els.testHomeBtn) els.testHomeBtn.addEventListener("click", showTestChoices);
+  if (els.practiceBackBtn) els.practiceBackBtn.addEventListener("click", showHomeStart);
+  if (els.testBackBtn) els.testBackBtn.addEventListener("click", showHomeStart);
+  if (els.continuePracticeBtn) els.continuePracticeBtn.addEventListener("click", () => startPractice());
+  if (els.customPathBtn) els.customPathBtn.addEventListener("click", startCustom);
   document.querySelectorAll("[data-preset]").forEach(btn => {
     btn.addEventListener("click", () => startPractice(btn.dataset.preset));
   });
@@ -2059,6 +2245,8 @@
   els.pianoInputBtn.addEventListener("click", () => setInputMode("piano"));
   els.realInputBtn.addEventListener("click", () => setInputMode("real"));
   els.fullPianoInputBtn.addEventListener("click", () => setInputMode("fullpiano"));
+  els.keyboardInputOnBtn.addEventListener("click", () => setKeyboardInput(true));
+  els.keyboardInputOffBtn.addEventListener("click", () => setKeyboardInput(false));
   els.realLabelsShowBtn.addEventListener("click", () => setRealPianoLabels(true));
   els.realLabelsHideBtn.addEventListener("click", () => setRealPianoLabels(false));
   els.keysDisplayLettersBtn.addEventListener("click", () => setKeysDisplay("letters"));
