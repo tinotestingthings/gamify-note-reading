@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v51</title>
+  <title>NoteSprint v53</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -475,6 +475,13 @@
             <label for="timerSecRange">Timer speed <span class="range-value" id="timerSecValue">3s per note</span></label>
             <input id="timerSecRange" type="range" min="2" max="8" value="3" step="1" />
           </div>
+          <div class="range-card wide" id="correctionTimeCard">
+            <label>Correction time <span class="range-value" id="correctionTimeValue">Default</span></label>
+            <div class="segmented" aria-label="Correction time">
+              <button id="correctionDefaultBtn" class="active" type="button">Default</button>
+              <button id="correctionSlowBtn" type="button">Slow</button>
+            </div>
+          </div>
         </div>
 
         <div class="settings-note" id="rangeHelp">Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.</div>
@@ -491,7 +498,7 @@
           <button id="timerBtn" class="pill" type="button">Timer mode</button>
         </div>
 
-        <div class="settings-note">Smart practice is session-only. Timer mode runs per note; timeout marks red and continues in Multiple mode.</div>
+        <div class="settings-note">Smart practice is session-only. Correction time controls how long wrong-answer color/text stays visible.</div>
       </section>
     </div>
 
@@ -625,7 +632,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 51.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 53.
       </div>
     </div>
   </div>
@@ -667,6 +674,7 @@
     realPianoLabels: true,
     keysDisplay: "letters",
     keyboardInput: true,
+    correctionTime: "default",
     smartPractice: true,
     theme: "apple",
     timerMode: false,
@@ -715,6 +723,7 @@
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
     keysDisplayCard: $("keysDisplayCard"), keysDisplayValue: $("keysDisplayValue"), keysDisplayLettersBtn: $("keysDisplayLettersBtn"), keysDisplayPianoBtn: $("keysDisplayPianoBtn"),
     midiDisplayCard: $("midiDisplayCard"), midiDisplayValue: $("midiDisplayValue"), midiDisplayPanelBtn: $("midiDisplayPanelBtn"), midiDisplay88Btn: $("midiDisplay88Btn"),
+    correctionTimeCard: $("correctionTimeCard"), correctionTimeValue: $("correctionTimeValue"), correctionDefaultBtn: $("correctionDefaultBtn"), correctionSlowBtn: $("correctionSlowBtn"),
     trebleBtn: $("trebleBtn"), bassBtn: $("bassBtn"), grandBtn: $("grandBtn"),
     aboveRange: $("aboveRange"), belowRange: $("belowRange"), ledgerFocusRange: $("ledgerFocusRange"), multiCountRange: $("multiCountRange"), timerSecRange: $("timerSecRange"),
     themeSelect: $("themeSelect"), themeValue: $("themeValue"),
@@ -1313,6 +1322,19 @@
     });
   }
   function disableAnswers(disabled = true) { [...document.querySelectorAll(".answer")].forEach(btn => btn.disabled = disabled); }
+  function correctionDelayMs(kind = "single") {
+    const mode = state.correctionTime || "default";
+    if (kind === "multiStep") {
+      if (mode === "slow") return 2500;
+      return 650;
+    }
+    if (mode === "slow") return 5200;
+    return 1600;
+  }
+  function correctionLabel() {
+    if (state.correctionTime === "slow") return "Slow";
+    return "Default";
+  }
 
   function answer(value) {
     if (state.locked || !state.current || state.current.type === "empty") return;
@@ -1346,7 +1368,7 @@
       drawStaff(state.current, true);
       playWrong();
       updateStats();
-      setTimeout(() => nextQuestion(false), 1300);
+      setTimeout(() => nextQuestion(false), correctionDelayMs("single"));
     }
   }
   function answerMulti(value) {
@@ -1360,40 +1382,42 @@
     if (!state.multiMarks) state.multiMarks = [];
     state.multiMarks[state.multiIndex] = isCorrect ? "correct" : "wrong";
 
+    const total = state.current.notes.length;
+    const advanceMulti = () => {
+      state.multiIndex += 1;
+      state.stepStartedAt = performance.now();
+      drawStaff(state.current, false);
+      scrollFullPianoToCurrent();
+
+      if (state.multiIndex >= total) {
+        finishMultiSequence();
+      } else {
+        els.feedback.textContent = `${state.multiIndex}/${total}`;
+        [...document.querySelectorAll(".answer")].forEach(btn => btn.classList.remove("correct", "wrong"));
+        state.locked = false;
+        disableAnswers(false);
+        startTimer();
+      }
+    };
+
     if (!isCorrect) {
       state.multiHadMistake = true;
       state.streak = 0;
       const expectedLabel = usesFullPianoAnswer() ? expected : `${expected}${state.showSolfege ? " / " + SOLFEGE[expected] : ""}`;
       els.feedback.textContent = `Wrong — #${state.multiIndex + 1} was ${expectedLabel}`;
       els.feedback.className = "feedback bad";
+      drawStaff(state.current, false);
       playWrong();
       updateStats();
-    } else {
-      els.feedback.className = "feedback good";
-      playTone(659.25, 0.07, "sine", 0.08);
+      state.locked = true;
+      disableAnswers(true);
+      setTimeout(advanceMulti, correctionDelayMs("multiStep"));
+      return;
     }
 
-    state.multiIndex += 1;
-    state.stepStartedAt = performance.now();
-    drawStaff(state.current, false);
-    scrollFullPianoToCurrent();
-    const total = state.current.notes.length;
-    const correctSoFar = state.multiMarks.filter(mark => mark === "correct").length;
-    const wrongSoFar = state.multiMarks.filter(mark => mark === "wrong").length;
-
-    if (state.multiIndex >= total) {
-      finishMultiSequence();
-    } else {
-      if (isCorrect) {
-        els.feedback.textContent = `${state.multiIndex}/${total}`;
-      } else {
-        els.feedback.textContent += ` · continuing ${state.multiIndex}/${total}`;
-      }
-      setTimeout(() => {
-        [...document.querySelectorAll(".answer")].forEach(btn => btn.classList.remove("correct", "wrong"));
-        startTimer();
-      }, 150);
-    }
+    els.feedback.className = "feedback good";
+    playTone(659.25, 0.07, "sine", 0.08);
+    setTimeout(advanceMulti, 150);
   }
 
   function nextQuestion(playSound = false) {
@@ -1478,7 +1502,8 @@
     const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑ · ${state.ledgerFocusPercent}% ledger` : "staff only";
     const smart = state.smartPractice ? "smart" : "random";
     const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
-    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keysDisplay}${midiDisplay}${keyboardText} · ${range} · ${smart}${timer}`;
+    const correction = ` · correction ${correctionLabel().toLowerCase()}`;
+    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keysDisplay}${midiDisplay}${keyboardText} · ${range} · ${smart}${timer}${correction}`;
     updateHomeSetup();
   }
   function updateStats() {
@@ -1504,6 +1529,7 @@
     els.realLabelsValue.textContent = state.realPianoLabels ? "Show" : "Hide";
     els.keysDisplayValue.textContent = state.keysDisplay === "piano" ? "Piano" : "Letters";
     els.midiDisplayValue.textContent = state.midiDisplay === "88key" ? "88 Key" : "Panel";
+    els.correctionTimeValue.textContent = correctionLabel();
   }
   function inversionLabel() {
     const parts = ["root"];
@@ -1536,6 +1562,8 @@
     els.keysDisplayPianoBtn.classList.toggle("active", state.keysDisplay === "piano");
     els.midiDisplayPanelBtn.classList.toggle("active", state.midiDisplay !== "88key");
     els.midiDisplay88Btn.classList.toggle("active", state.midiDisplay === "88key");
+    els.correctionDefaultBtn.classList.toggle("active", !state.correctionTime || state.correctionTime === "default");
+    els.correctionSlowBtn.classList.toggle("active", state.correctionTime === "slow");
     [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.fullPianoInputBtn, els.computerInputBtn, els.midiInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
     const usesRealPianoView = state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano") || (state.inputMode === "midi" && state.midiDisplay === "88key");
     const supportsKeyboardInputToggle = state.gameMode !== "chord" && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real");
@@ -1584,6 +1612,12 @@
   }
   function setKeyboardInput(on) {
     state.keyboardInput = !!on;
+    updateRangeLabels();
+    updateSummary();
+    updateModeControls();
+  }
+  function setCorrectionTime(mode) {
+    state.correctionTime = mode === "slow" ? "slow" : "default";
     updateRangeLabels();
     updateSummary();
     updateModeControls();
@@ -2039,32 +2073,41 @@
     drawStaff(state.current, true);
     playWrong();
     updateStats();
-    setTimeout(() => nextQuestion(false), 950);
+    setTimeout(() => nextQuestion(false), correctionDelayMs("single"));
   }
   function timeoutMultiStep() {
-    const expected = state.current.answerSequence[state.multiIndex];
     const currentNote = state.current.notes[state.multiIndex];
+    const expected = usesFullPianoAnswer() ? currentNote.note : state.current.answerSequence[state.multiIndex];
     updateNoteLearning(currentNote, false, state.timerSeconds * 1000);
     if (!state.multiMarks) state.multiMarks = [];
     state.multiMarks[state.multiIndex] = "wrong";
     state.multiHadMistake = true;
     state.streak = 0;
+    markAnswerButtons("__timeout__", expected, false);
     els.feedback.textContent = `Time — #${state.multiIndex + 1} was ${expected}${state.showSolfege ? " / " + SOLFEGE[expected] : ""}`;
     els.feedback.className = "feedback bad";
+    drawStaff(state.current, false);
     playWrong();
     updateStats();
-    state.multiIndex += 1;
-    state.stepStartedAt = performance.now();
-    drawStaff(state.current, false);
-    scrollFullPianoToCurrent();
-    const total = state.current.notes.length;
-    if (state.multiIndex >= total) {
-      finishMultiSequence();
-    } else {
-      setTimeout(() => {
-        if (!state.locked) startTimer();
-      }, 120);
-    }
+    state.locked = true;
+    disableAnswers(true);
+
+    setTimeout(() => {
+      state.multiIndex += 1;
+      state.stepStartedAt = performance.now();
+      drawStaff(state.current, false);
+      scrollFullPianoToCurrent();
+      const total = state.current.notes.length;
+      if (state.multiIndex >= total) {
+        finishMultiSequence();
+      } else {
+        els.feedback.textContent = `${state.multiIndex}/${total}`;
+        [...document.querySelectorAll(".answer")].forEach(btn => btn.classList.remove("correct", "wrong"));
+        state.locked = false;
+        disableAnswers(false);
+        startTimer();
+      }
+    }, correctionDelayMs("multiStep"));
   }
   function finishMultiSequence() {
     state.locked = true;
@@ -2090,7 +2133,7 @@
     }
     updateStats();
     if (recordTestNotes(correctSoFar, wrongSoFar)) return;
-    setTimeout(() => nextQuestion(false), 760);
+    setTimeout(() => nextQuestion(false), state.multiHadMistake ? correctionDelayMs("single") : 760);
   }
 
 
@@ -2253,6 +2296,8 @@
   els.keysDisplayPianoBtn.addEventListener("click", () => setKeysDisplay("piano"));
   els.midiDisplayPanelBtn.addEventListener("click", () => setMidiDisplay("panel"));
   els.midiDisplay88Btn.addEventListener("click", () => setMidiDisplay("88key"));
+  els.correctionDefaultBtn.addEventListener("click", () => setCorrectionTime("default"));
+  els.correctionSlowBtn.addEventListener("click", () => setCorrectionTime("slow"));
   els.computerInputBtn.addEventListener("click", () => setInputMode("computer"));
   els.midiInputBtn.addEventListener("click", () => setInputMode("midi"));
   document.addEventListener("keydown", handleComputerKey);
