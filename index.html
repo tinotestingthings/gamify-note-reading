@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v1.0</title>
+  <title>NoteSprint v1.01</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -104,6 +104,8 @@
     .controls { padding: 10px; display: grid; gap: 8px; }
     .segmented { background: rgba(118,118,128,0.12); border-radius: 17px; padding: 4px; display: grid; grid-template-columns: repeat(2,1fr); gap: 4px; }
     .segmented.three { grid-template-columns: repeat(3,1fr); }
+    .segmented.four { grid-template-columns: repeat(4,1fr); }
+    .segmented.four button { font-size: 11px; padding: 9px 3px; }
     .segmented.five { grid-template-columns: repeat(5,1fr); }
     .segmented.five button { font-size: 11px; padding: 9px 3px; }
     .segmented.six { grid-template-columns: repeat(6,1fr); }
@@ -186,6 +188,7 @@
 
     .range-card .segmented { margin-top: 9px; }
     .select-control { width: 100%; margin-top: 9px; min-height: 38px; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px; background: var(--control-bg); color: var(--text); font-size: 13px; font-weight: 850; padding: 0 10px; }
+    .midi-connect-btn { width: 100%; margin-top: 8px; min-height: 38px; border: 0; border-radius: 13px; background: var(--blue); color: #fff; font-size: 13px; font-weight: 900; }
     .timer-rail { position: absolute; top: 10px; right: 8px; width: 7px; height: calc(100% - 20px); border-radius: 999px; overflow: hidden; background: rgba(118,118,128,0.18); border: 1px solid rgba(0,0,0,0.08); z-index: 2; }
     .timer-fill { position: absolute; left: 0; bottom: 0; width: 100%; height: 0%; border-radius: 999px; background: linear-gradient(180deg, var(--green), var(--blue), var(--red)); transition: height 0.06s linear; }
     body.theme-neon .card, body.theme-neon .answer, body.theme-neon .secondary, body.theme-neon .icon-btn { border-color: rgba(34,211,238,0.22); }
@@ -401,7 +404,7 @@
     </header>
 
     <button class="card mode-summary" id="settingsSummary" type="button" aria-label="Open settings summary">
-      <span id="summaryText"><strong>Multiple</strong> · Grand · Choices · 4↓ 4↑ · 80% ledger · smart</span>
+      <span id="summaryText"><strong>Multiple</strong> · Grand · Choices · keyboard on · 4↓ 4↑ · 80% ledger · smart</span>
       <span>☰</span>
     </button>
 
@@ -424,13 +427,13 @@
           <button id="grandBtn" class="active" type="button">Grand</button>
         </div>
 
-        <div class="segmented six" aria-label="Input mode">
+        <div class="segmented four" aria-label="Display mode">
           <button id="choiceInputBtn" class="active" type="button">Choices</button>
           <button id="pianoInputBtn" type="button">ABC</button>
           <button id="realInputBtn" type="button">Piano</button>
           <button id="fullPianoInputBtn" type="button">88 Key</button>
-          <button id="computerInputBtn" type="button">Keybd</button>
-          <button id="midiInputBtn" type="button">MIDI</button>
+          <button id="computerInputBtn" class="hidden" type="button">Keybd</button>
+          <button id="midiInputBtn" class="hidden" type="button">MIDI</button>
         </div>
 
         <div class="range-card wide hidden" id="keyboardInputCard">
@@ -447,6 +450,11 @@
             <button id="realLabelsShowBtn" class="active" type="button">Show</button>
             <button id="realLabelsHideBtn" type="button">Hide</button>
           </div>
+        </div>
+
+        <div class="range-card wide" id="midiConnectCard">
+          <label>MIDI input <span class="range-value" id="midiStatusValue">Optional</span></label>
+          <button id="midiConnectBtn" class="midi-connect-btn" type="button">Connect MIDI</button>
         </div>
 
         <div class="range-card wide hidden" id="keysDisplayCard">
@@ -657,7 +665,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.0.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.01.
       </div>
     </div>
   </div>
@@ -746,6 +754,7 @@
     choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), fullPianoInputBtn: $("fullPianoInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
     keyboardInputCard: $("keyboardInputCard"), keyboardInputValue: $("keyboardInputValue"), keyboardInputOnBtn: $("keyboardInputOnBtn"), keyboardInputOffBtn: $("keyboardInputOffBtn"),
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
+    midiConnectCard: $("midiConnectCard"), midiStatusValue: $("midiStatusValue"), midiConnectBtn: $("midiConnectBtn"),
     keysDisplayCard: $("keysDisplayCard"), keysDisplayValue: $("keysDisplayValue"), keysDisplayLettersBtn: $("keysDisplayLettersBtn"), keysDisplayPianoBtn: $("keysDisplayPianoBtn"),
     midiDisplayCard: $("midiDisplayCard"), midiDisplayValue: $("midiDisplayValue"), midiDisplayPanelBtn: $("midiDisplayPanelBtn"), midiDisplay88Btn: $("midiDisplay88Btn"),
     correctionTimeCard: $("correctionTimeCard"), correctionTimeValue: $("correctionTimeValue"), correctionDefaultBtn: $("correctionDefaultBtn"), correctionSlowBtn: $("correctionSlowBtn"),
@@ -1217,7 +1226,7 @@
     return state.current.note || "C4";
   }
   function usesFullPianoAnswer() {
-    return state.inputMode === "fullpiano" || (state.inputMode === "midi" && state.midiDisplay === "88key");
+    return state.inputMode === "fullpiano";
   }
   function usesFullPianoView() {
     return usesFullPianoAnswer();
@@ -1310,17 +1319,6 @@
 
     if (state.inputMode === "real" && state.gameMode !== "chord") {
       renderRealPiano({ clickable: true });
-      return;
-    }
-
-    if (state.inputMode === "computer" && state.keysDisplay === "piano" && state.gameMode !== "chord") {
-      renderRealPiano({ clickable: false });
-      return;
-    }
-
-    if (state.inputMode === "midi" && state.gameMode !== "chord") {
-      if (state.midiDisplay === "88key") renderFullPiano({ clickable: false, showMidiStatus: true });
-      else renderMidiPanel();
       return;
     }
 
@@ -1480,13 +1478,11 @@
       els.noteInfo.textContent = `Read left to right · ${state.multiCount} notes · ${clefPart}${rangeLabel}${focusText} · ${smartText}`;
       els.feedback.textContent = `0/${state.current.notes.length}`;
     } else {
-      const baseText = state.inputMode === "piano" ? (state.keyboardInput ? "Tap ABC / press A–G" : "Tap ABC button")
-        : state.inputMode === "real" ? (state.keyboardInput ? "Click piano / press A–G" : "Click the piano")
-        : state.inputMode === "fullpiano" ? "Click exact 88 key"
-        : state.inputMode === "computer" ? "Use keyboard A–G"
-        : state.inputMode === "midi" ? (state.midiDisplay === "88key" ? "Play exact MIDI key" : "Play MIDI keyboard")
-        : (state.showSolfege ? "Choose note / solfege" : "Choose note");
-      const midiText = state.inputMode === "midi" ? ` · ${state.midiStatus}` : "";
+      const baseText = state.inputMode === "piano" ? "Tap ABC / press A–G"
+        : state.inputMode === "real" ? "Click piano / press A–G"
+        : state.inputMode === "fullpiano" ? "Click/play exact 88 key"
+        : (state.showSolfege ? "Choose note / press A–G" : "Choose note / press A–G");
+      const midiText = state.midiAccess ? ` · MIDI: ${state.midiStatus}` : "";
       els.noteInfo.textContent = `${baseText} · ${clefPart}${rangeLabel}${focusText} · ${smartText}${midiText}`;
     }
     renderTestStatus();
@@ -1499,14 +1495,10 @@
     if (state.inputMode === "piano") return "ABC";
     if (state.inputMode === "real") return "Piano";
     if (state.inputMode === "fullpiano") return "88 Key";
-    if (state.inputMode === "computer") return "Keybd A-G";
-    if (state.inputMode === "midi") return "MIDI";
     return "Choices";
   }
   function canUseLetterKeyboard() {
-    if (state.gameMode === "chord") return false;
-    if (state.inputMode === "computer") return true;
-    return state.keyboardInput && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real");
+    return state.gameMode !== "chord" && state.inputMode !== "fullpiano";
   }
   function updateHomeSetup() {
     if (!els.homeSetupText) return;
@@ -1522,16 +1514,15 @@
     const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
     const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
     const input = inputModeLabel();
-    const showPianoLabelsSummary = state.gameMode !== "chord" && (state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano") || (state.inputMode === "midi" && state.midiDisplay === "88key"));
+    const showPianoLabelsSummary = state.gameMode !== "chord" && (state.inputMode === "real" || state.inputMode === "fullpiano");
     const realLabels = showPianoLabelsSummary ? ` · labels ${state.realPianoLabels ? "show" : "hide"}` : "";
-    const keysDisplay = state.inputMode === "computer" && state.gameMode !== "chord" ? ` · display ${state.keysDisplay === "piano" ? "Piano" : "Letters"}` : "";
-    const midiDisplay = state.inputMode === "midi" && state.gameMode !== "chord" ? ` · display ${state.midiDisplay === "88key" ? "88 Key" : "Panel"}` : "";
-    const keyboardText = state.gameMode !== "chord" && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real") ? ` · keyboard ${state.keyboardInput ? "on" : "off"}` : "";
+    const midiText = state.midiAccess && state.gameMode !== "chord" ? " · MIDI ready" : "";
+    const keyboardText = state.gameMode !== "chord" && state.inputMode !== "fullpiano" ? " · keyboard on" : "";
     const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑ · ${state.ledgerFocusPercent}% ledger` : "staff only";
     const smart = state.smartPractice ? "smart" : "random";
     const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
     const correction = ` · correction ${correctionLabel().toLowerCase()}`;
-    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keysDisplay}${midiDisplay}${keyboardText} · ${range} · ${smart}${timer}${correction}`;
+    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keyboardText}${midiText} · ${range} · ${smart}${timer}${correction}`;
     updateHomeSetup();
   }
   function updateStats() {
@@ -1553,10 +1544,11 @@
     els.ledgerFocusValue.textContent = `${state.ledgerFocusPercent}%`;
     els.multiCountValue.textContent = state.multiCount === 1 ? "1 note" : `${state.multiCount} notes`;
     els.timerSecValue.textContent = `${state.timerSeconds}s per note`;
-    els.keyboardInputValue.textContent = state.keyboardInput ? "On" : "Off";
+    if (els.keyboardInputValue) els.keyboardInputValue.textContent = "On";
     els.realLabelsValue.textContent = state.realPianoLabels ? "Show" : "Hide";
-    els.keysDisplayValue.textContent = state.keysDisplay === "piano" ? "Piano" : "Letters";
-    els.midiDisplayValue.textContent = state.midiDisplay === "88key" ? "88 Key" : "Panel";
+    if (els.midiStatusValue) els.midiStatusValue.textContent = state.midiAccess ? "Connected" : "Optional";
+    if (els.keysDisplayValue) els.keysDisplayValue.textContent = state.keysDisplay === "piano" ? "Piano" : "Letters";
+    if (els.midiDisplayValue) els.midiDisplayValue.textContent = state.midiDisplay === "88key" ? "88 Key" : "Panel";
     els.correctionTimeValue.textContent = correctionLabel();
   }
   function inversionLabel() {
@@ -1566,6 +1558,8 @@
     return parts.join("/");
   }
   function refreshAfterSettingChange() {
+    if (!["choice", "piano", "real", "fullpiano"].includes(state.inputMode)) state.inputMode = "choice";
+    state.keyboardInput = true;
     updateRangeLabels(); updateSummary(); updateModeControls();
     if (state.started) nextQuestion(false);
   }
@@ -1580,48 +1574,42 @@
     els.pianoInputBtn.classList.toggle("active", state.inputMode === "piano");
     els.realInputBtn.classList.toggle("active", state.inputMode === "real");
     els.fullPianoInputBtn.classList.toggle("active", state.inputMode === "fullpiano");
-    els.computerInputBtn.classList.toggle("active", state.inputMode === "computer");
-    els.midiInputBtn.classList.toggle("active", state.inputMode === "midi");
-    els.keyboardInputOnBtn.classList.toggle("active", state.keyboardInput);
-    els.keyboardInputOffBtn.classList.toggle("active", !state.keyboardInput);
+    if (els.computerInputBtn) els.computerInputBtn.classList.remove("active");
+    if (els.midiInputBtn) els.midiInputBtn.classList.remove("active");
+    if (els.keyboardInputOnBtn) els.keyboardInputOnBtn.classList.toggle("active", true);
+    if (els.keyboardInputOffBtn) els.keyboardInputOffBtn.classList.toggle("active", false);
     els.realLabelsShowBtn.classList.toggle("active", state.realPianoLabels);
     els.realLabelsHideBtn.classList.toggle("active", !state.realPianoLabels);
-    els.keysDisplayLettersBtn.classList.toggle("active", state.keysDisplay !== "piano");
-    els.keysDisplayPianoBtn.classList.toggle("active", state.keysDisplay === "piano");
-    els.midiDisplayPanelBtn.classList.toggle("active", state.midiDisplay !== "88key");
-    els.midiDisplay88Btn.classList.toggle("active", state.midiDisplay === "88key");
+    if (els.keysDisplayLettersBtn) els.keysDisplayLettersBtn.classList.toggle("active", true);
+    if (els.keysDisplayPianoBtn) els.keysDisplayPianoBtn.classList.toggle("active", false);
+    if (els.midiDisplayPanelBtn) els.midiDisplayPanelBtn.classList.toggle("active", true);
+    if (els.midiDisplay88Btn) els.midiDisplay88Btn.classList.toggle("active", false);
     els.correctionDefaultBtn.classList.toggle("active", !state.correctionTime || state.correctionTime === "default");
     els.correctionSlowBtn.classList.toggle("active", state.correctionTime === "slow");
-    [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.fullPianoInputBtn, els.computerInputBtn, els.midiInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
-    const usesRealPianoView = state.inputMode === "real" || state.inputMode === "fullpiano" || (state.inputMode === "computer" && state.keysDisplay === "piano") || (state.inputMode === "midi" && state.midiDisplay === "88key");
-    const supportsKeyboardInputToggle = state.gameMode !== "chord" && (state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real");
-    els.keyboardInputCard.classList.toggle("hidden", !supportsKeyboardInputToggle);
+    [els.choiceInputBtn, els.pianoInputBtn, els.realInputBtn, els.fullPianoInputBtn].forEach(btn => btn.disabled = state.gameMode === "chord");
+    const usesRealPianoView = state.inputMode === "real" || state.inputMode === "fullpiano";
+    if (els.keyboardInputCard) els.keyboardInputCard.classList.add("hidden");
     els.realLabelsCard.classList.toggle("hidden", !usesRealPianoView || state.gameMode === "chord");
-    els.keysDisplayCard.classList.toggle("hidden", state.inputMode !== "computer" || state.gameMode === "chord");
-    els.midiDisplayCard.classList.toggle("hidden", state.inputMode !== "midi" || state.gameMode === "chord");
+    if (els.midiConnectCard) els.midiConnectCard.classList.toggle("hidden", state.gameMode === "chord");
+    if (els.keysDisplayCard) els.keysDisplayCard.classList.add("hidden");
+    if (els.midiDisplayCard) els.midiDisplayCard.classList.add("hidden");
     els.chordSettings.classList.toggle("hidden", state.gameMode !== "chord");
     els.multiCountCard.classList.toggle("hidden", state.gameMode !== "multi");
     els.rangeHelp.textContent = state.gameMode === "chord"
       ? "Chord mode uses the same staff range. Ledger focus prioritizes chords containing outside-staff notes."
-      : state.inputMode === "midi"
-        ? (state.midiDisplay === "88key" ? "MIDI 88 Key shows the full piano from A0 to C8. Play the exact key/octave on your MIDI keyboard; black keys count as wrong until accidentals mode is added." : "MIDI mode works in Chrome/Edge with a USB MIDI keyboard. In Panel display, natural white keys answer notes; black keys count as wrong until accidentals mode is added.")
+      : state.inputMode === "fullpiano"
+        ? "88 Key display shows A0 to C8. Click the exact key, or play the exact MIDI key/octave if MIDI is connected. Computer A–G is off here because octave matters."
         : state.inputMode === "real"
-          ? (state.keyboardInput ? "Piano mode lets you click/tap the piano or press the computer keys A, B, C, D, E, F and G. Accidentals can be added later; for now notes are natural." : "Keyboard input is off. Click/tap the piano keys; accidentals can be added later, so for now notes are natural.")
-          : state.inputMode === "fullpiano"
-            ? "88 Key mode shows the full piano from A0 to C8. Click the exact key/octave for the note; Piano labels can be shown or hidden."
-            : state.inputMode === "computer"
-              ? (state.keysDisplay === "piano" ? "Keybd mode still answers with the computer keys A, B, C, D, E, F and G, but shows the same real piano key layout. Use Piano labels to show or hide note names." : "Keybd mode lets you answer with the computer keys A, B, C, D, E, F and G.")
-              : state.inputMode === "choice" || state.inputMode === "piano" || state.inputMode === "real"
-              ? (state.keyboardInput ? "You can click/tap the answers or press the computer keys A, B, C, D, E, F and G." : "Keyboard input is off. Use mouse/finger taps for this mode.")
-              : state.gameMode === "multi"
-              ? "Multiple Notes mode uses ledger focus for each note in the left-to-right row."
-              : "Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.";
+          ? "Piano display lets you click/tap the piano, press computer keys A–G, or play MIDI if connected. Accidentals can be added later; for now notes are natural."
+          : state.inputMode === "piano"
+            ? "ABC display lets you tap letters, press computer keys A–G, or play MIDI if connected."
+            : "Choices display lets you tap answer choices, press computer keys A–G, or play MIDI if connected.";
   }
   function setGameMode(mode) { state.gameMode = mode; if (mode === "chord") state.inputMode = "choice"; refreshAfterSettingChange(); }
   function setInputMode(mode) {
     if (state.gameMode === "chord") return;
-    state.inputMode = mode;
-    if (mode === "midi") connectMidi();
+    const allowed = ["choice", "piano", "real", "fullpiano"];
+    state.inputMode = allowed.includes(mode) ? mode : "choice";
     refreshAfterSettingChange();
   }
   function setRealPianoLabels(show) {
@@ -1681,25 +1669,29 @@
   }
 
   function handleMidiMessage(event) {
-    if (state.inputMode !== "midi" || !state.started || state.locked || state.gameMode === "chord") return;
+    if (!state.started || state.locked || state.gameMode === "chord") return;
     const [status, note, velocity] = event.data;
     const command = status & 0xf0;
     const isNoteOn = command === 0x90 && velocity > 0;
     if (!isNoteOn) return;
-    const answerName = state.midiDisplay === "88key" ? noteNameFromMidiNumber(note) : midiAnswerLetter(note);
+    const answerName = usesFullPianoAnswer() ? noteNameFromMidiNumber(note) : midiAnswerLetter(note);
     answer(answerName);
   }
 
   async function connectMidi() {
     if (!navigator.requestMIDIAccess) {
       state.midiStatus = "MIDI not supported in this browser";
+      updateRangeLabels();
       updateSummary();
+      updateModeControls();
       renderAnswers();
       return;
     }
     try {
       state.midiStatus = "Waiting for MIDI permission…";
+      updateRangeLabels();
       updateSummary();
+      updateModeControls();
       renderAnswers();
       const access = await navigator.requestMIDIAccess({ sysex: false });
       state.midiAccess = access;
@@ -1710,14 +1702,18 @@
           input.onmidimessage = handleMidiMessage;
         });
         state.midiStatus = count ? `${count} MIDI input${count === 1 ? "" : "s"} connected` : "No MIDI input found";
+        updateRangeLabels();
         updateSummary();
+        updateModeControls();
         renderAnswers();
       };
       attachInputs();
       access.onstatechange = attachInputs;
     } catch (err) {
       state.midiStatus = "MIDI permission denied or unavailable";
+      updateRangeLabels();
       updateSummary();
+      updateModeControls();
       renderAnswers();
     }
   }
@@ -2334,6 +2330,7 @@
   els.pianoInputBtn.addEventListener("click", () => setInputMode("piano"));
   els.realInputBtn.addEventListener("click", () => setInputMode("real"));
   els.fullPianoInputBtn.addEventListener("click", () => setInputMode("fullpiano"));
+  if (els.midiConnectBtn) els.midiConnectBtn.addEventListener("click", () => connectMidi());
   els.keyboardInputOnBtn.addEventListener("click", () => setKeyboardInput(true));
   els.keyboardInputOffBtn.addEventListener("click", () => setKeyboardInput(false));
   els.realLabelsShowBtn.addEventListener("click", () => setRealPianoLabels(true));
@@ -2344,8 +2341,8 @@
   els.midiDisplay88Btn.addEventListener("click", () => setMidiDisplay("88key"));
   els.correctionDefaultBtn.addEventListener("click", () => setCorrectionTime("default"));
   els.correctionSlowBtn.addEventListener("click", () => setCorrectionTime("slow"));
-  els.computerInputBtn.addEventListener("click", () => setInputMode("computer"));
-  els.midiInputBtn.addEventListener("click", () => setInputMode("midi"));
+  if (els.computerInputBtn) els.computerInputBtn.addEventListener("click", () => setInputMode("choice"));
+  if (els.midiInputBtn) els.midiInputBtn.addEventListener("click", () => connectMidi());
   document.addEventListener("keydown", handleComputerKey);
   els.trebleBtn.addEventListener("click", () => setClef("treble"));
   els.bassBtn.addEventListener("click", () => setClef("bass"));
