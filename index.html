@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v53</title>
+  <title>NoteSprint v54</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -280,6 +279,10 @@
     .home-hero h2 { margin: 0; font-size: clamp(26px, 8vw, 36px); letter-spacing: -0.065em; line-height: 0.95; }
     .home-subtitle { position: relative; z-index: 1; margin: 10px 0 0; color: var(--muted); font-size: 13px; font-weight: 800; line-height: 1.28; }
     .home-subtitle em { color: var(--blue); font-style: italic; }
+
+    .home-look-card { display: grid; gap: 7px; border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.68); border: 1px solid rgba(0,0,0,0.06); }
+    .home-look-card label { display: flex; align-items: center; justify-content: space-between; gap: 7px; color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.035em; }
+    .home-look-card .select-control { margin-top: 0; }
     .continue-card { display: grid; gap: 8px; border-radius: 22px; padding: 13px; background: var(--answer-bg); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 10px 22px rgba(0,0,0,0.07); }
     .section-kicker, .home-section-title { color: var(--muted); font-size: 9.5px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.09em; }
     .continue-card strong { font-size: 18px; letter-spacing: -0.04em; }
@@ -304,9 +307,9 @@
     .custom-card span { display: inline; margin: 0; }
     .test-result { margin: 0; }
     .storage-note { margin-top: 0; padding: 0 2px; }
-    body.theme-neon .home-hero, body.theme-neon .continue-card, body.theme-neon .path-btn.path-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
+    body.theme-neon .home-hero, body.theme-neon .continue-card, body.theme-neon .path-btn.path-card, body.theme-neon .home-look-card { background: rgba(15,23,42,0.82); border-color: rgba(34,211,238,0.22); }
     body.theme-retro .brand-mark { background: var(--text); color: var(--bg); }
-    body.theme-retro .home-hero, body.theme-retro .continue-card, body.theme-retro .path-btn.path-card { border: 2px solid var(--text); }
+    body.theme-retro .home-hero, body.theme-retro .continue-card, body.theme-retro .path-btn.path-card, body.theme-retro .home-look-card { border: 2px solid var(--text); }
     @media (max-width: 390px), (max-height: 720px) {
       .home-screen { padding: 10px; gap: 7px; }
       .home-hero { padding: 13px 12px; border-radius: 20px; }
@@ -441,18 +444,6 @@
           </div>
         </div>
 
-        <div class="range-card wide">
-          <label for="themeSelect">Look <span class="range-value" id="themeValue">Apple Clean</span></label>
-          <select id="themeSelect" class="select-control" aria-label="Visual style">
-            <option value="apple">Apple Clean</option>
-            <option value="retro">Retro Game Boy</option>
-            <option value="neon">Dark Neon</option>
-            <option value="paper">Paper Sheet Music</option>
-            <option value="duo">Duolingo-ish</option>
-            <option value="piano">Piano Practice Room</option>
-          </select>
-        </div>
-
 
         <div class="range-grid" aria-label="Ledger line range settings">
           <div class="range-card">
@@ -555,6 +546,18 @@
         <p class="home-subtitle">Remember it’s a marathon, <em>note</em> a sprint.</p>
       </section>
 
+      <section class="home-look-card" aria-label="Look setting">
+        <label for="themeSelect">Look <span class="range-value" id="themeValue">Apple Clean</span></label>
+        <select id="themeSelect" class="select-control" aria-label="Visual style">
+          <option value="apple">Apple Clean</option>
+          <option value="retro">Retro Game Boy</option>
+          <option value="neon">Dark Neon</option>
+          <option value="paper">Paper Sheet Music</option>
+          <option value="duo">Duolingo-ish</option>
+          <option value="piano">Piano Practice Room</option>
+        </select>
+      </section>
+
       <div class="test-result hidden" id="resultBox"></div>
 
       <section class="home-step" id="homeStartPanel" aria-label="Choose mode">
@@ -632,7 +635,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 53.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 54.
       </div>
     </div>
   </div>
@@ -1779,6 +1782,20 @@
   }
   function toggleButtonState(button, on) { button.classList.toggle("on", on); }
 
+  const THEME_VALUES = ["apple", "retro", "neon", "paper", "duo", "piano"];
+  const THEME_KEY = "noteSprintThemeV1";
+  function validTheme(value) { return THEME_VALUES.includes(value); }
+  function loadTheme() {
+    try {
+      const saved = localStorage.getItem(THEME_KEY);
+      return validTheme(saved) ? saved : "apple";
+    } catch { return "apple"; }
+  }
+  function saveTheme(value) {
+    try { localStorage.setItem(THEME_KEY, value); }
+    catch {}
+  }
+
   function themeLabel(value) {
     return ({ apple: "Apple Clean", retro: "Retro Game Boy", neon: "Dark Neon", paper: "Paper Sheet Music", duo: "Duolingo-ish", piano: "Piano Practice Room" })[value] || "Apple Clean";
   }
@@ -1790,28 +1807,31 @@
     if (state.current) drawStaff(state.current, false);
   }
   function setTheme(value) {
-    state.theme = value || "apple";
+    state.theme = validTheme(value) ? value : "apple";
+    saveTheme(state.theme);
     applyTheme();
     updateSummary();
   }
 
   const PRESETS = {
-    easy: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 50, multiCount: 2, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    intermediate: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 4, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    hard: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    notFun: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 3, belowLedgers: 5, ledgerFocusPercent: 90, multiCount: 5, smartPractice: true, timerMode: true, timerSeconds: 4 }
+    easy: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 50, multiCount: 2, smartPractice: true, timerMode: false, timerSeconds: 3 },
+    intermediate: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 4, smartPractice: true, timerMode: false, timerSeconds: 3 },
+    hard: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 },
+    notFun: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 3, belowLedgers: 5, ledgerFocusPercent: 90, multiCount: 5, smartPractice: true, timerMode: true, timerSeconds: 4 }
   };
 
   const TEST_PRESETS = {
-    quick: { label: "Quick Test", targetNotes: 25, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
-    rush: { label: "Rush Test", durationMs: 60000, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
-    survival: { label: "Survival", lives: 3, settings: { gameMode: "multi", inputMode: "choice", theme: "apple", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: true, timerSeconds: 4 } }
+    quick: { label: "Quick Test", targetNotes: 25, settings: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush: { label: "Rush Test", durationMs: 60000, settings: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    survival: { label: "Survival", lives: 3, settings: { gameMode: "multi", inputMode: "choice", clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: true, timerSeconds: 4 } }
   };
 
   const SCORE_KEY = "noteReaderTestScoresV1";
 
   function applyPresetData(preset) {
+    const chosenTheme = state.theme;
     Object.assign(state, preset);
+    state.theme = chosenTheme;
     state.current = null;
     state.previous = null;
     state.multiIndex = 0;
@@ -2309,7 +2329,7 @@
   els.ledgerFocusRange.addEventListener("input", () => setLedgerFocus(els.ledgerFocusRange.value));
   els.multiCountRange.addEventListener("input", () => setMultiCount(els.multiCountRange.value));
   els.timerSecRange.addEventListener("input", () => setTimerSeconds(els.timerSecRange.value));
-  els.themeSelect.addEventListener("change", () => setTheme(els.themeSelect.value));
+  if (els.themeSelect) els.themeSelect.addEventListener("change", () => setTheme(els.themeSelect.value));
   els.firstInvBtn.addEventListener("click", () => { state.includeFirstInv = !state.includeFirstInv; toggleButtonState(els.firstInvBtn, state.includeFirstInv); refreshAfterSettingChange(); });
   els.secondInvBtn.addEventListener("click", () => { state.includeSecondInv = !state.includeSecondInv; toggleButtonState(els.secondInvBtn, state.includeSecondInv); refreshAfterSettingChange(); });
   els.seventhBtn.addEventListener("click", () => { state.includeSevenths = !state.includeSevenths; toggleButtonState(els.seventhBtn, state.includeSevenths); refreshAfterSettingChange(); });
@@ -2321,6 +2341,8 @@
   els.playAgainBtn.addEventListener("click", () => { if (!isTesting()) playQuestionSound(); });
   els.skipBtn.addEventListener("click", () => { if (!isTesting()) skip(); });
 
+  state.theme = loadTheme();
+  applyTheme();
   updateModeControls();
   updateRangeLabels();
   updateSummary();
