@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v1.02</title>
+  <title>NoteSprint v2.0</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -22,8 +22,21 @@
       --answer-bg: #fff;
       --control-bg: rgba(255,255,255,0.72);
       --active-bg: #fff;
+      --home-bg: #eef4f5;
+      --home-panel: rgba(255,255,255,0.48);
+      --home-button: rgba(255,255,255,0.94);
+      --home-button-border: rgba(17,24,39,0.07);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(255,255,255,0.72);
     }
     body.theme-retro {
+      --home-bg: #eef4f5;
+      --home-panel: rgba(15,56,15,0.08);
+      --home-button: #c7db5d;
+      --home-button-border: rgba(15,56,15,0.30);
+      --home-test-bg: #d7e878;
+      --home-custom-bg: #b7d04e;
+
       --bg: #9bbc0f; --card: rgba(155,188,15,0.94); --text: #0f380f; --muted: #306230; --line: #306230;
       --blue: #0f380f; --green: #0f380f; --red: #8b1e1e; --shadow: 0 8px 0 rgba(15,56,15,0.33);
       --body-bg: linear-gradient(135deg, #9bbc0f, #8bac0f); --staff-bg: linear-gradient(180deg, #c7db5d, #9bbc0f); --staff-ink: #0f380f;
@@ -31,6 +44,13 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
     body.theme-neon {
+      --home-bg: #111827;
+      --home-panel: rgba(17,24,39,0.42);
+      --home-button: rgba(31,41,55,0.96);
+      --home-button-border: rgba(255,255,255,0.09);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(31,41,55,0.82);
+
       --bg: #070817; --card: rgba(17,24,39,0.84); --text: #eef2ff; --muted: #94a3b8; --line: rgba(148,163,184,0.30);
       --blue: #22d3ee; --green: #22c55e; --red: #fb7185; --shadow: 0 0 26px rgba(34,211,238,0.14);
       --body-bg: radial-gradient(circle at top left, rgba(34,211,238,0.22), transparent 34%), radial-gradient(circle at bottom right, rgba(168,85,247,0.22), transparent 38%), #070817;
@@ -38,6 +58,13 @@
       --answer-bg: rgba(15,23,42,0.96); --control-bg: rgba(15,23,42,0.72); --active-bg: rgba(34,211,238,0.18);
     }
     body.theme-paper {
+      --home-bg: #eef4f5;
+      --home-panel: rgba(255,250,237,0.54);
+      --home-button: rgba(255,250,237,0.96);
+      --home-button-border: rgba(120,84,45,0.16);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(255,250,237,0.76);
+
       --bg: #f3ead7; --card: rgba(255,250,239,0.92); --text: #22180d; --muted: #80694d; --line: #e6d8bf;
       --blue: #7c4a1e; --green: #28754e; --red: #a93226; --shadow: 0 10px 22px rgba(80,55,24,0.14);
       --body-bg: radial-gradient(circle at top, rgba(124,74,30,0.09), transparent 42%), #f3ead7; --staff-bg: linear-gradient(180deg, #fff9ec, #f6ead3); --staff-ink: #22180d;
@@ -45,6 +72,13 @@
       font-family: Georgia, 'Times New Roman', serif;
     }
     body.theme-duo {
+      --home-bg: #eef4f5;
+      --home-panel: rgba(255,255,255,0.48);
+      --home-button: rgba(255,255,255,0.96);
+      --home-button-border: rgba(88,204,2,0.13);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(255,255,255,0.76);
+
       --bg: #f0fbf4; --card: rgba(255,255,255,0.92); --text: #15261e; --muted: #527061; --line: #d9f0e2;
       --blue: #1cb0f6; --green: #58cc02; --red: #ff4b4b; --shadow: 0 10px 0 rgba(88,204,2,0.18);
       --body-bg: radial-gradient(circle at top left, rgba(88,204,2,0.18), transparent 36%), radial-gradient(circle at bottom right, rgba(28,176,246,0.16), transparent 36%), #f0fbf4;
@@ -52,12 +86,26 @@
       --radius: 20px;
     }
     body.theme-piano {
+      --home-bg: #eef4f5;
+      --home-panel: rgba(255,255,255,0.42);
+      --home-button: rgba(255,255,255,0.95);
+      --home-button-border: rgba(92,72,50,0.13);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(255,255,255,0.76);
+
       --bg: #efe7da; --card: rgba(255,252,246,0.92); --text: #1f1710; --muted: #735f4b; --line: #dfd0bd;
       --blue: #8b5e34; --green: #2f855a; --red: #b84032; --shadow: 0 14px 28px rgba(61,38,17,0.16);
       --body-bg: linear-gradient(135deg, #f6efe5, #d9c3a6); --staff-bg: linear-gradient(180deg, #fffdf7, #f1e6d6); --staff-ink: #1f1710;
       --answer-bg: #fffdf7; --control-bg: rgba(255,252,246,0.80); --active-bg: #f1ddc2;
     }
     body.theme-night {
+      --home-bg: #eef4f5;
+      --home-panel: rgba(47,35,33,0.42);
+      --home-button: rgba(47,35,33,0.96);
+      --home-button-border: rgba(232,214,201,0.10);
+      --home-test-bg: #e7f0ff;
+      --home-custom-bg: rgba(47,35,33,0.82);
+
       --bg: #1b1414;
       --card: rgba(39,28,27,0.94);
       --text: #e5d2c3;
@@ -96,7 +144,7 @@
     .card { background: var(--card); border: 1px solid rgba(255,255,255,0.76); border-radius: var(--radius); box-shadow: var(--shadow); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
     .mode-summary { padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; gap: 7px; color: var(--muted); font-size: 11px; font-weight: 850; line-height: 1.2; }
     .mode-summary strong { color: var(--text); }
-    .settings-backdrop { position: fixed; inset: 0; background: rgba(17,24,39,0.18); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 18; display: flex; align-items: flex-start; justify-content: center; padding: calc(10px + env(safe-area-inset-top)) 10px 10px; overflow: auto; }
+    .settings-backdrop { position: fixed; inset: 0; background: rgba(17,24,39,0.18); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 42; display: flex; align-items: flex-start; justify-content: center; padding: calc(10px + env(safe-area-inset-top)) 10px 10px; overflow: auto; }
     .settings-panel { width: min(480px, 100%); margin: 0 auto; }
     .settings-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 1px 1px 3px; }
     .settings-top h2 { margin: 0; font-size: 20px; letter-spacing: -0.04em; }
@@ -379,6 +427,69 @@
       .choice-copy span { font-size: 9.6px; line-height: 1.13; }
       .choice-action { font-size: 9.5px; }
     }
+    .custom-preset-wrap { display: grid; gap: 7px; margin-top: 3px; }
+    .custom-preset-top { margin-top: 2px; }
+    .mini-save { border: 0; border-radius: 999px; padding: 7px 10px; background: var(--blue); color: #fff; font-size: 11px; font-weight: 950; }
+    .custom-preset-list { display: grid; gap: 7px; }
+    .custom-preset-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: stretch; }
+    .custom-preset-row .path-btn.path-card { min-height: 64px; }
+    .preset-delete { border: 1px solid rgba(255,59,48,0.18); border-radius: 16px; background: rgba(255,59,48,0.08); color: var(--red); font-size: 11px; font-weight: 950; padding: 0 9px; min-width: 58px; }
+    .save-preset-card { display: grid; gap: 7px; }
+    .save-preset-btn { width: 100%; border: 0; border-radius: 14px; min-height: 38px; background: var(--blue); color: #fff; font-size: 12px; font-weight: 950; }
+    .custom-empty { font-size: 10px; line-height: 1.22; }
+    body.theme-night .preset-delete { background: rgba(160,86,68,0.16); border-color: rgba(208,138,120,0.20); }
+
+    .simple-home-actions { display: grid; gap: 8px; }
+    .home-level-card { display: grid; gap: 7px; padding: 10px; border-radius: 19px; background: rgba(255,255,255,0.66); border: 1px solid rgba(0,0,0,0.06); }
+    .home-level-card label { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.05em; }
+    .primary-start { min-height: 116px; border-radius: 24px; padding: 16px; display: grid; align-content: center; gap: 4px; background: linear-gradient(135deg, rgba(0,122,255,0.18), rgba(52,199,89,0.13)), var(--answer-bg); }
+    .primary-start strong { font-size: 24px; letter-spacing: -0.06em; }
+    .primary-start .home-setup-line { color: var(--muted); font-size: 12px; font-weight: 850; line-height: 1.25; }
+    .home-quick-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .home-small-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .home-small-btn { min-height: 42px; border-radius: 15px; padding: 8px 7px; text-align: center; font-size: 11px; font-weight: 950; }
+    .home-small-btn span { margin: 0; font-size: 10px; }
+    .quick-action { min-height: 72px; border-radius: 19px; display: grid; align-content: center; }
+    .quick-action strong { font-size: 17px; }
+    .settings-basic { display: grid; gap: 8px; }
+    details.advanced-settings { display: grid; gap: 8px; border-radius: 18px; background: rgba(118,118,128,0.08); border: 1px solid rgba(0,0,0,0.045); padding: 7px; }
+    details.advanced-settings > summary { cursor: pointer; list-style: none; border-radius: 14px; padding: 10px 9px; color: var(--text); font-weight: 950; font-size: 13px; background: rgba(255,255,255,0.58); }
+    details.advanced-settings > summary::-webkit-details-marker { display: none; }
+    details.advanced-settings > summary:after { content: "↓"; float: right; color: var(--muted); }
+    details.advanced-settings[open] > summary:after { content: "↑"; }
+    .advanced-body { display: grid; gap: 8px; margin-top: 8px; }
+    @media (max-width: 360px) {
+      .home-small-row { grid-template-columns: 1fr; }
+      .primary-start { min-height: 98px; }
+    }
+
+    .home-direct-section { display: grid; gap: 8px; }
+    .level-start-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+    .level-start-btn { min-height: 72px; border-radius: 19px; display: grid; align-content: center; text-align: center; padding: 10px 6px; }
+    .level-start-btn strong { font-size: 15px; letter-spacing: -0.04em; }
+    .test-score-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .test-score-btn { min-height: 82px; border-radius: 20px; display: grid; align-content: center; }
+    .home-recent-list { display: grid; gap: 7px; }
+    .home-recent-list .path-card { min-height: 62px; }
+    .home-custom-row { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .overlay { background: var(--home-bg); }
+    .start-box.home-screen { background: var(--home-panel); border-color: rgba(255,255,255,0.54); box-shadow: 0 18px 42px rgba(30,64,175,0.13); }
+    .home-hero { background: transparent; border-color: transparent; box-shadow: none; padding-bottom: 8px; }
+    .home-hero:after { background: rgba(0,122,255,0.08); }
+    .home-section-title { color: rgba(17,24,39,0.54); }
+    .home-direct-section .path-btn { background: var(--home-button); border-color: var(--home-button-border); box-shadow: 0 10px 22px rgba(15,23,42,0.08); }
+    .home-direct-section .path-btn.test, .test-score-btn { background: var(--home-test-bg); border-color: rgba(0,122,255,0.16); }
+    .home-direct-section .custom-card { background: var(--home-custom-bg); border-style: dashed; }
+    .level-start-btn:nth-child(2) { box-shadow: 0 12px 26px rgba(0,122,255,0.12); border-color: rgba(0,122,255,0.14); }
+    .home-recent-list .path-card { background: rgba(255,255,255,0.82); }
+    body.theme-night .home-section-title, body.theme-neon .home-section-title { color: rgba(229,210,195,0.66); }
+    body.theme-night .home-recent-list .path-card, body.theme-neon .home-recent-list .path-card { background: var(--home-button); }
+    @media (max-width: 360px) {
+      .level-start-row { gap: 5px; }
+      .level-start-btn { min-height: 64px; padding: 8px 4px; }
+      .level-start-btn strong { font-size: 13px; }
+    }
+
     @media (max-width: 340px) { .home-choice-grid { grid-template-columns: 1fr; } }
 
     /* Keep the NoteSprint subline visible on the home screen and compact screens. */
@@ -386,14 +497,1309 @@
     @media (max-height: 710px) { .subtitle.app-tagline { display: block; } }
     @media (max-height: 650px) { .home-subtitle { display: block; } }
 
+    /* v1.08: flatter home screen, colored buttons, no practice action row */
+    .overlay {
+      background: var(--home-bg) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .start-box.home-screen {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      padding: 12px 8px !important;
+      max-width: 450px;
+    }
+    .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      padding: 12px 6px 6px !important;
+    }
+    .home-hero:after { display: none !important; }
+    .brand-mark { box-shadow: none !important; }
+    .home-direct-section .path-btn {
+      box-shadow: 0 6px 14px rgba(15,23,42,0.055) !important;
+      border-width: 1px;
+    }
+    .level-start-btn:nth-child(1) {
+      background: #e7f7ed !important;
+      border-color: rgba(52,199,89,0.20) !important;
+    }
+    .level-start-btn:nth-child(2) {
+      background: #e7f0ff !important;
+      border-color: rgba(0,122,255,0.20) !important;
+      box-shadow: 0 7px 16px rgba(0,122,255,0.08) !important;
+    }
+    .level-start-btn:nth-child(3) {
+      background: #fff0df !important;
+      border-color: rgba(255,149,0,0.22) !important;
+    }
+    .test-score-btn:nth-child(1),
+    .home-direct-section .test-score-btn:nth-child(1) {
+      background: #ebe9ff !important;
+      border-color: rgba(88,86,214,0.20) !important;
+    }
+    .test-score-btn:nth-child(2),
+    .home-direct-section .test-score-btn:nth-child(2) {
+      background: #e5f7ff !important;
+      border-color: rgba(0,122,255,0.20) !important;
+    }
+    .home-recent-list .path-card {
+      background: #fff8e8 !important;
+      border-color: rgba(255,204,0,0.20) !important;
+    }
+    .home-direct-section .custom-card {
+      background: #edf1f5 !important;
+      border-color: rgba(100,116,139,0.20) !important;
+      border-style: solid !important;
+    }
+    body.theme-night .level-start-btn:nth-child(1),
+    body.theme-neon .level-start-btn:nth-child(1) { background: rgba(70,104,80,0.36) !important; }
+    body.theme-night .level-start-btn:nth-child(2),
+    body.theme-neon .level-start-btn:nth-child(2) { background: rgba(90,84,132,0.38) !important; }
+    body.theme-night .level-start-btn:nth-child(3),
+    body.theme-neon .level-start-btn:nth-child(3) { background: rgba(126,84,62,0.38) !important; }
+    body.theme-night .test-score-btn,
+    body.theme-neon .test-score-btn { background: rgba(74,62,100,0.38) !important; }
+    body.theme-night .home-recent-list .path-card,
+    body.theme-neon .home-recent-list .path-card,
+    body.theme-night .home-direct-section .custom-card,
+    body.theme-neon .home-direct-section .custom-card { background: rgba(47,35,33,0.74) !important; }
+    #actionsRow { display: none !important; }
+
+    /* v1.09: flatter modern home buttons and presets in Settings */
+    .home-direct-section { gap: 10px !important; }
+    .level-start-row, .test-score-row { gap: 9px !important; }
+    .home-direct-section .path-btn {
+      text-align: center !important;
+      justify-items: center;
+      align-items: center;
+      border-radius: 22px !important;
+      box-shadow: none !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      padding: 12px 10px !important;
+    }
+    .level-start-btn {
+      min-height: 84px !important;
+      padding: 14px 6px !important;
+    }
+    .level-start-btn strong {
+      font-size: clamp(16px, 4.8vw, 21px) !important;
+      letter-spacing: -0.055em !important;
+      line-height: 1 !important;
+    }
+    .test-score-btn {
+      min-height: 86px !important;
+      padding: 12px 8px !important;
+    }
+    .test-score-btn strong {
+      font-size: clamp(28px, 11vw, 42px) !important;
+      line-height: 0.92 !important;
+      letter-spacing: -0.075em !important;
+      text-align: center !important;
+    }
+    .test-score-btn .highscore {
+      margin-top: 8px !important;
+      font-size: 11px !important;
+      text-align: center !important;
+    }
+    .home-custom-row .custom-card {
+      min-height: 66px !important;
+      align-content: center !important;
+    }
+    .home-custom-row .custom-card strong {
+      font-size: 21px !important;
+      letter-spacing: -0.055em !important;
+    }
+    .home-custom-row .custom-card span {
+      font-size: 11px !important;
+      text-align: center !important;
+    }
+    .preset-card-clean {
+      text-align: center !important;
+      justify-content: center !important;
+    }
+    .preset-card-clean .card-copy {
+      margin: 0 !important;
+      width: 100%;
+    }
+    .preset-card-clean .card-copy strong {
+      font-size: 15.5px !important;
+      text-align: center !important;
+    }
+    .preset-card-clean .card-copy span {
+      font-size: 10.5px !important;
+      text-align: center !important;
+    }
+    .home-recent-list .preset-card-clean {
+      min-height: 68px !important;
+      background: #fff3cf !important;
+    }
+    .settings-preset-card {
+      margin-top: 2px;
+      display: grid;
+      gap: 8px;
+    }
+    .settings-preset-list {
+      display: grid;
+      gap: 7px;
+      margin-top: 2px;
+    }
+    .settings-preset-list .custom-preset-row {
+      grid-template-columns: 1fr auto;
+    }
+    .settings-preset-list .preset-card-clean {
+      min-height: 58px !important;
+      background: var(--control-bg) !important;
+    }
+    .settings-preset-list .preset-delete {
+      min-height: 58px;
+    }
+    @media (max-width: 360px) {
+      .level-start-btn { min-height: 74px !important; }
+      .test-score-btn { min-height: 78px !important; }
+    }
+
+    /* v1.09 slick branch: unified home button palette only */
+    .home-direct-section .path-btn {
+      background: #f5f1e8 !important;
+      border-color: rgba(49,43,36,0.12) !important;
+      color: #27231f !important;
+      box-shadow: none !important;
+    }
+    .level-start-btn:nth-child(1),
+    .level-start-btn:nth-child(2),
+    .level-start-btn:nth-child(3) {
+      background: #eee8dc !important;
+      border-color: rgba(49,43,36,0.14) !important;
+    }
+    .test-score-btn:nth-child(1),
+    .test-score-btn:nth-child(2),
+    .home-direct-section .test-score-btn:nth-child(1),
+    .home-direct-section .test-score-btn:nth-child(2) {
+      background: #e9e5db !important;
+      border-color: rgba(49,43,36,0.16) !important;
+    }
+    .home-recent-list .path-card {
+      background: #f6f2e9 !important;
+      border-color: rgba(49,43,36,0.11) !important;
+    }
+    .home-direct-section .custom-card {
+      background: #e7e1d5 !important;
+      border-color: rgba(49,43,36,0.15) !important;
+      border-style: solid !important;
+    }
+    .home-direct-section .path-btn strong,
+    .home-direct-section .path-btn span {
+      color: #27231f !important;
+    }
+    .test-score-btn .highscore {
+      color: rgba(39,35,31,0.62) !important;
+    }
+    body.theme-night .home-direct-section .path-btn,
+    body.theme-neon .home-direct-section .path-btn {
+      background: rgba(52,48,43,0.92) !important;
+      border-color: rgba(232,214,201,0.12) !important;
+    }
+
+    /* v1.09 blue branch: light blue home + white/grey buttons */
+    .overlay {
+      background: #eaf5fb !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .start-box.home-screen {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .home-direct-section .path-btn {
+      background: #ffffff !important;
+      border-color: rgba(44,72,92,0.12) !important;
+      color: #1f2f3a !important;
+      box-shadow: none !important;
+    }
+    .level-start-btn:nth-child(1),
+    .level-start-btn:nth-child(2),
+    .level-start-btn:nth-child(3) {
+      background: #ffffff !important;
+      border-color: rgba(44,72,92,0.13) !important;
+    }
+    .test-score-btn:nth-child(1),
+    .test-score-btn:nth-child(2),
+    .home-direct-section .test-score-btn:nth-child(1),
+    .home-direct-section .test-score-btn:nth-child(2) {
+      background: #f4f7f9 !important;
+      border-color: rgba(44,72,92,0.14) !important;
+    }
+    .home-recent-list .path-card {
+      background: #ffffff !important;
+      border-color: rgba(44,72,92,0.10) !important;
+    }
+    .home-direct-section .custom-card {
+      background: #edf2f5 !important;
+      border-color: rgba(44,72,92,0.14) !important;
+      border-style: solid !important;
+    }
+    .home-direct-section .path-btn strong,
+    .home-direct-section .path-btn span {
+      color: #1f2f3a !important;
+    }
+    .test-score-btn .highscore {
+      color: rgba(31,47,58,0.58) !important;
+    }
+    .home-section-title {
+      color: rgba(31,47,58,0.54) !important;
+    }
+
+    /* v1.09-blue themes: refreshed optional looks only. Default remains unchanged. */
+
+    /* Shared optional-theme cleanup */
+    body.theme-retro,
+    body.theme-neon,
+    body.theme-paper,
+    body.theme-duo,
+    body.theme-piano,
+    body.theme-night {
+      --shadow: none;
+    }
+
+    body.theme-retro .card,
+    body.theme-neon .card,
+    body.theme-paper .card,
+    body.theme-duo .card,
+    body.theme-piano .card,
+    body.theme-night .card,
+    body.theme-retro .settings-panel,
+    body.theme-neon .settings-panel,
+    body.theme-paper .settings-panel,
+    body.theme-duo .settings-panel,
+    body.theme-piano .settings-panel,
+    body.theme-night .settings-panel,
+    body.theme-retro .range-card,
+    body.theme-neon .range-card,
+    body.theme-paper .range-card,
+    body.theme-duo .range-card,
+    body.theme-piano .range-card,
+    body.theme-night .range-card,
+    body.theme-retro .cheat-sheet,
+    body.theme-neon .cheat-sheet,
+    body.theme-paper .cheat-sheet,
+    body.theme-duo .cheat-sheet,
+    body.theme-piano .cheat-sheet,
+    body.theme-night .cheat-sheet {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    /* Night mode: dark and readable */
+    body.theme-night {
+      --bg: #111820;
+      --card: rgba(24,34,44,0.94);
+      --text: #fff3df;
+      --muted: rgba(255,243,223,0.68);
+      --line: rgba(255,243,223,0.15);
+      --blue: #9fc7e4;
+      --green: #9bcfb1;
+      --red: #ef8f83;
+      --body-bg: #111820;
+      --staff-bg: #f7f1e7;
+      --staff-ink: #111820;
+      --answer-bg: rgba(255,243,223,0.10);
+      --control-bg: rgba(255,243,223,0.10);
+      --active-bg: rgba(159,199,228,0.22);
+      --home-bg: #111820;
+      --home-panel: transparent;
+      --home-button: rgba(255,243,223,0.10);
+      --home-button-border: rgba(255,243,223,0.16);
+      --home-test-bg: rgba(159,199,228,0.15);
+      --home-custom-bg: rgba(255,243,223,0.08);
+      background: #111820 !important;
+      color: #fff3df !important;
+    }
+
+    body.theme-night .overlay,
+    body.theme-night .settings-backdrop,
+    body.theme-night .cheat-backdrop {
+      background: #111820 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-night .start-box.home-screen,
+    body.theme-night .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-night .home-direct-section .path-btn,
+    body.theme-night .path-btn,
+    body.theme-night .range-card,
+    body.theme-night .settings-panel,
+    body.theme-night .cheat-sheet,
+    body.theme-night .card,
+    body.theme-night details.advanced-settings,
+    body.theme-night details.advanced-settings > summary {
+      background: rgba(24,34,44,0.94) !important;
+      border-color: rgba(255,243,223,0.14) !important;
+      color: #fff3df !important;
+    }
+
+    body.theme-night .home-direct-section .path-btn.test,
+    body.theme-night .test-score-btn {
+      background: rgba(159,199,228,0.16) !important;
+      border-color: rgba(159,199,228,0.26) !important;
+    }
+
+    body.theme-night .home-direct-section .path-btn strong,
+    body.theme-night .home-direct-section .path-btn span,
+    body.theme-night .path-btn strong,
+    body.theme-night .path-btn span,
+    body.theme-night .card-copy strong,
+    body.theme-night .card-copy span,
+    body.theme-night .home-subtitle,
+    body.theme-night .home-section-title,
+    body.theme-night .settings-note,
+    body.theme-night .storage-note,
+    body.theme-night .subtitle,
+    body.theme-night .range-card label,
+    body.theme-night .range-value,
+    body.theme-night .note-name,
+    body.theme-night .feedback,
+    body.theme-night h1,
+    body.theme-night h2,
+    body.theme-night h3 {
+      color: #fff3df !important;
+    }
+
+    body.theme-night .settings-note,
+    body.theme-night .storage-note,
+    body.theme-night .subtitle,
+    body.theme-night .home-section-title,
+    body.theme-night .range-card label {
+      color: rgba(255,243,223,0.68) !important;
+    }
+
+    body.theme-night .segmented,
+    body.theme-night .select-control,
+    body.theme-night .pill,
+    body.theme-night .icon-btn,
+    body.theme-night .close-btn,
+    body.theme-night .secondary,
+    body.theme-night .preset-delete {
+      background: rgba(255,243,223,0.09) !important;
+      border-color: rgba(255,243,223,0.14) !important;
+      color: #fff3df !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-night .segmented button.active,
+    body.theme-night .pill.on,
+    body.theme-night .save-preset-btn,
+    body.theme-night .midi-connect-btn {
+      background: rgba(159,199,228,0.24) !important;
+      color: #fff3df !important;
+    }
+
+    body.theme-night .staff-wrap {
+      background: #f7f1e7 !important;
+      border-color: rgba(255,243,223,0.12) !important;
+    }
+
+    body.theme-night .answer {
+      background: rgba(255,243,223,0.10) !important;
+      color: #fff3df !important;
+      border-color: rgba(255,243,223,0.16) !important;
+      box-shadow: none !important;
+    }
+
+    /* Dark Neon: dark but less harsh, readable */
+    body.theme-neon {
+      --bg: #101522;
+      --card: rgba(18,26,41,0.94);
+      --text: #fff4df;
+      --muted: rgba(255,244,223,0.66);
+      --line: rgba(255,244,223,0.15);
+      --blue: #8fd5ff;
+      --green: #98e2bd;
+      --red: #f08b86;
+      --body-bg: #101522;
+      --staff-bg: #f7f1e7;
+      --staff-ink: #101522;
+      --answer-bg: rgba(255,244,223,0.10);
+      --control-bg: rgba(255,244,223,0.10);
+      --active-bg: rgba(143,213,255,0.22);
+      --home-bg: #101522;
+      --home-panel: transparent;
+      --home-button: rgba(255,244,223,0.10);
+      --home-button-border: rgba(255,244,223,0.16);
+      --home-test-bg: rgba(143,213,255,0.15);
+      --home-custom-bg: rgba(255,244,223,0.08);
+      background: #101522 !important;
+      color: #fff4df !important;
+    }
+
+    body.theme-neon .overlay,
+    body.theme-neon .settings-backdrop,
+    body.theme-neon .cheat-backdrop {
+      background: #101522 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-neon .start-box.home-screen,
+    body.theme-neon .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-neon .home-direct-section .path-btn,
+    body.theme-neon .path-btn,
+    body.theme-neon .range-card,
+    body.theme-neon .settings-panel,
+    body.theme-neon .cheat-sheet,
+    body.theme-neon .card,
+    body.theme-neon details.advanced-settings,
+    body.theme-neon details.advanced-settings > summary {
+      background: rgba(18,26,41,0.94) !important;
+      border-color: rgba(255,244,223,0.14) !important;
+      color: #fff4df !important;
+    }
+
+    body.theme-neon .home-direct-section .path-btn.test,
+    body.theme-neon .test-score-btn {
+      background: rgba(143,213,255,0.15) !important;
+      border-color: rgba(143,213,255,0.28) !important;
+    }
+
+    body.theme-neon .home-direct-section .path-btn strong,
+    body.theme-neon .home-direct-section .path-btn span,
+    body.theme-neon .path-btn strong,
+    body.theme-neon .path-btn span,
+    body.theme-neon .card-copy strong,
+    body.theme-neon .card-copy span,
+    body.theme-neon .home-subtitle,
+    body.theme-neon .home-section-title,
+    body.theme-neon .settings-note,
+    body.theme-neon .storage-note,
+    body.theme-neon .subtitle,
+    body.theme-neon .range-card label,
+    body.theme-neon .range-value,
+    body.theme-neon .note-name,
+    body.theme-neon .feedback,
+    body.theme-neon h1,
+    body.theme-neon h2,
+    body.theme-neon h3 {
+      color: #fff4df !important;
+    }
+
+    body.theme-neon .settings-note,
+    body.theme-neon .storage-note,
+    body.theme-neon .subtitle,
+    body.theme-neon .home-section-title,
+    body.theme-neon .range-card label {
+      color: rgba(255,244,223,0.66) !important;
+    }
+
+    body.theme-neon .segmented,
+    body.theme-neon .select-control,
+    body.theme-neon .pill,
+    body.theme-neon .icon-btn,
+    body.theme-neon .close-btn,
+    body.theme-neon .secondary,
+    body.theme-neon .preset-delete {
+      background: rgba(255,244,223,0.09) !important;
+      border-color: rgba(255,244,223,0.14) !important;
+      color: #fff4df !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-neon .segmented button.active,
+    body.theme-neon .pill.on,
+    body.theme-neon .save-preset-btn,
+    body.theme-neon .midi-connect-btn {
+      background: rgba(143,213,255,0.22) !important;
+      color: #fff4df !important;
+    }
+
+    body.theme-neon .staff-wrap {
+      background: #f7f1e7 !important;
+      border-color: rgba(255,244,223,0.12) !important;
+    }
+
+    body.theme-neon .answer {
+      background: rgba(255,244,223,0.10) !important;
+      color: #fff4df !important;
+      border-color: rgba(255,244,223,0.16) !important;
+      box-shadow: none !important;
+    }
+
+    /* Paper Sheet Music: calm cream + ink */
+    body.theme-paper {
+      --bg: #efe7d6;
+      --card: rgba(255,250,239,0.86);
+      --text: #2c261f;
+      --muted: rgba(44,38,31,0.62);
+      --line: rgba(44,38,31,0.13);
+      --blue: #5d7d94;
+      --green: #6f8d62;
+      --red: #a75c50;
+      --body-bg: #efe7d6;
+      --staff-bg: #fffaf0;
+      --staff-ink: #2c261f;
+      --answer-bg: rgba(255,250,239,0.90);
+      --control-bg: rgba(255,250,239,0.78);
+      --active-bg: rgba(44,38,31,0.10);
+      --home-bg: #efe7d6;
+      --home-panel: transparent;
+      --home-button: rgba(255,250,239,0.88);
+      --home-button-border: rgba(44,38,31,0.14);
+      --home-test-bg: rgba(255,250,239,0.76);
+      --home-custom-bg: rgba(255,250,239,0.70);
+      background: #efe7d6 !important;
+      color: #2c261f !important;
+    }
+
+    body.theme-paper .overlay,
+    body.theme-paper .settings-backdrop,
+    body.theme-paper .cheat-backdrop {
+      background: #efe7d6 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-paper .start-box.home-screen,
+    body.theme-paper .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-paper .home-direct-section .path-btn,
+    body.theme-paper .path-btn,
+    body.theme-paper .range-card,
+    body.theme-paper .settings-panel,
+    body.theme-paper .cheat-sheet,
+    body.theme-paper .card,
+    body.theme-paper details.advanced-settings,
+    body.theme-paper details.advanced-settings > summary {
+      background: rgba(255,250,239,0.88) !important;
+      border-color: rgba(44,38,31,0.14) !important;
+      color: #2c261f !important;
+    }
+
+    body.theme-paper .home-direct-section .path-btn strong,
+    body.theme-paper .home-direct-section .path-btn span,
+    body.theme-paper .path-btn strong,
+    body.theme-paper .path-btn span,
+    body.theme-paper .card-copy strong,
+    body.theme-paper .card-copy span,
+    body.theme-paper .home-subtitle,
+    body.theme-paper .home-section-title,
+    body.theme-paper .settings-note,
+    body.theme-paper .storage-note,
+    body.theme-paper .subtitle,
+    body.theme-paper .range-card label,
+    body.theme-paper .range-value,
+    body.theme-paper .note-name,
+    body.theme-paper .feedback,
+    body.theme-paper h1,
+    body.theme-paper h2,
+    body.theme-paper h3 {
+      color: #2c261f !important;
+    }
+
+    body.theme-paper .settings-note,
+    body.theme-paper .storage-note,
+    body.theme-paper .subtitle,
+    body.theme-paper .home-section-title,
+    body.theme-paper .range-card label {
+      color: rgba(44,38,31,0.62) !important;
+    }
+
+    body.theme-paper .answer {
+      background: rgba(255,250,239,0.88) !important;
+      color: #2c261f !important;
+      border-color: rgba(44,38,31,0.14) !important;
+      box-shadow: none !important;
+    }
+
+    /* Piano Practice Room: warm neutral */
+    body.theme-piano {
+      --bg: #e8ded0;
+      --card: rgba(250,246,239,0.86);
+      --text: #2b2521;
+      --muted: rgba(43,37,33,0.62);
+      --line: rgba(43,37,33,0.13);
+      --blue: #627c8d;
+      --green: #718a68;
+      --red: #a86156;
+      --body-bg: #e8ded0;
+      --staff-bg: #fbf8f1;
+      --staff-ink: #2b2521;
+      --answer-bg: rgba(250,246,239,0.90);
+      --control-bg: rgba(250,246,239,0.76);
+      --active-bg: rgba(43,37,33,0.10);
+      --home-bg: #e8ded0;
+      --home-panel: transparent;
+      --home-button: rgba(250,246,239,0.88);
+      --home-button-border: rgba(43,37,33,0.14);
+      --home-test-bg: rgba(250,246,239,0.76);
+      --home-custom-bg: rgba(250,246,239,0.70);
+      background: #e8ded0 !important;
+      color: #2b2521 !important;
+    }
+
+    body.theme-piano .overlay,
+    body.theme-piano .settings-backdrop,
+    body.theme-piano .cheat-backdrop {
+      background: #e8ded0 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-piano .start-box.home-screen,
+    body.theme-piano .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-piano .home-direct-section .path-btn,
+    body.theme-piano .path-btn,
+    body.theme-piano .range-card,
+    body.theme-piano .settings-panel,
+    body.theme-piano .cheat-sheet,
+    body.theme-piano .card,
+    body.theme-piano details.advanced-settings,
+    body.theme-piano details.advanced-settings > summary {
+      background: rgba(250,246,239,0.88) !important;
+      border-color: rgba(43,37,33,0.14) !important;
+      color: #2b2521 !important;
+    }
+
+    body.theme-piano .home-direct-section .path-btn strong,
+    body.theme-piano .home-direct-section .path-btn span,
+    body.theme-piano .path-btn strong,
+    body.theme-piano .path-btn span,
+    body.theme-piano .card-copy strong,
+    body.theme-piano .card-copy span,
+    body.theme-piano .home-subtitle,
+    body.theme-piano .home-section-title,
+    body.theme-piano .settings-note,
+    body.theme-piano .storage-note,
+    body.theme-piano .subtitle,
+    body.theme-piano .range-card label,
+    body.theme-piano .range-value,
+    body.theme-piano .note-name,
+    body.theme-piano .feedback,
+    body.theme-piano h1,
+    body.theme-piano h2,
+    body.theme-piano h3 {
+      color: #2b2521 !important;
+    }
+
+    body.theme-piano .settings-note,
+    body.theme-piano .storage-note,
+    body.theme-piano .subtitle,
+    body.theme-piano .home-section-title,
+    body.theme-piano .range-card label {
+      color: rgba(43,37,33,0.62) !important;
+    }
+
+    body.theme-piano .answer {
+      background: rgba(250,246,239,0.88) !important;
+      color: #2b2521 !important;
+      border-color: rgba(43,37,33,0.14) !important;
+      box-shadow: none !important;
+    }
+
+    /* Duolingo-ish: modern, less loud */
+    body.theme-duo {
+      --bg: #e9f7ee;
+      --card: rgba(255,255,255,0.82);
+      --text: #173225;
+      --muted: rgba(23,50,37,0.62);
+      --line: rgba(23,50,37,0.12);
+      --blue: #4d8ea8;
+      --green: #4d9a68;
+      --red: #bf5e55;
+      --body-bg: #e9f7ee;
+      --staff-bg: #fbfff9;
+      --staff-ink: #173225;
+      --answer-bg: rgba(255,255,255,0.88);
+      --control-bg: rgba(255,255,255,0.72);
+      --active-bg: rgba(77,154,104,0.14);
+      --home-bg: #e9f7ee;
+      --home-panel: transparent;
+      --home-button: rgba(255,255,255,0.88);
+      --home-button-border: rgba(23,50,37,0.12);
+      --home-test-bg: rgba(255,255,255,0.78);
+      --home-custom-bg: rgba(255,255,255,0.70);
+      background: #e9f7ee !important;
+      color: #173225 !important;
+    }
+
+    body.theme-duo .overlay,
+    body.theme-duo .settings-backdrop,
+    body.theme-duo .cheat-backdrop {
+      background: #e9f7ee !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-duo .start-box.home-screen,
+    body.theme-duo .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-duo .home-direct-section .path-btn,
+    body.theme-duo .path-btn,
+    body.theme-duo .range-card,
+    body.theme-duo .settings-panel,
+    body.theme-duo .cheat-sheet,
+    body.theme-duo .card,
+    body.theme-duo details.advanced-settings,
+    body.theme-duo details.advanced-settings > summary {
+      background: rgba(255,255,255,0.86) !important;
+      border-color: rgba(23,50,37,0.12) !important;
+      color: #173225 !important;
+    }
+
+    body.theme-duo .home-direct-section .path-btn strong,
+    body.theme-duo .home-direct-section .path-btn span,
+    body.theme-duo .path-btn strong,
+    body.theme-duo .path-btn span,
+    body.theme-duo .card-copy strong,
+    body.theme-duo .card-copy span,
+    body.theme-duo .home-subtitle,
+    body.theme-duo .home-section-title,
+    body.theme-duo .settings-note,
+    body.theme-duo .storage-note,
+    body.theme-duo .subtitle,
+    body.theme-duo .range-card label,
+    body.theme-duo .range-value,
+    body.theme-duo .note-name,
+    body.theme-duo .feedback,
+    body.theme-duo h1,
+    body.theme-duo h2,
+    body.theme-duo h3 {
+      color: #173225 !important;
+    }
+
+    body.theme-duo .settings-note,
+    body.theme-duo .storage-note,
+    body.theme-duo .subtitle,
+    body.theme-duo .home-section-title,
+    body.theme-duo .range-card label {
+      color: rgba(23,50,37,0.62) !important;
+    }
+
+    body.theme-duo .answer {
+      background: rgba(255,255,255,0.88) !important;
+      color: #173225 !important;
+      border-color: rgba(23,50,37,0.12) !important;
+      box-shadow: none !important;
+    }
+
+    /* Retro Game Boy: readable but still retro */
+    body.theme-retro {
+      --bg: #cadc75;
+      --card: rgba(224,239,151,0.88);
+      --text: #123312;
+      --muted: rgba(18,51,18,0.68);
+      --line: rgba(18,51,18,0.22);
+      --blue: #123312;
+      --green: #123312;
+      --red: #7a1f1f;
+      --body-bg: #cadc75;
+      --staff-bg: #eff7bd;
+      --staff-ink: #123312;
+      --answer-bg: rgba(239,247,189,0.86);
+      --control-bg: rgba(239,247,189,0.74);
+      --active-bg: rgba(18,51,18,0.12);
+      --home-bg: #cadc75;
+      --home-panel: transparent;
+      --home-button: rgba(239,247,189,0.86);
+      --home-button-border: rgba(18,51,18,0.24);
+      --home-test-bg: rgba(239,247,189,0.76);
+      --home-custom-bg: rgba(239,247,189,0.70);
+      background: #cadc75 !important;
+      color: #123312 !important;
+    }
+
+    body.theme-retro .overlay,
+    body.theme-retro .settings-backdrop,
+    body.theme-retro .cheat-backdrop {
+      background: #cadc75 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-retro .start-box.home-screen,
+    body.theme-retro .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-retro .home-direct-section .path-btn,
+    body.theme-retro .path-btn,
+    body.theme-retro .range-card,
+    body.theme-retro .settings-panel,
+    body.theme-retro .cheat-sheet,
+    body.theme-retro .card,
+    body.theme-retro details.advanced-settings,
+    body.theme-retro details.advanced-settings > summary {
+      background: rgba(239,247,189,0.86) !important;
+      border-color: rgba(18,51,18,0.24) !important;
+      color: #123312 !important;
+    }
+
+    body.theme-retro .home-direct-section .path-btn strong,
+    body.theme-retro .home-direct-section .path-btn span,
+    body.theme-retro .path-btn strong,
+    body.theme-retro .path-btn span,
+    body.theme-retro .card-copy strong,
+    body.theme-retro .card-copy span,
+    body.theme-retro .home-subtitle,
+    body.theme-retro .home-section-title,
+    body.theme-retro .settings-note,
+    body.theme-retro .storage-note,
+    body.theme-retro .subtitle,
+    body.theme-retro .range-card label,
+    body.theme-retro .range-value,
+    body.theme-retro .note-name,
+    body.theme-retro .feedback,
+    body.theme-retro h1,
+    body.theme-retro h2,
+    body.theme-retro h3 {
+      color: #123312 !important;
+    }
+
+    body.theme-retro .settings-note,
+    body.theme-retro .storage-note,
+    body.theme-retro .subtitle,
+    body.theme-retro .home-section-title,
+    body.theme-retro .range-card label {
+      color: rgba(18,51,18,0.68) !important;
+    }
+
+    body.theme-retro .answer {
+      background: rgba(239,247,189,0.86) !important;
+      color: #123312 !important;
+      border-color: rgba(18,51,18,0.24) !important;
+      box-shadow: none !important;
+    }
+
+    /* v1.09-blue presets: preset ordering controls */
+    .preset-order-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .preset-move {
+      min-width: 34px;
+      padding: 0 9px !important;
+      font-size: 15px !important;
+      line-height: 1 !important;
+    }
+    .preset-move:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* v1.09-blue mode: visible Notes / Chord mode choice in main settings */
+    .segmented.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* v1.09-blue rush: difficulty rush buttons + highscores only on demand */
+    .rush-level-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .rush-level-row .test-score-btn {
+      min-height: 70px !important;
+      padding: 10px 6px !important;
+      align-content: center !important;
+      text-align: center !important;
+    }
+    .rush-level-row .test-score-btn strong {
+      font-size: clamp(14px, 4.4vw, 19px) !important;
+      letter-spacing: -0.055em !important;
+    }
+    .highscore-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 9px;
+    }
+    .highscore-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(44,72,92,0.10);
+      font-size: 10.5px;
+      line-height: 1.2;
+    }
+    .highscore-row strong {
+      display: block !important;
+      font-size: 10.8px !important;
+      letter-spacing: -0.02em !important;
+    }
+    .highscore-row span {
+      margin: 0 !important;
+      white-space: nowrap;
+      font-weight: 850;
+      color: var(--muted) !important;
+    }
+    body.theme-night .highscore-row,
+    body.theme-neon .highscore-row {
+      background: rgba(255,244,223,0.08);
+      border-color: rgba(255,244,223,0.12);
+    }
+    @media (max-width: 360px) {
+      .rush-level-row { gap: 5px; }
+      .rush-level-row .test-score-btn { min-height: 62px !important; padding: 8px 4px !important; }
+      .rush-level-row .test-score-btn strong { font-size: 13px !important; }
+      .highscore-row { font-size: 9.6px; padding: 6px; }
+      .highscore-row strong { font-size: 9.8px !important; }
+    }
+
+    /* v1.09-blue choose: choose level, then choose practice/rush */
+    .home-mode-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .home-start-mode {
+      min-height: 58px !important;
+      padding: 11px 10px !important;
+      text-align: center !important;
+      align-content: center !important;
+    }
+    .home-start-mode strong {
+      font-size: clamp(17px, 5.2vw, 22px) !important;
+      letter-spacing: -0.055em !important;
+    }
+    .level-start-btn.active {
+      background: #dbeaf2 !important;
+      border-color: rgba(44,72,92,0.24) !important;
+      box-shadow: inset 0 0 0 2px rgba(44,72,92,0.08) !important;
+    }
+    body.theme-night .level-start-btn.active,
+    body.theme-neon .level-start-btn.active {
+      background: rgba(159,196,223,0.24) !important;
+      border-color: rgba(159,196,223,0.32) !important;
+    }
+
+    /* v1.09-blue highscores: inline toggle panel under the button */
+    .home-highscores-panel {
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(44,72,92,0.12);
+    }
+    .home-highscores-panel.hidden {
+      display: none !important;
+    }
+    body.theme-night .home-highscores-panel,
+    body.theme-neon .home-highscores-panel {
+      background: rgba(255,244,223,0.08);
+      border-color: rgba(255,244,223,0.12);
+    }
+
+    /* v1.09-blue rush-row: rush buttons next to each other */
+    .rush-start-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .rush-start-row .home-start-mode {
+      min-height: 66px !important;
+      padding: 10px 6px !important;
+    }
+    .rush-start-row .home-start-mode strong {
+      font-size: clamp(14px, 4.2vw, 18px) !important;
+      line-height: 1.05 !important;
+    }
+
+    /* v1.09-blue emoji: optional playful emoji style */
+    body.theme-emoji {
+      --bg: #fff7dd;
+      --card: rgba(255,255,255,0.84);
+      --text: #29231d;
+      --muted: rgba(41,35,29,0.62);
+      --line: rgba(41,35,29,0.12);
+      --blue: #5f8fb2;
+      --green: #4d9b6c;
+      --red: #d45f57;
+      --body-bg: #fff7dd;
+      --staff-bg: #fffdf6;
+      --staff-ink: #29231d;
+      --answer-bg: rgba(255,255,255,0.90);
+      --control-bg: rgba(255,255,255,0.78);
+      --active-bg: rgba(255,195,75,0.22);
+      --home-bg: #fff7dd;
+      --home-panel: transparent;
+      --home-button: rgba(255,255,255,0.88);
+      --home-button-border: rgba(41,35,29,0.13);
+      --home-test-bg: rgba(255,255,255,0.82);
+      --home-custom-bg: rgba(255,255,255,0.76);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,215,115,0.38), transparent 26%),
+        radial-gradient(circle at 82% 10%, rgba(137,207,240,0.35), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(175,230,160,0.36), transparent 30%),
+        #fff7dd !important;
+      color: #29231d !important;
+    }
+
+    body.theme-emoji .overlay,
+    body.theme-emoji .settings-backdrop,
+    body.theme-emoji .cheat-backdrop {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,215,115,0.38), transparent 26%),
+        radial-gradient(circle at 82% 10%, rgba(137,207,240,0.35), transparent 24%),
+        #fff7dd !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-emoji .start-box.home-screen,
+    body.theme-emoji .home-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-emoji .card,
+    body.theme-emoji .settings-panel,
+    body.theme-emoji .range-card,
+    body.theme-emoji .cheat-sheet,
+    body.theme-emoji .path-btn,
+    body.theme-emoji .answer,
+    body.theme-emoji details.advanced-settings,
+    body.theme-emoji details.advanced-settings > summary {
+      background: rgba(255,255,255,0.86) !important;
+      border-color: rgba(41,35,29,0.13) !important;
+      color: #29231d !important;
+      box-shadow: 0 8px 0 rgba(41,35,29,0.08) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    body.theme-emoji .path-btn,
+    body.theme-emoji .icon-btn,
+    body.theme-emoji .secondary,
+    body.theme-emoji .close-btn,
+    body.theme-emoji .save-preset-btn,
+    body.theme-emoji .midi-connect-btn,
+    body.theme-emoji .preset-delete,
+    body.theme-emoji .segmented button,
+    body.theme-emoji .pill,
+    body.theme-emoji .select-control {
+      border-radius: 20px !important;
+      background: rgba(255,255,255,0.90) !important;
+      border-color: rgba(41,35,29,0.14) !important;
+      color: #29231d !important;
+      box-shadow: 0 5px 0 rgba(41,35,29,0.08) !important;
+    }
+
+    body.theme-emoji .path-btn:active,
+    body.theme-emoji .icon-btn:active,
+    body.theme-emoji .secondary:active,
+    body.theme-emoji .segmented button:active {
+      transform: translateY(2px) scale(0.99) !important;
+      box-shadow: 0 2px 0 rgba(41,35,29,0.08) !important;
+    }
+
+    body.theme-emoji .segmented button.active,
+    body.theme-emoji .pill.on,
+    body.theme-emoji .level-start-btn.active,
+    body.theme-emoji .save-preset-btn,
+    body.theme-emoji .midi-connect-btn {
+      background: #ffe5a6 !important;
+      border-color: rgba(196,126,25,0.28) !important;
+    }
+
+    body.theme-emoji .test,
+    body.theme-emoji .test-score-btn {
+      background: #eaf6ff !important;
+      border-color: rgba(75,139,176,0.24) !important;
+    }
+
+    body.theme-emoji .custom-card {
+      background: #eff9e9 !important;
+      border-color: rgba(80,145,75,0.22) !important;
+    }
+
+    body.theme-emoji .brand-mark {
+      background: #29231d !important;
+      color: #fff7dd !important;
+    }
+
+    body.theme-emoji .home-subtitle::before { content: "🎵 "; }
+    body.theme-emoji .home-subtitle::after { content: " ✨"; }
+
+    body.theme-emoji .home-section-title::before { content: "⭐ "; }
+    body.theme-emoji .home-section-title { color: rgba(41,35,29,0.62) !important; }
+
+    body.theme-emoji #homeLevelEasyBtn strong::before,
+    body.theme-emoji #settingsLevelEasyBtn::before { content: "🌱 "; }
+    body.theme-emoji #homeLevelNormalBtn strong::before,
+    body.theme-emoji #settingsLevelNormalBtn::before { content: "🎯 "; }
+    body.theme-emoji #homeLevelHardBtn strong::before,
+    body.theme-emoji #settingsLevelHardBtn::before { content: "🔥 "; }
+
+    body.theme-emoji #homePracticeModeBtn strong::before { content: "🎹 "; }
+    body.theme-emoji #homeRush30Btn strong::before { content: "⚡ "; }
+    body.theme-emoji #homeRush60Btn strong::before { content: "🚀 "; }
+    body.theme-emoji #personalHighscoresBtn strong::before { content: "🏆 "; }
+    body.theme-emoji #customPathBtn strong::before { content: "🛠️ "; }
+    body.theme-emoji .preset-card-clean strong::before { content: "💾 "; }
+
+    body.theme-emoji #trebleBtn::before { content: "🎼 "; }
+    body.theme-emoji #bassBtn::before { content: "🎻 "; }
+    body.theme-emoji #grandBtn::before { content: "🎹 "; }
+    body.theme-emoji #notesMainModeBtn::before,
+    body.theme-emoji #multiModeBtn::before { content: "🎵 "; }
+    body.theme-emoji #chordsMainModeBtn::before,
+    body.theme-emoji #chordModeBtn::before { content: "🎶 "; }
+
+    body.theme-emoji #choiceInputBtn::before { content: "🔘 "; }
+    body.theme-emoji #pianoInputBtn::before { content: "🔤 "; }
+    body.theme-emoji #realInputBtn::before { content: "🎹 "; }
+    body.theme-emoji #fullPianoInputBtn::before { content: "🧭 "; }
+    body.theme-emoji #midiConnectBtn::before { content: "🔌 "; }
+    body.theme-emoji #savePresetBtn::before,
+    body.theme-emoji #savePresetHomeBtn::before { content: "💾 "; }
+
+    body.theme-emoji #homeBtn::before { content: "🏠"; }
+    body.theme-emoji #homeBtn { font-size: 0 !important; }
+    body.theme-emoji #homeBtn::before { font-size: 18px !important; }
+    body.theme-emoji #cheatBtn::before { content: "💡"; }
+    body.theme-emoji #cheatBtn { font-size: 0 !important; }
+    body.theme-emoji #cheatBtn::before { font-size: 18px !important; }
+    body.theme-emoji #openSettingsBtn::before { content: "⚙️"; }
+    body.theme-emoji #openSettingsBtn { font-size: 0 !important; }
+    body.theme-emoji #openSettingsBtn::before { font-size: 18px !important; }
+    body.theme-emoji #soundBtn::before { content: "🔊"; }
+    body.theme-emoji #soundBtn { font-size: 0 !important; }
+    body.theme-emoji #soundBtn::before { font-size: 18px !important; }
+
+    body.theme-emoji .answer::before { content: "🎵 "; opacity: 0.82; }
+    body.theme-emoji .answer.correct::before { content: "✅ "; }
+    body.theme-emoji .answer.wrong::before { content: "❌ "; }
+
+    body.theme-emoji .feedback.good::before { content: "🎉 "; }
+    body.theme-emoji .feedback.bad::before { content: "🙃 "; }
+
+    body.theme-emoji .staff-wrap {
+      background: #fffdf6 !important;
+      border: 2px solid rgba(41,35,29,0.12) !important;
+    }
+
+    /* v1.09-blue emoji-piano: restore piano/keyboard to normal inside Emoji mode */
+    body.theme-emoji .full-piano,
+    body.theme-emoji .full-piano-shell,
+    body.theme-emoji .midi-panel,
+    body.theme-emoji .answers.keyboard,
+    body.theme-emoji .answers.full-piano-mode,
+    body.theme-emoji .piano-wrap {
+      background: var(--answer-bg) !important;
+      border-color: var(--line) !important;
+      color: var(--text) !important;
+      box-shadow: none !important;
+    }
+
+    body.theme-emoji .white-key,
+    body.theme-emoji .answers.keyboard .answer.white-key {
+      background: linear-gradient(180deg, #ffffff, #eef1f5) !important;
+      color: #1f2937 !important;
+      border-color: rgba(17,24,39,0.22) !important;
+      box-shadow: inset 0 -4px 8px rgba(17,24,39,0.08) !important;
+      border-radius: 0 0 7px 7px !important;
+    }
+
+    body.theme-emoji .black-key,
+    body.theme-emoji .answers.keyboard .answer.black-key {
+      background: linear-gradient(180deg, #2a2f3a, #090b10) !important;
+      color: #f8fafc !important;
+      border-color: rgba(0,0,0,0.60) !important;
+      box-shadow: inset 0 -4px 6px rgba(0,0,0,0.38) !important;
+      border-radius: 0 0 5px 5px !important;
+    }
+
+    body.theme-emoji .white-key::before,
+    body.theme-emoji .black-key::before,
+    body.theme-emoji .answers.keyboard .answer::before,
+    body.theme-emoji .answers.full-piano-mode .answer::before,
+    body.theme-emoji .piano-wrap button::before,
+    body.theme-emoji .full-piano button::before {
+      content: none !important;
+    }
+
+    body.theme-emoji .white-key.target,
+    body.theme-emoji .black-key.target {
+      outline: 3px solid var(--blue) !important;
+      outline-offset: -3px !important;
+    }
+
+    body.theme-emoji .white-key.correct,
+    body.theme-emoji .black-key.correct {
+      background: var(--green) !important;
+      color: #ffffff !important;
+    }
+
+    body.theme-emoji .white-key.wrong,
+    body.theme-emoji .black-key.wrong {
+      background: var(--red) !important;
+      color: #ffffff !important;
+    }
+
+    body.theme-emoji .key-label,
+    body.theme-emoji .piano-label,
+    body.theme-emoji .white-key small,
+    body.theme-emoji .black-key small,
+    body.theme-emoji .answers.keyboard .answer small {
+      color: inherit !important;
+      font-weight: 800 !important;
+    }
+
+    /* v1.09 blue logo: embedded NoteSprint icon */
+    .header-brand { display:flex; align-items:center; gap:10px; min-width:0; }
+    .app-logo-icon { width:34px; height:34px; object-fit:contain; flex:0 0 auto; }
+    .home-logo-icon { width:48px; height:48px; object-fit:contain; flex:0 0 auto; }
+    .brand-mark { display:none !important; }
+    @media (max-width: 380px) {
+      .app-logo-icon { width:30px; height:30px; }
+      .home-logo-icon { width:42px; height:42px; }
+    }
+
   </style>
 </head>
 <body>
   <main class="app">
     <header>
-      <div>
-        <h1>NoteSprint</h1>
-        <div class="subtitle app-tagline">Remember it’s a marathon, <em>note</em> a sprint.</div>
+      <div class="header-brand">
+        <img class="app-logo-icon" src="data:image/png;base64,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" alt="NoteSprint icon" />
+        <div>
+          <h1>NoteSprint</h1>
+          <div class="subtitle app-tagline">Remember it’s a marathon, <em>note</em> a sprint.</div>
+        </div>
       </div>
       <div class="header-actions">
         <button class="icon-btn" id="homeBtn" type="button" aria-label="Back to home">⌂</button>
@@ -415,110 +1821,164 @@
           <button class="close-btn" id="closeSettingsBtn" type="button" aria-label="Close settings">×</button>
         </div>
 
-        <div class="segmented three" aria-label="Game mode">
-          <button id="noteModeBtn" type="button">Notes</button>
-          <button id="multiModeBtn" class="active" type="button">Multiple</button>
-          <button id="chordModeBtn" type="button">Chords</button>
-        </div>
-
-        <div class="segmented three" aria-label="Clef mode">
-          <button id="trebleBtn" type="button">Treble</button>
-          <button id="bassBtn" type="button">Bass</button>
-          <button id="grandBtn" class="active" type="button">Grand</button>
-        </div>
-
-        <div class="segmented four" aria-label="Display mode">
-          <button id="choiceInputBtn" class="active" type="button">Choices</button>
-          <button id="pianoInputBtn" type="button">ABC</button>
-          <button id="realInputBtn" type="button">Piano</button>
-          <button id="fullPianoInputBtn" type="button">88 Key</button>
-          <button id="computerInputBtn" class="hidden" type="button">Keybd</button>
-          <button id="midiInputBtn" class="hidden" type="button">MIDI</button>
-        </div>
-
-        <div class="range-card wide hidden" id="keyboardInputCard">
-          <label>Keyboard input <span class="range-value" id="keyboardInputValue">On</span></label>
-          <div class="segmented" aria-label="Keyboard input">
-            <button id="keyboardInputOnBtn" class="active" type="button">On</button>
-            <button id="keyboardInputOffBtn" type="button">Off</button>
-          </div>
-        </div>
-
-        <div class="range-card wide hidden" id="realLabelsCard">
-          <label>Piano labels <span class="range-value" id="realLabelsValue">Show</span></label>
-          <div class="segmented" aria-label="Piano labels">
-            <button id="realLabelsShowBtn" class="active" type="button">Show</button>
-            <button id="realLabelsHideBtn" type="button">Hide</button>
-          </div>
-        </div>
-
-        <div class="range-card wide" id="midiConnectCard">
-          <label>MIDI input <span class="range-value" id="midiStatusValue">Optional</span></label>
-          <button id="midiConnectBtn" class="midi-connect-btn" type="button">Connect MIDI</button>
-        </div>
-
-        <div class="range-card wide hidden" id="keysDisplayCard">
-          <label>Keybd display <span class="range-value" id="keysDisplayValue">Letters</span></label>
-          <div class="segmented" aria-label="Keybd display">
-            <button id="keysDisplayLettersBtn" class="active" type="button">Letters</button>
-            <button id="keysDisplayPianoBtn" type="button">Piano</button>
-          </div>
-        </div>
-
-        <div class="range-card wide hidden" id="midiDisplayCard">
-          <label>MIDI display <span class="range-value" id="midiDisplayValue">Panel</span></label>
-          <div class="segmented" aria-label="MIDI display">
-            <button id="midiDisplayPanelBtn" class="active" type="button">Panel</button>
-            <button id="midiDisplay88Btn" type="button">88 Key</button>
-          </div>
-        </div>
-
-
-        <div class="range-grid" aria-label="Ledger line range settings">
-          <div class="range-card">
-            <label for="aboveRange">Above staff <span class="range-value" id="aboveValue">4 ledgers</span></label>
-            <input id="aboveRange" type="range" min="0" max="5" value="4" step="1" />
-          </div>
-          <div class="range-card">
-            <label for="belowRange">Below staff <span class="range-value" id="belowValue">4 ledgers</span></label>
-            <input id="belowRange" type="range" min="0" max="5" value="4" step="1" />
-          </div>
+        <div class="settings-basic" aria-label="Basic settings">
           <div class="range-card wide">
-            <label for="ledgerFocusRange">Ledger focus <span class="range-value" id="ledgerFocusValue">80%</span></label>
-            <input id="ledgerFocusRange" type="range" min="0" max="100" value="80" step="10" />
-          </div>
-          <div class="range-card wide" id="multiCountCard">
-            <label for="multiCountRange">Notes in row <span class="range-value" id="multiCountValue">5 notes</span></label>
-            <input id="multiCountRange" type="range" min="2" max="5" value="5" step="1" />
-          </div>
-          <div class="range-card wide" id="timerSecCard">
-            <label for="timerSecRange">Timer speed <span class="range-value" id="timerSecValue">3s per note</span></label>
-            <input id="timerSecRange" type="range" min="2" max="8" value="3" step="1" />
-          </div>
-          <div class="range-card wide" id="correctionTimeCard">
-            <label>Correction time <span class="range-value" id="correctionTimeValue">Default</span></label>
-            <div class="segmented" aria-label="Correction time">
-              <button id="correctionDefaultBtn" class="active" type="button">Default</button>
-              <button id="correctionSlowBtn" type="button">Slow</button>
+            <label>Practice level <span class="range-value" id="settingsLevelValue">Normal</span></label>
+            <div class="segmented three" aria-label="Practice level">
+              <button id="settingsLevelEasyBtn" type="button">Beginner</button>
+              <button id="settingsLevelNormalBtn" class="active" type="button">Normal</button>
+              <button id="settingsLevelHardBtn" type="button">Hard</button>
             </div>
           </div>
+
+          <div class="segmented three" aria-label="Clef mode">
+            <button id="trebleBtn" type="button">Treble</button>
+            <button id="bassBtn" type="button">Bass</button>
+            <button id="grandBtn" class="active" type="button">Grand</button>
+          </div>
+
+          <div class="range-card wide">
+            <label>Mode <span class="range-value" id="noteChordModeValue">Notes</span></label>
+            <div class="segmented two" aria-label="Note or chord mode">
+              <button id="notesMainModeBtn" class="active" type="button">Notes</button>
+              <button id="chordsMainModeBtn" type="button">Chord mode</button>
+            </div>
+          </div>
+
+          <div class="range-card wide">
+            <label for="themeSelect">Look <span class="range-value" id="themeValue">Default</span></label>
+            <select id="themeSelect" class="select-control" aria-label="Visual style">
+              <option value="emoji">Default - Emojis</option>
+              <option value="apple">Clean</option>
+              <option value="night">Night mode</option>
+              <option value="retro">Retro Game Boy</option>
+              <option value="neon">Dark Neon</option>
+              <option value="paper">Paper Sheet Music</option>
+              <option value="duo">Duolingo-ish</option>
+              <option value="piano">Piano Practice Room</option>
+            </select>
+          </div>
+
+          <div class="range-card wide save-preset-card">
+            <label>Personal presets <span class="range-value">Local</span></label>
+            <button id="savePresetBtn" class="save-preset-btn" type="button">Save current settings as preset</button>
+          </div>
         </div>
 
-        <div class="settings-note" id="rangeHelp">Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.</div>
+        <details class="advanced-settings" id="advancedSettings">
+          <summary>Advanced settings</summary>
+          <div class="advanced-body">
 
-        <div class="toggles hidden" id="chordSettings">
-          <button id="firstInvBtn" class="pill" type="button">1st inversion</button>
-          <button id="secondInvBtn" class="pill" type="button">2nd inversion</button>
-          <button id="seventhBtn" class="pill" type="button">Include 7ths</button>
+            <div class="segmented three hidden" aria-label="Game mode">
+              <button id="noteModeBtn" type="button">Notes</button>
+              <button id="multiModeBtn" class="active" type="button">Multiple</button>
+              <button id="chordModeBtn" type="button">Chords</button>
+            </div>
+
+            <div class="segmented four" aria-label="Display mode">
+              <button id="choiceInputBtn" class="active" type="button">Choices</button>
+              <button id="pianoInputBtn" type="button">ABC</button>
+              <button id="realInputBtn" type="button">Piano</button>
+              <button id="fullPianoInputBtn" type="button">88 Key</button>
+              <button id="computerInputBtn" class="hidden" type="button">Keybd</button>
+              <button id="midiInputBtn" class="hidden" type="button">MIDI</button>
+            </div>
+
+            <div class="range-card wide hidden" id="keyboardInputCard">
+              <label>Keyboard input <span class="range-value" id="keyboardInputValue">On</span></label>
+              <div class="segmented" aria-label="Keyboard input">
+                <button id="keyboardInputOnBtn" class="active" type="button">On</button>
+                <button id="keyboardInputOffBtn" type="button">Off</button>
+              </div>
+            </div>
+
+            <div class="range-card wide hidden" id="realLabelsCard">
+              <label>Piano labels <span class="range-value" id="realLabelsValue">Show</span></label>
+              <div class="segmented" aria-label="Piano labels">
+                <button id="realLabelsShowBtn" class="active" type="button">Show</button>
+                <button id="realLabelsHideBtn" type="button">Hide</button>
+              </div>
+            </div>
+
+            <div class="range-card wide" id="midiConnectCard">
+              <label>MIDI input <span class="range-value" id="midiStatusValue">Optional</span></label>
+              <button id="midiConnectBtn" class="midi-connect-btn" type="button">Connect MIDI</button>
+            </div>
+
+            <div class="range-card wide hidden" id="keysDisplayCard">
+              <label>Keybd display <span class="range-value" id="keysDisplayValue">Letters</span></label>
+              <div class="segmented" aria-label="Keybd display">
+                <button id="keysDisplayLettersBtn" class="active" type="button">Letters</button>
+                <button id="keysDisplayPianoBtn" type="button">Piano</button>
+              </div>
+            </div>
+
+            <div class="range-card wide hidden" id="midiDisplayCard">
+              <label>MIDI display <span class="range-value" id="midiDisplayValue">Panel</span></label>
+              <div class="segmented" aria-label="MIDI display">
+                <button id="midiDisplayPanelBtn" class="active" type="button">Panel</button>
+                <button id="midiDisplay88Btn" type="button">88 Key</button>
+              </div>
+            </div>
+
+            <div class="range-grid" aria-label="Ledger line range settings">
+              <div class="range-card">
+                <label for="aboveRange">Above staff <span class="range-value" id="aboveValue">4 ledgers</span></label>
+                <input id="aboveRange" type="range" min="0" max="5" value="4" step="1" />
+              </div>
+              <div class="range-card">
+                <label for="belowRange">Below staff <span class="range-value" id="belowValue">4 ledgers</span></label>
+                <input id="belowRange" type="range" min="0" max="5" value="4" step="1" />
+              </div>
+              <div class="range-card wide">
+                <label for="ledgerFocusRange">Ledger focus <span class="range-value" id="ledgerFocusValue">80%</span></label>
+                <input id="ledgerFocusRange" type="range" min="0" max="100" value="80" step="10" />
+              </div>
+              <div class="range-card wide" id="multiCountCard">
+                <label for="multiCountRange">Notes in row <span class="range-value" id="multiCountValue">5 notes</span></label>
+                <input id="multiCountRange" type="range" min="1" max="5" value="5" step="1" />
+              </div>
+              <div class="range-card wide" id="timerSecCard">
+                <label for="timerSecRange">Timer speed <span class="range-value" id="timerSecValue">3s per note</span></label>
+                <input id="timerSecRange" type="range" min="2" max="8" value="3" step="1" />
+              </div>
+              <div class="range-card wide" id="correctionTimeCard">
+                <label>Correction time <span class="range-value" id="correctionTimeValue">Default</span></label>
+                <div class="segmented" aria-label="Correction time">
+                  <button id="correctionDefaultBtn" class="active" type="button">Default</button>
+                  <button id="correctionSlowBtn" type="button">Slow</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-note" id="rangeHelp">Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.</div>
+
+            <div class="toggles hidden" id="chordSettings">
+              <button id="firstInvBtn" class="pill" type="button">1st inversion</button>
+              <button id="secondInvBtn" class="pill" type="button">2nd inversion</button>
+              <button id="seventhBtn" class="pill" type="button">Include 7ths</button>
+            </div>
+
+            <div class="toggles">
+              <button id="solfegeBtn" class="pill" type="button">Show Do Re Mi</button>
+              <button id="smartBtn" class="pill on" type="button">Smart practice</button>
+              <button id="timerBtn" class="pill" type="button">Timer mode</button>
+            </div>
+
+            <div class="range-card wide">
+              <label>Tests <span class="range-value">Current settings</span></label>
+              <button id="customTestBtn" class="save-preset-btn" type="button">Start custom 60s test</button>
+            </div>
+
+            <div class="settings-note">Advanced controls are for custom drills and saved presets. Default practice always uses 5-note runs.</div>
+          </div>
+        </details>
+
+        <div class="range-card wide settings-preset-card">
+          <label>My presets <span class="range-value">Tap to start · delete here</span></label>
+          <div class="custom-preset-list settings-preset-list" id="customPresetList"></div>
+          <div class="settings-note custom-empty" id="noCustomPresets">No saved presets yet. Save your current settings above.</div>
         </div>
-
-        <div class="toggles">
-          <button id="solfegeBtn" class="pill" type="button">Show Do Re Mi</button>
-          <button id="smartBtn" class="pill on" type="button">Smart practice</button>
-          <button id="timerBtn" class="pill" type="button">Timer mode</button>
-        </div>
-
-        <div class="settings-note">Smart practice is session-only. Correction time controls how long wrong-answer color/text stays visible.</div>
       </section>
     </div>
 
@@ -569,103 +2029,55 @@
     <div class="start-box home-screen">
       <section class="home-hero" aria-label="Home">
         <div class="brand-row">
-          <div class="brand-mark" aria-hidden="true">𝄞</div>
+          <img class="home-logo-icon" src="data:image/png;base64,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" alt="NoteSprint icon" />
           <h2>NoteSprint</h2>
         </div>
         <p class="home-subtitle">Remember it’s a marathon, <em>note</em> a sprint.</p>
       </section>
 
-      <section class="home-look-card" aria-label="Look setting">
-        <label for="themeSelect">Look <span class="range-value" id="themeValue">Default</span></label>
-        <select id="themeSelect" class="select-control" aria-label="Visual style">
-            <option value="apple">Default</option>
-            <option value="night">Night mode</option>
-            <option value="retro">Retro Game Boy</option>
-            <option value="neon">Dark Neon</option>
-            <option value="paper">Paper Sheet Music</option>
-            <option value="duo">Duolingo-ish</option>
-            <option value="piano">Piano Practice Room</option>
-          </select>
-      </section>
-
       <div class="test-result hidden" id="resultBox"></div>
 
-      <section class="home-step" id="homeStartPanel" aria-label="Choose mode">
-        <div class="home-section-title">Choose your run</div>
-        <div class="home-choice-grid">
-          <button class="path-btn home-choice-card" id="practiceHomeBtn" type="button">
-            <span class="choice-icon" aria-hidden="true">🎹</span>
-            <span class="choice-copy"><strong>PRACTISE</strong><span>Warm up, learn notes, and build speed.</span></span>
-            <span class="choice-action">Choose path</span>
-          </button>
-          <button class="path-btn home-choice-card" id="testHomeBtn" type="button">
-            <span class="choice-icon" aria-hidden="true">🏁</span>
-            <span class="choice-copy"><strong>TEST</strong><span>Fixed runs, rush mode, or survival.</span></span>
-            <span class="choice-action">Choose test</span>
-          </button>
-        </div>
-      </section>
+      <section class="home-step" id="homeStartPanel" aria-label="Quick start">
+        <div class="home-direct-section">
+          <div class="home-section-title">Choose level</div>
+          <div class="level-start-row" aria-label="Choose level">
+            <button class="path-btn level-start-btn" id="homeLevelEasyBtn" type="button"><strong>Beginner</strong></button>
+            <button class="path-btn level-start-btn" id="homeLevelNormalBtn" type="button"><strong>Normal</strong></button>
+            <button class="path-btn level-start-btn" id="homeLevelHardBtn" type="button"><strong>Hard</strong></button>
+          </div>
 
-      <section class="home-step hidden" id="practicePanel" aria-label="Practice paths">
-        <div class="panel-topline">
-          <button class="mini-back" id="practiceBackBtn" type="button">← Back</button>
-          <div class="home-section-title">Practise</div>
-        </div>
-        <div class="path-grid two">
-          <button class="path-btn path-card" data-preset="easy" type="button">
-            <span class="card-icon" aria-hidden="true">🌱</span>
-            <span class="card-copy"><strong>Easy</strong><span>2 notes · ±1 ledger · relaxed warm-up</span></span>
-            <span class="card-action">Start</span>
-          </button>
-          <button class="path-btn path-card" data-preset="intermediate" type="button">
-            <span class="card-icon" aria-hidden="true">🎵</span>
-            <span class="card-copy"><strong>Intermediate</strong><span>4 notes · ±3 ledgers · balanced drill</span></span>
-            <span class="card-action">Start</span>
-          </button>
-          <button class="path-btn path-card" data-preset="hard" type="button">
-            <span class="card-icon" aria-hidden="true">🔥</span>
-            <span class="card-copy"><strong>Hard</strong><span>5 notes · ±4 ledgers · smart focus</span></span>
-            <span class="card-action">Start</span>
-          </button>
-          <button class="path-btn path-card challenge-card" data-preset="notFun" type="button">
-            <span class="card-icon" aria-hidden="true">⚡</span>
-            <span class="card-copy"><strong>Challenge</strong><span>5 notes · heavy ledger focus · 4s timer</span></span>
-            <span class="card-action">Start</span>
-          </button>
-        </div>
-      </section>
+          <div class="home-section-title">Start</div>
+          <div class="home-mode-row" aria-label="Start mode">
+            <button class="path-btn test-score-btn home-start-mode" id="homePracticeModeBtn" type="button"><strong>Practise mode</strong></button>
+            <div class="rush-start-row">
+              <button class="path-btn test-score-btn home-start-mode test" id="homeRush30Btn" type="button"><strong>Rush 30 seconds</strong></button>
+              <button class="path-btn test-score-btn home-start-mode test" id="homeRush60Btn" type="button"><strong>Rush 60 seconds</strong></button>
+            </div>
+          </div>
 
-      <section class="home-step hidden" id="testPanel" aria-label="Testing modes">
-        <div class="panel-topline">
-          <button class="mini-back" id="testBackBtn" type="button">← Back</button>
-          <div class="home-section-title">Test</div>
-        </div>
-        <div class="path-grid two">
-          <button class="path-btn path-card test" data-test="quick" type="button">
-            <span class="card-icon" aria-hidden="true">✅</span>
-            <span class="card-copy"><strong>Quick Test</strong><span>25 notes · fixed score run</span></span>
-            <span class="highscore" data-highscore="quick">Best: –</span>
-          </button>
-          <button class="path-btn path-card test" data-test="rush" type="button">
-            <span class="card-icon" aria-hidden="true">⏱️</span>
-            <span class="card-copy"><strong>Rush Test</strong><span>60 seconds · score as many as possible</span></span>
-            <span class="highscore" data-highscore="rush">Best: –</span>
-          </button>
-          <button class="path-btn path-card test survival" data-test="survival" type="button">
-            <span class="card-icon" aria-hidden="true">❤️</span>
-            <span class="card-copy"><strong>Survival</strong><span>3 lives · 4s timer · stay alive</span></span>
-            <span class="highscore" data-highscore="survival">Best: –</span>
-          </button>
-          <button class="path-btn path-card custom-card" id="customPathBtn" type="button">
-            <span class="card-icon" aria-hidden="true">⚙️</span>
-            <span class="card-copy"><strong>Custom</strong><span>Open settings and build your drill</span></span>
-            <span class="card-action">Tune</span>
-          </button>
+          <div class="home-custom-row">
+            <button class="path-btn custom-card" id="personalHighscoresBtn" type="button">
+              <strong>Personal Highscores</strong>
+              <span>Show best scores per rush setting</span>
+            </button>
+            <div class="home-highscores-panel hidden" id="homeHighscoresPanel"></div>
+          </div>
+
+          <div class="home-section-title">Last presets</div>
+          <div class="home-recent-list" id="homeRecentPresetList"></div>
+          <div class="storage-note custom-empty" id="homeNoRecentPresets">No saved presets yet. Use Custom to make one.</div>
+
+          <div class="home-custom-row">
+            <button class="path-btn custom-card" id="customPathBtn" type="button">
+              <strong>Custom</strong>
+              <span>Settings & presets</span>
+            </button>
+          </div>
         </div>
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.02.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.09 blue logo transparent.
       </div>
     </div>
   </div>
@@ -709,7 +2121,7 @@
     keyboardInput: true,
     correctionTime: "default",
     smartPractice: true,
-    theme: "apple",
+    theme: "emoji",
     timerMode: false,
     timerSeconds: 3,
     timerAnimation: null,
@@ -740,17 +2152,19 @@
     testClock: null,
     midiAccess: null,
     midiStatus: "MIDI not connected",
-    midiDisplay: "panel"
+    midiDisplay: "panel",
+    homeLevel: "intermediate"
   };
 
   const $ = id => document.getElementById(id);
   const els = {
-    overlay: $("overlay"), resultBox: $("resultBox"), homeStartPanel: $("homeStartPanel"), practicePanel: $("practicePanel"), testPanel: $("testPanel"), practiceHomeBtn: $("practiceHomeBtn"), testHomeBtn: $("testHomeBtn"), practiceBackBtn: $("practiceBackBtn"), testBackBtn: $("testBackBtn"), continuePracticeBtn: $("continuePracticeBtn"), homeSetupText: $("homeSetupText"), customPathBtn: $("customPathBtn"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
+    overlay: $("overlay"), resultBox: $("resultBox"), homeStartPanel: $("homeStartPanel"), practicePanel: $("practicePanel"), testPanel: $("testPanel"), practiceHomeBtn: $("practiceHomeBtn"), testHomeBtn: $("testHomeBtn"), settingsHomeBtn: $("settingsHomeBtn"), rush60HomeBtn: $("rush60HomeBtn"), savedPresetsBtn: $("savedPresetsBtn"), homeLevelEasyBtn: $("homeLevelEasyBtn"), homeLevelNormalBtn: $("homeLevelNormalBtn"), homeLevelHardBtn: $("homeLevelHardBtn"), homePracticeModeBtn: $("homePracticeModeBtn"), homeRush30Btn: $("homeRush30Btn"), homeRush60Btn: $("homeRush60Btn"), homeLevelValue: $("homeLevelValue"), settingsLevelEasyBtn: $("settingsLevelEasyBtn"), settingsLevelNormalBtn: $("settingsLevelNormalBtn"), settingsLevelHardBtn: $("settingsLevelHardBtn"), settingsLevelValue: $("settingsLevelValue"), practiceBackBtn: $("practiceBackBtn"), testBackBtn: $("testBackBtn"), continuePracticeBtn: $("continuePracticeBtn"), homeSetupText: $("homeSetupText"), customPathBtn: $("customPathBtn"), customTestBtn: $("customTestBtn"), personalHighscoresBtn: $("personalHighscoresBtn"), homeHighscoresPanel: $("homeHighscoresPanel"), savePresetBtn: $("savePresetBtn"), savePresetHomeBtn: $("savePresetHomeBtn"), customPresetList: $("customPresetList"), noCustomPresets: $("noCustomPresets"), homeRecentPresetList: $("homeRecentPresetList"), homeNoRecentPresets: $("homeNoRecentPresets"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
     feedback: $("feedback"), noteInfo: $("noteInfo"), score: $("scoreEl"), streak: $("streakEl"), best: $("bestEl"), avg: $("avgEl"),
     streakCard: $("streakCard"), bestCard: $("bestCard"), avgCard: $("avgCard"), testModeStat: $("testModeStat"), testModeName: $("testModeName"),
     openSettingsBtn: $("openSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"), settingsBackdrop: $("settingsBackdrop"),
     cheatBtn: $("cheatBtn"), closeCheatBtn: $("closeCheatBtn"), cheatBackdrop: $("cheatBackdrop"), cheatContent: $("cheatContent"),
     settingsSummary: $("settingsSummary"), summaryText: $("summaryText"), noteModeBtn: $("noteModeBtn"), multiModeBtn: $("multiModeBtn"), chordModeBtn: $("chordModeBtn"),
+    notesMainModeBtn: $("notesMainModeBtn"), chordsMainModeBtn: $("chordsMainModeBtn"), noteChordModeValue: $("noteChordModeValue"),
     choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), fullPianoInputBtn: $("fullPianoInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
     keyboardInputCard: $("keyboardInputCard"), keyboardInputValue: $("keyboardInputValue"), keyboardInputOnBtn: $("keyboardInputOnBtn"), keyboardInputOffBtn: $("keyboardInputOffBtn"),
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
@@ -1490,6 +2904,44 @@
     startTimer();
   }
 
+  function homeLevelLabel(level = state.homeLevel) {
+    if (level === "easy") return "Beginner";
+    if (level === "hard") return "Hard";
+    return "Normal";
+  }
+  function homeLevelPreset(level = state.homeLevel) {
+    return ["easy", "intermediate", "hard"].includes(level) ? level : "intermediate";
+  }
+  function setHomeLevel(level, applyNow = false) {
+    state.homeLevel = homeLevelPreset(level);
+    updateHomeLevelControls();
+    updateHomeSetup();
+    if (applyNow) applyPreset(state.homeLevel);
+  }
+  function startHomePractice() {
+    startPractice(homeLevelPreset());
+  }
+  function testLevelSuffix(level = homeLevelPreset()) {
+    if (level === "easy") return "easy";
+    if (level === "hard") return "hard";
+    return "normal";
+  }
+  function startHomeRush(seconds) {
+    const prefix = Number(seconds) === 60 ? "rush60" : "rush30";
+    startTest(`${prefix}_${testLevelSuffix()}`);
+  }
+  function updateHomeLevelControls() {
+    const level = homeLevelPreset();
+    if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.classList.toggle("active", level === "easy");
+    if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.classList.toggle("active", level === "intermediate");
+    if (els.homeLevelHardBtn) els.homeLevelHardBtn.classList.toggle("active", level === "hard");
+    if (els.settingsLevelEasyBtn) els.settingsLevelEasyBtn.classList.toggle("active", level === "easy");
+    if (els.settingsLevelNormalBtn) els.settingsLevelNormalBtn.classList.toggle("active", level === "intermediate");
+    if (els.settingsLevelHardBtn) els.settingsLevelHardBtn.classList.toggle("active", level === "hard");
+    if (els.homeLevelValue) els.homeLevelValue.textContent = homeLevelLabel(level);
+    if (els.settingsLevelValue) els.settingsLevelValue.textContent = homeLevelLabel(level);
+  }
+
   function inputModeLabel() {
     if (state.gameMode === "chord") return "Choices";
     if (state.inputMode === "piano") return "ABC";
@@ -1501,14 +2953,12 @@
     return state.gameMode !== "chord" && state.inputMode !== "fullpiano";
   }
   function updateHomeSetup() {
+    updateHomeLevelControls();
     if (!els.homeSetupText) return;
-    const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
-    const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
-    const input = inputModeLabel();
-    const range = state.aboveLedgers || state.belowLedgers ? `${state.belowLedgers}↓ ${state.aboveLedgers}↑` : "staff only";
-    const smart = state.smartPractice ? "smart" : "random";
-    const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
-    els.homeSetupText.textContent = `${mode} · ${clef} · ${input} · ${range} · ${smart}${timer}`;
+    const preset = PRESETS[homeLevelPreset()] || PRESETS.intermediate;
+    const clef = preset.clef === "grand" ? "Grand" : preset.clef === "treble" ? "Treble" : "Bass";
+    const range = preset.aboveLedgers || preset.belowLedgers ? `${preset.belowLedgers}↓ ${preset.aboveLedgers}↑` : "staff only";
+    els.homeSetupText.textContent = `${homeLevelLabel()} · 5 notes · ${clef} · Piano · ${range}`;
   }
   function updateSummary() {
     const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
@@ -1564,9 +3014,13 @@
     if (state.started) nextQuestion(false);
   }
   function updateModeControls() {
-    els.noteModeBtn.classList.toggle("active", state.gameMode === "note");
-    els.multiModeBtn.classList.toggle("active", state.gameMode === "multi");
+    updateHomeLevelControls();
+    els.noteModeBtn.classList.toggle("active", false);
+    els.multiModeBtn.classList.toggle("active", state.gameMode !== "chord");
     els.chordModeBtn.classList.toggle("active", state.gameMode === "chord");
+    if (els.notesMainModeBtn) els.notesMainModeBtn.classList.toggle("active", state.gameMode !== "chord");
+    if (els.chordsMainModeBtn) els.chordsMainModeBtn.classList.toggle("active", state.gameMode === "chord");
+    if (els.noteChordModeValue) els.noteChordModeValue.textContent = state.gameMode === "chord" ? "Chord mode" : "Notes";
     els.trebleBtn.classList.toggle("active", state.clef === "treble");
     els.bassBtn.classList.toggle("active", state.clef === "bass");
     els.grandBtn.classList.toggle("active", state.clef === "grand");
@@ -1605,7 +3059,7 @@
             ? "ABC display lets you tap letters, press computer keys A–G, or play MIDI if connected."
             : "Choices display lets you tap answer choices, press computer keys A–G, or play MIDI if connected.";
   }
-  function setGameMode(mode) { state.gameMode = mode; if (mode === "chord") state.inputMode = "choice"; refreshAfterSettingChange(); }
+  function setGameMode(mode) { state.gameMode = mode === "chord" ? "chord" : "multi"; if (state.gameMode === "chord") state.inputMode = "choice"; refreshAfterSettingChange(); }
   function setInputMode(mode) {
     if (state.gameMode === "chord") return;
     const allowed = ["choice", "piano", "real", "fullpiano"];
@@ -1651,7 +3105,7 @@
   function setClef(clef) { state.clef = clef; refreshAfterSettingChange(); }
   function setLedgerRange(which, value) { const clean = Math.max(0, Math.min(5, Number(value) || 0)); if (which === "above") state.aboveLedgers = clean; else state.belowLedgers = clean; refreshAfterSettingChange(); }
   function setLedgerFocus(value) { state.ledgerFocusPercent = Math.max(0, Math.min(100, Number(value) || 0)); refreshAfterSettingChange(); }
-  function setMultiCount(value) { state.multiCount = Math.max(2, Math.min(5, Number(value) || 3)); refreshAfterSettingChange(); }
+  function setMultiCount(value) { state.multiCount = Math.max(1, Math.min(5, Number(value) || 5)); state.gameMode = 'multi'; refreshAfterSettingChange(); }
   function setTimerSeconds(value) { state.timerSeconds = Math.max(2, Math.min(8, Number(value) || 3)); updateRangeLabels(); updateSummary(); if (state.started) startTimer(); }
   function setTimerMode(on) { state.timerMode = !!on; toggleButtonState(els.timerBtn, state.timerMode); updateSummary(); if (state.timerMode) startTimer(); else stopTimer(); }
 
@@ -1803,13 +3257,13 @@
   }
   function toggleButtonState(button, on) { button.classList.toggle("on", on); }
 
-  const THEME_VALUES = ["apple", "retro", "neon", "paper", "duo", "piano", "night"];
+  const THEME_VALUES = ["apple", "retro", "neon", "paper", "duo", "piano", "night", "emoji"];
   const THEME_KEY = "noteSprintThemeV1";
   function validTheme(value) { return THEME_VALUES.includes(value); }
   function loadTheme() {
     try {
       const saved = localStorage.getItem(THEME_KEY);
-      return validTheme(saved) ? saved : "apple";
+      return validTheme(saved) ? saved : "emoji";
     } catch { return "apple"; }
   }
   function saveTheme(value) {
@@ -1818,33 +3272,173 @@
   }
 
   function themeLabel(value) {
-    return ({ apple: "Default", night: "Night mode", retro: "Retro Game Boy", neon: "Dark Neon", paper: "Paper Sheet Music", duo: "Duolingo-ish", piano: "Piano Practice Room" })[value] || "Default";
+    return ({ emoji: "Default - Emojis", apple: "Clean", night: "Night mode", retro: "Retro Game Boy", neon: "Dark Neon", paper: "Paper Sheet Music", duo: "Duolingo-ish", piano: "Piano Practice Room" })[value] || "Default - Emojis";
   }
   function applyTheme() {
-    document.body.classList.remove("theme-apple", "theme-retro", "theme-neon", "theme-paper", "theme-duo", "theme-piano", "theme-night");
+    document.body.classList.remove("theme-apple", "theme-retro", "theme-neon", "theme-paper", "theme-duo", "theme-piano", "theme-night", "theme-emoji");
     document.body.classList.add(`theme-${state.theme}`);
     if (els.themeSelect) els.themeSelect.value = state.theme;
     if (els.themeValue) els.themeValue.textContent = themeLabel(state.theme);
     if (state.current) drawStaff(state.current, false);
   }
   function setTheme(value) {
-    state.theme = validTheme(value) ? value : "apple";
+    state.theme = validTheme(value) ? value : "emoji";
     saveTheme(state.theme);
     applyTheme();
     updateSummary();
   }
 
+  const CUSTOM_PRESET_KEY = "noteSprintCustomPresetsV1";
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  }
+  function currentPresetData() {
+    return {
+      gameMode: state.gameMode,
+      inputMode: state.inputMode,
+      realPianoLabels: state.realPianoLabels,
+      clef: state.clef,
+      aboveLedgers: state.aboveLedgers,
+      belowLedgers: state.belowLedgers,
+      ledgerFocusPercent: state.ledgerFocusPercent,
+      multiCount: state.multiCount,
+      includeFirstInv: state.includeFirstInv,
+      includeSecondInv: state.includeSecondInv,
+      includeSevenths: state.includeSevenths,
+      showSolfege: state.showSolfege,
+      correctionTime: state.correctionTime,
+      smartPractice: state.smartPractice,
+      timerMode: state.timerMode,
+      timerSeconds: state.timerSeconds,
+      theme: state.theme
+    };
+  }
+  function cleanPresetData(data) {
+    const out = { ...data };
+    if (!["note", "multi", "chord"].includes(out.gameMode)) out.gameMode = "multi";
+    if (!["choice", "piano", "real", "fullpiano"].includes(out.inputMode)) out.inputMode = "real";
+    if (out.gameMode === "chord") out.inputMode = "choice";
+    if (!["treble", "bass", "grand"].includes(out.clef)) out.clef = "grand";
+    out.aboveLedgers = Math.max(0, Math.min(5, Number(out.aboveLedgers) || 0));
+    out.belowLedgers = Math.max(0, Math.min(5, Number(out.belowLedgers) || 0));
+    out.ledgerFocusPercent = Math.max(0, Math.min(100, Number(out.ledgerFocusPercent) || 0));
+    out.multiCount = Math.max(1, Math.min(5, Number(out.multiCount) || 5));
+    out.timerSeconds = Math.max(2, Math.min(8, Number(out.timerSeconds) || 3));
+    out.realPianoLabels = out.realPianoLabels !== false;
+    out.smartPractice = out.smartPractice !== false;
+    out.timerMode = Boolean(out.timerMode);
+    out.showSolfege = Boolean(out.showSolfege);
+    out.includeFirstInv = Boolean(out.includeFirstInv);
+    out.includeSecondInv = Boolean(out.includeSecondInv);
+    out.includeSevenths = Boolean(out.includeSevenths);
+    out.correctionTime = out.correctionTime === "slow" ? "slow" : "default";
+    out.theme = validTheme(out.theme) ? out.theme : state.theme;
+    return out;
+  }
+  function loadCustomPresets() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(CUSTOM_PRESET_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.filter(p => p && p.id && p.name && p.settings).slice(0, 24) : [];
+    } catch { return []; }
+  }
+  function saveCustomPresets(presets) {
+    try { localStorage.setItem(CUSTOM_PRESET_KEY, JSON.stringify(presets)); }
+    catch {}
+  }
+  function presetSummary(settings) {
+    const s = cleanPresetData(settings);
+    const mode = s.gameMode === "chord" ? "Chords" : s.gameMode === "multi" ? `${s.multiCount} notes` : "Single notes";
+    const clef = s.clef === "grand" ? "Grand" : s.clef === "treble" ? "Treble" : "Bass";
+    const display = s.gameMode === "chord" ? "Choices" : s.inputMode === "piano" ? "ABC" : s.inputMode === "fullpiano" ? "88 Key" : s.inputMode === "real" ? "Piano" : "Choices";
+    const range = s.aboveLedgers || s.belowLedgers ? `${s.belowLedgers}↓ ${s.aboveLedgers}↑ · ${s.ledgerFocusPercent}% ledger` : "staff only";
+    const timer = s.timerMode ? ` · ${s.timerSeconds}s timer` : "";
+    const look = s.theme && s.theme !== "emoji" ? ` · ${themeLabel(s.theme)}` : "";
+    return `${mode} · ${clef} · ${display} · ${range}${timer}${look}`;
+  }
+  function renderCustomPresets() {
+    const presets = loadCustomPresets();
+    if (els.customPresetList) {
+      els.customPresetList.innerHTML = presets.map((preset, index) => `
+        <div class="custom-preset-row">
+          <button class="path-btn path-card preset-card-clean" data-custom-preset-id="${escapeHtml(preset.id)}" type="button">
+            <span class="card-copy"><strong>${escapeHtml(preset.name)}</strong><span>${escapeHtml(presetSummary(preset.settings))}</span></span>
+          </button>
+          <div class="preset-order-actions" aria-label="Preset order controls">
+            <button class="preset-delete preset-move" data-move-preset-id="${escapeHtml(preset.id)}" data-move-dir="up" type="button" ${index === 0 ? "disabled" : ""}>↑</button>
+            <button class="preset-delete preset-move" data-move-preset-id="${escapeHtml(preset.id)}" data-move-dir="down" type="button" ${index === presets.length - 1 ? "disabled" : ""}>↓</button>
+            <button class="preset-delete" data-delete-preset-id="${escapeHtml(preset.id)}" type="button">Delete</button>
+          </div>
+        </div>
+      `).join("");
+    }
+    if (els.homeRecentPresetList) {
+      els.homeRecentPresetList.innerHTML = presets.slice(0, 3).map(preset => `
+        <button class="path-btn path-card preset-card-clean" data-custom-preset-id="${escapeHtml(preset.id)}" type="button">
+          <span class="card-copy"><strong>${escapeHtml(preset.name)}</strong><span>${escapeHtml(presetSummary(preset.settings))}</span></span>
+        </button>
+      `).join("");
+    }
+    if (els.noCustomPresets) els.noCustomPresets.classList.toggle("hidden", presets.length > 0);
+    if (els.homeNoRecentPresets) els.homeNoRecentPresets.classList.toggle("hidden", presets.length > 0);
+  }
+  function saveCurrentAsCustomPreset() {
+    const name = prompt("Preset name?");
+    if (name === null) return;
+    const cleanName = name.trim().replace(/\s+/g, " ").slice(0, 28);
+    if (!cleanName) return;
+    const presets = loadCustomPresets();
+    const existingIndex = presets.findIndex(p => p.name.toLowerCase() === cleanName.toLowerCase());
+    const item = { id: existingIndex >= 0 ? presets[existingIndex].id : String(Date.now()), name: cleanName, settings: currentPresetData(), updatedAt: new Date().toISOString() };
+    if (existingIndex >= 0) presets[existingIndex] = item;
+    else presets.unshift(item);
+    saveCustomPresets(presets.slice(0, 24));
+    renderCustomPresets();
+    alert(`Saved preset: ${cleanName}`);
+  }
+  function startCustomPreset(id) {
+    const preset = loadCustomPresets().find(item => item.id === id);
+    if (!preset) return;
+    const settings = cleanPresetData(preset.settings);
+    applyPresetData(settings);
+    if (settings.theme) setTheme(settings.theme);
+    startPractice();
+  }
+  function moveCustomPreset(id, dir) {
+    const presets = loadCustomPresets();
+    const index = presets.findIndex(item => item.id === id);
+    if (index < 0) return;
+    const target = dir === "up" ? index - 1 : index + 1;
+    if (target < 0 || target >= presets.length) return;
+    const [item] = presets.splice(index, 1);
+    presets.splice(target, 0, item);
+    saveCustomPresets(presets);
+    renderCustomPresets();
+  }
+
+  function deleteCustomPreset(id) {
+    const presets = loadCustomPresets();
+    const preset = presets.find(item => item.id === id);
+    if (!preset) return;
+    if (!confirm(`Delete preset "${preset.name}"?`)) return;
+    saveCustomPresets(presets.filter(item => item.id !== id));
+    renderCustomPresets();
+  }
+
   const PRESETS = {
-    easy: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 50, multiCount: 2, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    intermediate: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 4, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    hard: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 },
-    notFun: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 5, ledgerFocusPercent: 90, multiCount: 5, smartPractice: true, timerMode: true, timerSeconds: 4 }
+    easy: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 45, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 },
+    intermediate: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 },
+    hard: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 5, belowLedgers: 5, ledgerFocusPercent: 80, multiCount: 5, smartPractice: true, timerMode: false, timerSeconds: 3 }
   };
 
   const TEST_PRESETS = {
-    quick: { label: "Quick Test", targetNotes: 25, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
-    rush: { label: "Rush Test", durationMs: 60000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
-    survival: { label: "Survival", lives: 3, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 4, belowLedgers: 4, ledgerFocusPercent: 70, multiCount: 5, smartPractice: false, timerMode: true, timerSeconds: 4 } }
+    rush30_easy: { label: "30s Rush · Beginner", durationMs: 30000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 45, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush30_normal: { label: "30s Rush · Normal", durationMs: 30000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush30_hard: { label: "30s Rush · Hard", durationMs: 30000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 5, belowLedgers: 5, ledgerFocusPercent: 80, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush60_easy: { label: "60s Rush · Beginner", durationMs: 60000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 1, belowLedgers: 1, ledgerFocusPercent: 45, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush60_normal: { label: "60s Rush · Normal", durationMs: 60000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 3, belowLedgers: 3, ledgerFocusPercent: 60, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    rush60_hard: { label: "60s Rush · Hard", durationMs: 60000, settings: { gameMode: "multi", inputMode: "real", realPianoLabels: true, clef: "grand", aboveLedgers: 5, belowLedgers: 5, ledgerFocusPercent: 80, multiCount: 5, smartPractice: false, timerMode: false, timerSeconds: 3 } },
+    custom: { label: "Custom Test", durationMs: 60000, settings: null }
   };
 
   const SCORE_KEY = "noteReaderTestScoresV1";
@@ -1921,6 +3515,31 @@
     });
   }
 
+  function highscoreLine(mode, scores) {
+    const score = scores[mode];
+    const label = TEST_PRESETS[mode]?.label || mode;
+    if (!score) return `<div class="highscore-row"><strong>${escapeHtml(label)}</strong><span>–</span></div>`;
+    return `<div class="highscore-row"><strong>${escapeHtml(label)}</strong><span>${score.score} · ${score.accuracy}% · ${score.correct}/${score.answered}</span></div>`;
+  }
+
+  function renderHomeHighscores() {
+    if (!els.homeHighscoresPanel) return;
+    const scores = loadScores();
+    const modes = ["rush30_easy", "rush30_normal", "rush30_hard", "rush60_easy", "rush60_normal", "rush60_hard", "custom"];
+    els.homeHighscoresPanel.innerHTML = `<div class="highscore-list">${modes.map(mode => highscoreLine(mode, scores)).join("")}</div>`;
+  }
+
+  function togglePersonalHighscores() {
+    if (!els.homeHighscoresPanel) return;
+    const show = els.homeHighscoresPanel.classList.contains("hidden");
+    if (show) renderHomeHighscores();
+    els.homeHighscoresPanel.classList.toggle("hidden", !show);
+    if (els.personalHighscoresBtn) {
+      const sub = els.personalHighscoresBtn.querySelector("span");
+      if (sub) sub.textContent = show ? "Hide best scores per rush setting" : "Show best scores per rush setting";
+    }
+  }
+
   function startPractice(presetName = null) {
     resetTestState();
     if (presetName) applyPreset(presetName);
@@ -1940,7 +3559,16 @@
     const test = TEST_PRESETS[mode];
     if (!test) return;
     resetTestState();
-    applyPresetData(test.settings);
+    if (test.settings) {
+      applyPresetData(test.settings);
+    } else {
+      state.gameMode = "multi";
+      if (!["choice", "piano", "real", "fullpiano"].includes(state.inputMode)) state.inputMode = "real";
+      state.realPianoLabels = state.realPianoLabels !== false;
+      updateRangeLabels();
+      updateModeControls();
+      updateSummary();
+    }
     if (els.resultBox) els.resultBox.classList.add("hidden");
     state.testMode = mode;
     state.testTargetNotes = test.targetNotes || 0;
@@ -1962,9 +3590,9 @@
 
   function startTestClock() {
     clearTestClock();
-    if (state.testMode !== "rush") return;
+    if (!TEST_PRESETS[state.testMode]?.durationMs) return;
     state.testClock = setInterval(() => {
-      if (state.testMode !== "rush" || !state.started) { clearTestClock(); return; }
+      if (!TEST_PRESETS[state.testMode]?.durationMs || !state.started) { clearTestClock(); return; }
       if (performance.now() >= state.testEndsAt) {
         endTest("time");
       } else {
@@ -1978,10 +3606,9 @@
   }
 
   function testModeDisplayName(mode = state.testMode) {
-    if (mode === "quick") return "QUICK TEST MODE";
-    if (mode === "rush") return "60 SECONDS RUSH MODE";
-    if (mode === "survival") return "SURVIVAL MODE";
-    return "TEST MODE";
+    const test = TEST_PRESETS[mode];
+    if (!test) return "TEST MODE";
+    return test.label.toUpperCase();
   }
 
   function testAccuracy() {
@@ -1989,12 +3616,11 @@
   }
 
   function testStatusText() {
-    if (state.testMode === "quick") return `Quick Test · ${state.testAnsweredNotes}/${state.testTargetNotes} notes · ${testAccuracy()}%`;
-    if (state.testMode === "rush") {
+    const test = TEST_PRESETS[state.testMode];
+    if (test?.durationMs) {
       const seconds = Math.max(0, Math.ceil((state.testEndsAt - performance.now()) / 1000));
-      return `Rush · ${seconds}s left · score ${state.score} · ${testAccuracy()}%`;
+      return `${test.label} · ${seconds}s left · score ${state.score} · ${testAccuracy()}%`;
     }
-    if (state.testMode === "survival") return `Survival · ${Math.max(0, state.testLives)} lives · score ${state.score} · ${testAccuracy()}%`;
     return "";
   }
 
@@ -2008,20 +3634,12 @@
     state.testWrongNotes += wrong;
     state.testAnsweredNotes += correct + wrong;
 
-    if (state.testMode === "survival" && wrong > 0) {
-      state.testLives -= wrong;
-      if (state.testLives <= 0) {
-        endTest("out of lives");
-        return true;
-      }
-    }
-
-    if (state.testMode === "quick" && state.testAnsweredNotes >= state.testTargetNotes) {
+    if (TEST_PRESETS[state.testMode]?.targetNotes && state.testAnsweredNotes >= state.testTargetNotes) {
       endTest("complete");
       return true;
     }
 
-    if (state.testMode === "rush" && performance.now() >= state.testEndsAt) {
+    if (TEST_PRESETS[state.testMode]?.durationMs && performance.now() >= state.testEndsAt) {
       endTest("time");
       return true;
     }
@@ -2043,7 +3661,7 @@
     const accuracy = testAccuracy();
     const detail = `${state.testCorrectNotes}/${state.testAnsweredNotes} correct`;
     const scores = loadScores();
-    const finalScore = Math.max(0, Math.round(state.score + state.testCorrectNotes * 2 - state.testWrongNotes * 3 + (mode === "survival" ? Math.max(0, state.testLives) * 30 : 0)));
+    const finalScore = Math.max(0, Math.round(state.score + state.testCorrectNotes * 2 - state.testWrongNotes * 3));
     const old = scores[mode];
     const isBest = !old || finalScore > old.score;
     if (isBest) {
@@ -2052,7 +3670,7 @@
     }
 
     if (els.resultBox) {
-      const reasonText = reason === "time" ? "Time is up" : reason === "out of lives" ? "No lives left" : "Finished";
+      const reasonText = reason === "time" ? "Time is up" : "Finished";
       els.resultBox.innerHTML = `<strong>${label}: ${finalScore} ${isBest ? "★ new best" : ""}</strong><span>${reasonText} · ${detail} · ${accuracy}% accuracy</span>`;
       els.resultBox.classList.remove("hidden");
     }
@@ -2063,6 +3681,7 @@
     els.playPreviousBtn.disabled = false;
     els.skipBtn.disabled = false;
     updateHighScoreUI();
+    if (els.homeHighscoresPanel && !els.homeHighscoresPanel.classList.contains("hidden")) renderHomeHighscores();
     closeSettings();
     closeCheatSheet();
     els.overlay.style.display = "flex";
@@ -2295,27 +3914,57 @@
     if (panel) panel.classList.remove("hidden");
   }
   function showHomeStart() { showHomePanel(els.homeStartPanel); }
-  function showPracticeChoices() { showHomePanel(els.practicePanel); }
+  function showPracticeChoices() { renderCustomPresets(); showHomePanel(els.practicePanel); }
   function showTestChoices() { showHomePanel(els.testPanel); }
 
   function startCustom() {
-    startPractice();
     openSettings();
   }
 
   els.homeBtn.addEventListener("click", showHome);
-  if (els.practiceHomeBtn) els.practiceHomeBtn.addEventListener("click", showPracticeChoices);
-  if (els.testHomeBtn) els.testHomeBtn.addEventListener("click", showTestChoices);
+  if (els.practiceHomeBtn) els.practiceHomeBtn.addEventListener("click", startHomePractice);
+  if (els.testHomeBtn) els.testHomeBtn.addEventListener("click", () => startTest("rush30"));
+  if (els.settingsHomeBtn) els.settingsHomeBtn.addEventListener("click", openSettings);
+  if (els.rush60HomeBtn) els.rush60HomeBtn.addEventListener("click", () => startTest("rush60"));
+  if (els.savedPresetsBtn) els.savedPresetsBtn.addEventListener("click", showPracticeChoices);
+  if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy"));
+  if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate"));
+  if (els.homeLevelHardBtn) els.homeLevelHardBtn.addEventListener("click", () => setHomeLevel("hard"));
+  if (els.settingsLevelEasyBtn) els.settingsLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy", true));
+  if (els.settingsLevelNormalBtn) els.settingsLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate", true));
+  if (els.settingsLevelHardBtn) els.settingsLevelHardBtn.addEventListener("click", () => setHomeLevel("hard", true));
   if (els.practiceBackBtn) els.practiceBackBtn.addEventListener("click", showHomeStart);
   if (els.testBackBtn) els.testBackBtn.addEventListener("click", showHomeStart);
   if (els.continuePracticeBtn) els.continuePracticeBtn.addEventListener("click", () => startPractice());
   if (els.customPathBtn) els.customPathBtn.addEventListener("click", startCustom);
+  if (els.customTestBtn) els.customTestBtn.addEventListener("click", () => startTest("custom"));
+  if (els.personalHighscoresBtn) els.personalHighscoresBtn.addEventListener("click", togglePersonalHighscores);
+  if (els.savePresetBtn) els.savePresetBtn.addEventListener("click", saveCurrentAsCustomPreset);
+  if (els.savePresetHomeBtn) els.savePresetHomeBtn.addEventListener("click", saveCurrentAsCustomPreset);
+  if (els.customPresetList) els.customPresetList.addEventListener("click", e => {
+    const startBtn = e.target.closest("[data-custom-preset-id]");
+    const moveBtn = e.target.closest("[data-move-preset-id]");
+    const deleteBtn = e.target.closest("[data-delete-preset-id]");
+    if (moveBtn) { moveCustomPreset(moveBtn.dataset.movePresetId, moveBtn.dataset.moveDir); return; }
+    if (deleteBtn) { deleteCustomPreset(deleteBtn.dataset.deletePresetId); return; }
+    if (startBtn) startCustomPreset(startBtn.dataset.customPresetId);
+  });
+  if (els.homeRecentPresetList) els.homeRecentPresetList.addEventListener("click", e => {
+    const startBtn = e.target.closest("[data-custom-preset-id]");
+    if (startBtn) startCustomPreset(startBtn.dataset.customPresetId);
+  });
   document.querySelectorAll("[data-preset]").forEach(btn => {
     btn.addEventListener("click", () => startPractice(btn.dataset.preset));
   });
   document.querySelectorAll("[data-test]").forEach(btn => {
     btn.addEventListener("click", () => startTest(btn.dataset.test));
   });
+  if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy"));
+  if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate"));
+  if (els.homeLevelHardBtn) els.homeLevelHardBtn.addEventListener("click", () => setHomeLevel("hard"));
+  if (els.homePracticeModeBtn) els.homePracticeModeBtn.addEventListener("click", startHomePractice);
+  if (els.homeRush30Btn) els.homeRush30Btn.addEventListener("click", () => startHomeRush(30));
+  if (els.homeRush60Btn) els.homeRush60Btn.addEventListener("click", () => startHomeRush(60));
   els.openSettingsBtn.addEventListener("click", openSettings);
   els.cheatBtn.addEventListener("click", openCheatSheet);
   els.closeCheatBtn.addEventListener("click", closeCheatSheet);
@@ -2323,9 +3972,11 @@
   els.settingsSummary.addEventListener("click", openSettings);
   els.closeSettingsBtn.addEventListener("click", closeSettings);
   els.settingsBackdrop.addEventListener("click", e => { if (e.target === els.settingsBackdrop) closeSettings(); });
-  els.noteModeBtn.addEventListener("click", () => setGameMode("note"));
+  els.noteModeBtn.addEventListener("click", () => setGameMode("multi"));
   els.multiModeBtn.addEventListener("click", () => setGameMode("multi"));
   els.chordModeBtn.addEventListener("click", () => setGameMode("chord"));
+  if (els.notesMainModeBtn) els.notesMainModeBtn.addEventListener("click", () => setGameMode("multi"));
+  if (els.chordsMainModeBtn) els.chordsMainModeBtn.addEventListener("click", () => setGameMode("chord"));
   els.choiceInputBtn.addEventListener("click", () => setInputMode("choice"));
   els.pianoInputBtn.addEventListener("click", () => setInputMode("piano"));
   els.realInputBtn.addEventListener("click", () => setInputMode("real"));
@@ -2371,6 +4022,8 @@
   updateSummary();
   updateHighScoreUI();
   updateTestControls();
+  renderCustomPresets();
+  updateHomeLevelControls();
   drawStaff(null);
 })();
 </script>
