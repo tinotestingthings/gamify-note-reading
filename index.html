@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoteSprint v2.0</title>
+  <title>NoteSprint v2.7</title>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -1413,7 +1413,7 @@
     }
     .preset-move:disabled {
       opacity: 0.35;
-      pointer-events: none;
+      pointer-events: auto;
     }
 
     /* v1.09-blue mode: visible Notes / Chord mode choice in main settings */
@@ -1789,6 +1789,243 @@
       .home-logo-icon { width:42px; height:42px; }
     }
 
+    /* v1.09 blue accidentals */
+    .segmented.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #accidentalsRandomBtn { font-size: 11px; }
+
+    /* v1.09 blue records-party: new personal record celebration */
+    .party-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      pointer-events: none;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(1px);
+    }
+    .party-overlay.hidden { display: none !important; }
+    .party-card {
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+      min-width: min(82vw, 330px);
+      border-radius: 28px;
+      padding: 22px 22px 20px;
+      text-align: center;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .party-card .party-emoji {
+      font-size: 46px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .party-card strong {
+      display: block;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 1000;
+      letter-spacing: -0.055em;
+    }
+    .party-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .party-burst {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .party-burst span {
+      position: absolute;
+      font-size: 23px;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.12));
+    }
+    .party-run .party-card {
+      animation: partyCardPop 680ms cubic-bezier(.2,.9,.2,1) both;
+    }
+    .party-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .party-actions button {
+      position: relative;
+      z-index: 20;
+      pointer-events: auto;
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 10px;
+      font-weight: 950;
+      cursor: pointer;
+      background: rgba(0,122,255,0.12);
+      color: var(--blue);
+    }
+    .party-actions button:last-child {
+      background: var(--blue);
+      color: white;
+    }
+    .party-run .party-burst span {
+      animation: partyConfetti 1.85s cubic-bezier(.14,.78,.21,1) var(--d) both;
+    }
+    @keyframes partyCardPop {
+      0% { opacity: 0; transform: scale(0.72) translateY(20px); }
+      55% { opacity: 1; transform: scale(1.06) translateY(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes partyConfetti {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.35) rotate(0deg); }
+      10% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.1) rotate(var(--r)); }
+    }
+    body.theme-night .party-card,
+    body.theme-neon .party-card {
+      background: rgba(17,24,39,0.94);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    /* v1.09 blue score-pop: live score +1/-1 animation */
+    .score-stat {
+      position: relative;
+      overflow: visible;
+    }
+    .score-delta {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      z-index: 4;
+      font-size: 22px;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.16);
+      animation: scoreDeltaPop 780ms cubic-bezier(.16,.9,.2,1) both;
+    }
+    .score-delta.plus { color: var(--green); }
+    .score-delta.minus { color: var(--red); }
+    @keyframes scoreDeltaPop {
+      0% { opacity: 0; transform: translate(-50%, -35%) scale(0.55); }
+      16% { opacity: 1; transform: translate(-50%, -72%) scale(1.18); }
+      58% { opacity: 1; transform: translate(-50%, -110%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -150%) scale(0.88); }
+    }
+
+    /* v1.09 blue reset-highscores */
+    .danger-zone-card {
+      border-color: rgba(255,59,48,0.18) !important;
+      background: rgba(255,59,48,0.045) !important;
+    }
+    .danger-btn {
+      width: 100%;
+      border: 1px solid rgba(255,59,48,0.26);
+      border-radius: 14px;
+      padding: 11px 12px;
+      background: rgba(255,59,48,0.10);
+      color: var(--red);
+      font-weight: 950;
+      cursor: pointer;
+    }
+    .danger-btn.confirm {
+      background: var(--red);
+      color: white;
+      border-color: var(--red);
+      animation: confirmPulse 900ms ease-in-out infinite alternate;
+    }
+    @keyframes confirmPulse {
+      from { transform: scale(1); box-shadow: 0 0 0 rgba(255,59,48,0); }
+      to { transform: scale(1.015); box-shadow: 0 10px 22px rgba(255,59,48,0.22); }
+    }
+
+    /* v2.1: clearer settings sections + mistake practice */
+    .settings-group-title {
+      grid-column: 1 / -1;
+      margin: 9px 2px 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 1000;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .settings-group-title.outside {
+      width: 100%;
+      margin: 12px 2px 6px;
+    }
+    .mistake-practice-card {
+      border-color: rgba(52,199,89,0.18) !important;
+      background: rgba(52,199,89,0.045) !important;
+    }
+    .mistake-practice-card .mini-danger:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .mini-danger {
+      width: 100%;
+      margin-top: 7px;
+      border: 1px solid rgba(255,59,48,0.18);
+      border-radius: 13px;
+      padding: 9px 10px;
+      background: rgba(255,59,48,0.07);
+      color: var(--red);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* v2.2: mistake level preset support */
+    #settingsLevelMistakesBtn::before { content: "↻ "; }
+    .mistake-practice-card .settings-note { margin-top: 6px; }
+
+    /* v2.3: mistake level placement and empty state */
+    #settingsLevelMistakesBtn.empty {
+      color: var(--muted) !important;
+      background: rgba(120,120,128,0.10) !important;
+      border-color: rgba(120,120,128,0.18) !important;
+      opacity: 0.72;
+    }
+    .clear-mistakes-top {
+      width: 100%;
+      margin-top: 8px;
+    }
+    #mistakeTopNote {
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* v2.4: mistake level on homepage */
+    .level-start-row {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+    .level-start-row .level-start-btn {
+      min-height: 58px !important;
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+    .level-start-row .level-start-btn strong {
+      font-size: clamp(12px, 3.5vw, 16px) !important;
+    }
+    #homeLevelMistakesBtn.empty {
+      color: var(--muted) !important;
+      background: rgba(120,120,128,0.10) !important;
+      border-color: rgba(120,120,128,0.18) !important;
+      opacity: 0.72;
+    }
+    #homeLevelMistakesBtn strong::before { content: "↻ "; }
+
   </style>
 </head>
 <body>
@@ -1814,7 +2051,20 @@
       <span>☰</span>
     </button>
 
-    <div class="settings-backdrop hidden" id="settingsBackdrop">
+    <div class="party-overlay hidden" id="partyOverlay" aria-hidden="true">
+    <div class="party-burst" id="partyBurst"></div>
+    <div class="party-card">
+      <div class="party-emoji">🎉</div>
+      <strong>New personal record!</strong>
+      <span id="partyText">Great score</span>
+      <div class="party-actions">
+        <button id="partyCloseBtn" type="button" onclick="window.noteSprintHideParty && window.noteSprintHideParty()">Close</button>
+        <button id="partyGoAgainBtn" type="button" onclick="window.noteSprintGoAgain && window.noteSprintGoAgain()">Go again</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-backdrop hidden" id="settingsBackdrop">
       <section class="card controls settings-panel" aria-label="Practice settings">
         <div class="settings-top">
           <h2>Settings</h2>
@@ -1822,15 +2072,20 @@
         </div>
 
         <div class="settings-basic" aria-label="Basic settings">
+          <div class="settings-group-title">Basic</div>
           <div class="range-card wide">
             <label>Practice level <span class="range-value" id="settingsLevelValue">Normal</span></label>
-            <div class="segmented three" aria-label="Practice level">
+            <div class="segmented four" aria-label="Practice level">
               <button id="settingsLevelEasyBtn" type="button">Beginner</button>
               <button id="settingsLevelNormalBtn" class="active" type="button">Normal</button>
               <button id="settingsLevelHardBtn" type="button">Hard</button>
+              <button id="settingsLevelMistakesBtn" type="button">Mistakes</button>
             </div>
+            <button id="clearMistakesBtn" class="secondary mini-danger clear-mistakes-top" type="button">Clear mistakes</button>
+            <div class="settings-note" id="mistakeTopNote">Mistakes saved: 0</div>
           </div>
 
+          <div class="settings-group-title">Notation</div>
           <div class="segmented three" aria-label="Clef mode">
             <button id="trebleBtn" type="button">Treble</button>
             <button id="bassBtn" type="button">Bass</button>
@@ -1845,6 +2100,17 @@
             </div>
           </div>
 
+          <div class="range-card wide">
+            <label>Accidentals <span class="range-value" id="accidentalModeValue">Off</span></label>
+            <div class="segmented four" aria-label="Accidental mode">
+              <button id="accidentalsOffBtn" class="active" type="button">Off</button>
+              <button id="accidentalsSharpBtn" type="button">Sharps</button>
+              <button id="accidentalsFlatBtn" type="button">Flats</button>
+              <button id="accidentalsRandomBtn" type="button">Random key</button>
+            </div>
+          </div>
+
+          <div class="settings-group-title">Appearance & presets</div>
           <div class="range-card wide">
             <label for="themeSelect">Look <span class="range-value" id="themeValue">Default</span></label>
             <select id="themeSelect" class="select-control" aria-label="Visual style">
@@ -1866,9 +2132,10 @@
         </div>
 
         <details class="advanced-settings" id="advancedSettings">
-          <summary>Advanced settings</summary>
+          <summary>More settings</summary>
           <div class="advanced-body">
 
+            <div class="settings-group-title">Input</div>
             <div class="segmented three hidden" aria-label="Game mode">
               <button id="noteModeBtn" type="button">Notes</button>
               <button id="multiModeBtn" class="active" type="button">Multiple</button>
@@ -1921,6 +2188,7 @@
               </div>
             </div>
 
+            <div class="settings-group-title">Range & timing</div>
             <div class="range-grid" aria-label="Ledger line range settings">
               <div class="range-card">
                 <label for="aboveRange">Above staff <span class="range-value" id="aboveValue">4 ledgers</span></label>
@@ -1953,6 +2221,7 @@
 
             <div class="settings-note" id="rangeHelp">Ledger focus controls the split: e.g. 70% outside-staff notes, 30% normal staff.</div>
 
+            <div class="settings-group-title">Learning options</div>
             <div class="toggles hidden" id="chordSettings">
               <button id="firstInvBtn" class="pill" type="button">1st inversion</button>
               <button id="secondInvBtn" class="pill" type="button">2nd inversion</button>
@@ -1965,15 +2234,28 @@
               <button id="timerBtn" class="pill" type="button">Timer mode</button>
             </div>
 
+            <div class="range-card wide mistake-practice-card">
+              <label>Mistakes <span class="range-value" id="mistakeCountValue">0 saved</span></label>
+              <div class="settings-note">Wrong notes are collected automatically. Select Mistakes as a level to practise about 50% saved mistakes and 50% fresh ±1 ledger notes.</div>
+            </div>
+
+            <div class="settings-group-title">Rush & data</div>
             <div class="range-card wide">
               <label>Tests <span class="range-value">Current settings</span></label>
               <button id="customTestBtn" class="save-preset-btn" type="button">Start custom 60s test</button>
+            </div>
+
+            <div class="range-card wide danger-zone-card">
+              <label>Highscores <span class="range-value" id="resetHighscoresValue">Saved locally</span></label>
+              <button id="resetHighscoresBtn" class="danger-btn" type="button">Reset highscores</button>
+              <div class="settings-note">This only clears Rush personal records on this device.</div>
             </div>
 
             <div class="settings-note">Advanced controls are for custom drills and saved presets. Default practice always uses 5-note runs.</div>
           </div>
         </details>
 
+        <div class="settings-group-title outside">My presets</div>
         <div class="range-card wide settings-preset-card">
           <label>My presets <span class="range-value">Tap to start · delete here</span></label>
           <div class="custom-preset-list settings-preset-list" id="customPresetList"></div>
@@ -1983,7 +2265,7 @@
     </div>
 
     <section class="card stats" aria-label="Stats">
-      <div class="stat"><div class="label">Score</div><div class="value" id="scoreEl">0</div></div>
+      <div class="stat score-stat" id="scoreStat"><div class="label">Score</div><div class="value" id="scoreEl">0</div></div>
       <div class="stat practice-stat" id="streakCard"><div class="label">Streak</div><div class="value" id="streakEl">0</div></div>
       <div class="stat practice-stat" id="bestCard"><div class="label">Best</div><div class="value" id="bestEl">0</div></div>
       <div class="stat practice-stat" id="avgCard"><div class="label">Avg time</div><div class="value" id="avgEl">–</div></div>
@@ -2044,6 +2326,7 @@
             <button class="path-btn level-start-btn" id="homeLevelEasyBtn" type="button"><strong>Beginner</strong></button>
             <button class="path-btn level-start-btn" id="homeLevelNormalBtn" type="button"><strong>Normal</strong></button>
             <button class="path-btn level-start-btn" id="homeLevelHardBtn" type="button"><strong>Hard</strong></button>
+            <button class="path-btn level-start-btn" id="homeLevelMistakesBtn" type="button"><strong>Mistakes</strong></button>
           </div>
 
           <div class="home-section-title">Start</div>
@@ -2077,7 +2360,7 @@
       </section>
 
       <div class="storage-note">
-        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 1.09 blue logo transparent.
+        <strong>Privacy</strong> Scores stay in local browser storage on this device only. Clear them by clearing site data in your browser. <a href="https://tinotestingthings.github.io/gamify-note-reading/" target="_blank" rel="noopener noreferrer">Github</a>. Version 2.7.
       </div>
     </div>
   </div>
@@ -2122,6 +2405,7 @@
     correctionTime: "default",
     smartPractice: true,
     theme: "emoji",
+    accidentalMode: "off",
     timerMode: false,
     timerSeconds: 3,
     timerAnimation: null,
@@ -2150,21 +2434,24 @@
     testLives: 0,
     testEndsAt: 0,
     testClock: null,
+    lastCompletedTestMode: null,
     midiAccess: null,
     midiStatus: "MIDI not connected",
     midiDisplay: "panel",
-    homeLevel: "intermediate"
+    homeLevel: "intermediate",
+    mistakePractice: false
   };
 
   const $ = id => document.getElementById(id);
   const els = {
-    overlay: $("overlay"), resultBox: $("resultBox"), homeStartPanel: $("homeStartPanel"), practicePanel: $("practicePanel"), testPanel: $("testPanel"), practiceHomeBtn: $("practiceHomeBtn"), testHomeBtn: $("testHomeBtn"), settingsHomeBtn: $("settingsHomeBtn"), rush60HomeBtn: $("rush60HomeBtn"), savedPresetsBtn: $("savedPresetsBtn"), homeLevelEasyBtn: $("homeLevelEasyBtn"), homeLevelNormalBtn: $("homeLevelNormalBtn"), homeLevelHardBtn: $("homeLevelHardBtn"), homePracticeModeBtn: $("homePracticeModeBtn"), homeRush30Btn: $("homeRush30Btn"), homeRush60Btn: $("homeRush60Btn"), homeLevelValue: $("homeLevelValue"), settingsLevelEasyBtn: $("settingsLevelEasyBtn"), settingsLevelNormalBtn: $("settingsLevelNormalBtn"), settingsLevelHardBtn: $("settingsLevelHardBtn"), settingsLevelValue: $("settingsLevelValue"), practiceBackBtn: $("practiceBackBtn"), testBackBtn: $("testBackBtn"), continuePracticeBtn: $("continuePracticeBtn"), homeSetupText: $("homeSetupText"), customPathBtn: $("customPathBtn"), customTestBtn: $("customTestBtn"), personalHighscoresBtn: $("personalHighscoresBtn"), homeHighscoresPanel: $("homeHighscoresPanel"), savePresetBtn: $("savePresetBtn"), savePresetHomeBtn: $("savePresetHomeBtn"), customPresetList: $("customPresetList"), noCustomPresets: $("noCustomPresets"), homeRecentPresetList: $("homeRecentPresetList"), homeNoRecentPresets: $("homeNoRecentPresets"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
-    feedback: $("feedback"), noteInfo: $("noteInfo"), score: $("scoreEl"), streak: $("streakEl"), best: $("bestEl"), avg: $("avgEl"),
+    overlay: $("overlay"), resultBox: $("resultBox"), homeStartPanel: $("homeStartPanel"), practicePanel: $("practicePanel"), testPanel: $("testPanel"), practiceHomeBtn: $("practiceHomeBtn"), testHomeBtn: $("testHomeBtn"), settingsHomeBtn: $("settingsHomeBtn"), rush60HomeBtn: $("rush60HomeBtn"), savedPresetsBtn: $("savedPresetsBtn"), homeLevelEasyBtn: $("homeLevelEasyBtn"), homeLevelNormalBtn: $("homeLevelNormalBtn"), homeLevelHardBtn: $("homeLevelHardBtn"), homeLevelMistakesBtn: $("homeLevelMistakesBtn"), homePracticeModeBtn: $("homePracticeModeBtn"), homeRush30Btn: $("homeRush30Btn"), homeRush60Btn: $("homeRush60Btn"), homeLevelValue: $("homeLevelValue"), settingsLevelEasyBtn: $("settingsLevelEasyBtn"), settingsLevelNormalBtn: $("settingsLevelNormalBtn"), settingsLevelHardBtn: $("settingsLevelHardBtn"), settingsLevelMistakesBtn: $("settingsLevelMistakesBtn"), settingsLevelValue: $("settingsLevelValue"), practiceBackBtn: $("practiceBackBtn"), testBackBtn: $("testBackBtn"), continuePracticeBtn: $("continuePracticeBtn"), homeSetupText: $("homeSetupText"), customPathBtn: $("customPathBtn"), customTestBtn: $("customTestBtn"), clearMistakesBtn: $("clearMistakesBtn"), mistakeCountValue: $("mistakeCountValue"), mistakeTopNote: $("mistakeTopNote"), personalHighscoresBtn: $("personalHighscoresBtn"), homeHighscoresPanel: $("homeHighscoresPanel"), savePresetBtn: $("savePresetBtn"), savePresetHomeBtn: $("savePresetHomeBtn"), customPresetList: $("customPresetList"), noCustomPresets: $("noCustomPresets"), homeRecentPresetList: $("homeRecentPresetList"), homeNoRecentPresets: $("homeNoRecentPresets"), homeBtn: $("homeBtn"), svg: $("staffSvg"), staffWrap: $("staffWrap"), answers: $("answers"),
+    feedback: $("feedback"), noteInfo: $("noteInfo"), score: $("scoreEl"), scoreStat: $("scoreStat"), streak: $("streakEl"), best: $("bestEl"), avg: $("avgEl"),
     streakCard: $("streakCard"), bestCard: $("bestCard"), avgCard: $("avgCard"), testModeStat: $("testModeStat"), testModeName: $("testModeName"),
     openSettingsBtn: $("openSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"), settingsBackdrop: $("settingsBackdrop"),
     cheatBtn: $("cheatBtn"), closeCheatBtn: $("closeCheatBtn"), cheatBackdrop: $("cheatBackdrop"), cheatContent: $("cheatContent"),
     settingsSummary: $("settingsSummary"), summaryText: $("summaryText"), noteModeBtn: $("noteModeBtn"), multiModeBtn: $("multiModeBtn"), chordModeBtn: $("chordModeBtn"),
     notesMainModeBtn: $("notesMainModeBtn"), chordsMainModeBtn: $("chordsMainModeBtn"), noteChordModeValue: $("noteChordModeValue"),
+    accidentalModeValue: $("accidentalModeValue"), accidentalsOffBtn: $("accidentalsOffBtn"), accidentalsSharpBtn: $("accidentalsSharpBtn"), accidentalsFlatBtn: $("accidentalsFlatBtn"), accidentalsRandomBtn: $("accidentalsRandomBtn"),
     choiceInputBtn: $("choiceInputBtn"), pianoInputBtn: $("pianoInputBtn"), realInputBtn: $("realInputBtn"), fullPianoInputBtn: $("fullPianoInputBtn"), computerInputBtn: $("computerInputBtn"), midiInputBtn: $("midiInputBtn"),
     keyboardInputCard: $("keyboardInputCard"), keyboardInputValue: $("keyboardInputValue"), keyboardInputOnBtn: $("keyboardInputOnBtn"), keyboardInputOffBtn: $("keyboardInputOffBtn"),
     realLabelsCard: $("realLabelsCard"), realLabelsValue: $("realLabelsValue"), realLabelsShowBtn: $("realLabelsShowBtn"), realLabelsHideBtn: $("realLabelsHideBtn"),
@@ -2179,13 +2466,19 @@
     timerRail: $("timerRail"), timerFill: $("timerFill"),
     multiCountCard: $("multiCountCard"), timerSecCard: $("timerSecCard"), rangeHelp: $("rangeHelp"), chordSettings: $("chordSettings"), firstInvBtn: $("firstInvBtn"),
     secondInvBtn: $("secondInvBtn"), seventhBtn: $("seventhBtn"), solfegeBtn: $("solfegeBtn"), smartBtn: $("smartBtn"), timerBtn: $("timerBtn"),
-    soundBtn: $("soundBtn"), actionsRow: $("actionsRow"), playPreviousBtn: $("playPreviousBtn"), playAgainBtn: $("playAgainBtn"), skipBtn: $("skipBtn")
+    soundBtn: $("soundBtn"), actionsRow: $("actionsRow"), playPreviousBtn: $("playPreviousBtn"), playAgainBtn: $("playAgainBtn"), skipBtn: $("skipBtn"), resetHighscoresBtn: $("resetHighscoresBtn"), resetHighscoresValue: $("resetHighscoresValue"), partyOverlay: $("partyOverlay"), partyBurst: $("partyBurst"), partyText: $("partyText"), partyCloseBtn: $("partyCloseBtn"), partyGoAgainBtn: $("partyGoAgainBtn")
   };
 
   function parseNote(note) {
-    const letter = note[0];
-    const octave = Number(note.slice(1));
-    return { note, letter, octave };
+    const m = String(note).match(/^([A-G])([#♯b♭]?)(-?\d+)$/);
+    if (!m) {
+      const letter = String(note)[0] || "C";
+      const octave = Number(String(note).slice(1)) || 4;
+      return { note, letter, accidentalText: "", accidental: 0, octave };
+    }
+    const accidentalText = m[2] || "";
+    const accidental = accidentalText === "#" || accidentalText === "♯" ? 1 : accidentalText === "b" || accidentalText === "♭" ? -1 : 0;
+    return { note: String(note), letter: m[1], accidentalText, accidental, octave: Number(m[3]) };
   }
   function diatonicIndex(note) {
     const n = typeof note === "string" ? parseNote(note) : note;
@@ -2198,7 +2491,7 @@
   }
   function midiNumber(note) {
     const n = typeof note === "string" ? parseNote(note) : note;
-    return (n.octave + 1) * 12 + SEMITONES[n.letter];
+    return (n.octave + 1) * 12 + SEMITONES[n.letter] + (Number(n.accidental) || 0);
   }
   function frequency(note) { return 440 * Math.pow(2, (midiNumber(note) - 69) / 12); }
   function midiAnswerName(midi) {
@@ -2208,7 +2501,15 @@
     const name = midiAnswerName(midi);
     return name.includes("#") ? name : name[0];
   }
-  function choiceLabel(letter) { return state.showSolfege ? `${letter}<small>${SOLFEGE[letter]}</small>` : letter; }
+  function displayChoiceValue(value) {
+    const label = state.current?.choiceLabels?.[value] || String(value).replaceAll("#", "♯").replaceAll("b", "♭");
+    return label;
+  }
+  function choiceLabel(value) {
+    const label = displayChoiceValue(value);
+    const root = label[0];
+    return state.showSolfege && SOLFEGE[root] ? `${label}<small>${SOLFEGE[root]}</small>` : label;
+  }
   function chordChoiceLabel(label) { const root = label[0]; return state.showSolfege ? `${label}<small>${SOLFEGE[root] || ""}</small>` : label; }
   function shuffle(array) {
     const a = [...array];
@@ -2247,7 +2548,124 @@
     const slowPenalty = avgMs ? Math.max(0, (avgMs - 1400) / 1300) : 0;
     return Math.max(0.35, Math.min(9, 1 + rec.wrong * 2.4 + rec.slow * 0.9 + slowPenalty - rec.itemStreak * 0.28));
   }
-  function noteLearningKey(note) { return `note:${note.staff}:${note.note}`; }
+
+  const ACCIDENTAL_KEYS = {
+    sharp: [
+      { name: "G", count: 1, signs: { F: 1 } },
+      { name: "D", count: 2, signs: { F: 1, C: 1 } },
+      { name: "A", count: 3, signs: { F: 1, C: 1, G: 1 } },
+      { name: "E", count: 4, signs: { F: 1, C: 1, G: 1, D: 1 } },
+      { name: "B", count: 5, signs: { F: 1, C: 1, G: 1, D: 1, A: 1 } }
+    ],
+    flat: [
+      { name: "F", count: 1, signs: { B: -1 } },
+      { name: "B♭", count: 2, signs: { B: -1, E: -1 } },
+      { name: "E♭", count: 3, signs: { B: -1, E: -1, A: -1 } },
+      { name: "A♭", count: 4, signs: { B: -1, E: -1, A: -1, D: -1 } },
+      { name: "D♭", count: 5, signs: { B: -1, E: -1, A: -1, D: -1, G: -1 } }
+    ]
+  };
+  const SHARPABLE = ["C", "D", "F", "G", "A"];
+  const FLATTABLE = ["D", "E", "G", "A", "B"];
+  const SHARP_ORDER = ["F", "C", "G", "D", "A", "E", "B"];
+  const FLAT_ORDER = ["B", "E", "A", "D", "G", "C", "F"];
+  const KEY_SIG_STEPS = {
+    treble: {
+      sharp: { F: 8, C: 5, G: 9, D: 6, A: 3, E: 7, B: 4 },
+      flat: { B: 4, E: 7, A: 3, D: 6, G: 2, C: 5, F: 1 }
+    },
+    bass: {
+      sharp: { F: 6, C: 3, G: 7, D: 4, A: 1, E: 5, B: 2 },
+      flat: { B: 2, E: 5, A: 1, D: 4, G: 0, C: 3, F: -1 }
+    }
+  };
+  const CANONICAL_SHARP_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+
+  function accidentalModeLabel(mode = state.accidentalMode) {
+    if (mode === "sharp") return "Sharps";
+    if (mode === "flat") return "Flats";
+    if (mode === "random") return "Random key";
+    return "Off";
+  }
+  function setAccidentalMode(mode) {
+    state.accidentalMode = ["off", "sharp", "flat", "random"].includes(mode) ? mode : "off";
+    if (state.accidentalMode !== "off" && state.inputMode === "piano") state.inputMode = "real";
+    updateRangeLabels();
+    updateSummary();
+    updateModeControls();
+    if (state.started) nextQuestion(false);
+  }
+  function pickKeySignature() {
+    if (state.accidentalMode === "off" || state.gameMode === "chord") return null;
+    let family = state.accidentalMode;
+    if (family === "random") family = Math.random() < 0.5 ? "sharp" : "flat";
+    const keys = ACCIDENTAL_KEYS[family] || [];
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    return key ? { family, ...key } : null;
+  }
+  function canonicalPitchName(letter, accidental = 0) {
+    const pitch = (SEMITONES[letter] + accidental + 12) % 12;
+    return CANONICAL_SHARP_NAMES[pitch];
+  }
+  function noteDisplayName(note) {
+    const sign = note.accidental === 1 ? "♯" : note.accidental === -1 ? "♭" : "";
+    return `${note.letter}${sign}`;
+  }
+  function noteFullDisplayName(note) {
+    return `${noteDisplayName(note)}${note.octave}`;
+  }
+  function displayLabelForAnswer(answer, sampleNote = null) {
+    if (sampleNote && sampleNote.answer === answer) return noteDisplayName(sampleNote);
+    return String(answer).replaceAll("#", "♯").replaceAll("b", "♭");
+  }
+  function applyKeyToNote(note, keySig) {
+    if (!keySig) {
+      return { ...note, accidental: 0, printedAccidental: null, answer: note.letter, note: `${note.letter}${note.octave}`, displayName: note.letter };
+    }
+    const inKey = keySig.signs[note.letter] || 0;
+    let accidental = inKey;
+    let printedAccidental = null;
+    const r = Math.random();
+    if (inKey && r < 0.22) {
+      accidental = 0;
+      printedAccidental = "natural";
+    } else if (r < 0.34) {
+      if (keySig.family === "sharp" && !inKey && SHARPABLE.includes(note.letter)) {
+        accidental = 1;
+        printedAccidental = "sharp";
+      } else if (keySig.family === "flat" && !inKey && FLATTABLE.includes(note.letter)) {
+        accidental = -1;
+        printedAccidental = "flat";
+      }
+    }
+    const answer = canonicalPitchName(note.letter, accidental);
+    const pitchNote = `${answer}${note.octave}`;
+    return {
+      ...note,
+      accidental,
+      keyDefaultAccidental: inKey,
+      printedAccidental,
+      answer,
+      note: pitchNote,
+      displayName: noteDisplayName({ ...note, accidental }),
+      keySig
+    };
+  }
+  function addQuestionChoiceLabels(question) {
+    if (!question || question.type === "empty" || question.type === "chord") return question;
+    const samples = question.type === "multi" ? question.notes : [question];
+    const labels = {};
+    samples.forEach(n => { labels[n.answer] = noteDisplayName(n); });
+    (question.choices || []).forEach(v => { if (!labels[v]) labels[v] = displayLabelForAnswer(v); });
+    question.choiceLabels = labels;
+    return question;
+  }
+  function noteAnswerChoices(correctAnswer, sampleNote = null) {
+    const all = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+    const distractors = shuffle(all.filter(v => v !== correctAnswer)).slice(0, 5);
+    return shuffle([correctAnswer, ...distractors]);
+  }
+  function noteLearningKey(note) { return `note:${note.staff}:${note.note || note.letter + note.octave}`; }
   function chordLearningKey(chord) { return `chord:${chord.staff}:${chord.label}:${chord.inversion}:${chord.notes.map(n => n.note).join("-")}`; }
   function updateNoteLearning(note, isCorrect, elapsedMs) {
     if (!note) return;
@@ -2361,7 +2779,203 @@
     return [...new Set(labels)];
   }
 
+
+  const MISTAKE_KEY = "noteSprintMistakesV1";
+  function mistakeKey(note) {
+    if (!note) return "";
+    const n = typeof note === "string" ? parseNote(note) : note;
+    return `${n.staff || "treble"}:${n.note || (n.letter + n.octave)}:${n.displayName || ""}`;
+  }
+  function normaliseMistakeNote(note) {
+    if (!note) return null;
+    const parsed = parseNote(note.note || `${note.letter || "C"}${note.octave ?? 4}`);
+    const accidental = Number.isFinite(Number(note.accidental)) ? Number(note.accidental) : parsed.accidental || 0;
+    const letter = note.letter || parsed.letter;
+    const octave = Number.isFinite(Number(note.octave)) ? Number(note.octave) : parsed.octave;
+    const staff = ["treble", "bass"].includes(note.staff) ? note.staff : "treble";
+    const displayName = note.displayName || noteDisplayName({ letter, accidental });
+    const answer = note.answer || canonicalPitchName(letter, accidental);
+    const fullNote = note.note || `${answer}${octave}`;
+    const printedAccidental = note.printedAccidental || (accidental === 1 ? "sharp" : accidental === -1 ? "flat" : null);
+    return {
+      note: fullNote,
+      letter,
+      octave,
+      staff,
+      accidental,
+      answer,
+      displayName,
+      printedAccidental,
+      ledger: isLedgerIndex(diatonicIndex({ letter, octave }), staff)
+    };
+  }
+  function loadMistakes() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(MISTAKE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.map(normaliseMistakeNote).filter(Boolean).slice(0, 80) : [];
+    } catch { return []; }
+  }
+  function saveMistakes(items) {
+    const unique = [];
+    const seen = new Set();
+    items.map(normaliseMistakeNote).filter(Boolean).forEach(note => {
+      const key = mistakeKey(note);
+      if (key && !seen.has(key)) {
+        seen.add(key);
+        unique.push(note);
+      }
+    });
+    try { localStorage.setItem(MISTAKE_KEY, JSON.stringify(unique.slice(0, 80))); } catch {}
+    updateMistakePracticeUI();
+  }
+  function mistakeCount() { return loadMistakes().length; }
+  function updateMistakePracticeUI() {
+    const count = mistakeCount();
+    if (els.mistakeCountValue) els.mistakeCountValue.textContent = count === 1 ? "1 saved" : `${count} saved`;
+    if (els.mistakeTopNote) els.mistakeTopNote.textContent = count ? `Mistakes saved: ${count}` : "No mistakes saved yet";
+    if (els.settingsLevelMistakesBtn) {
+      els.settingsLevelMistakesBtn.classList.toggle("empty", count === 0);
+      els.settingsLevelMistakesBtn.title = count ? "Use saved mistakes as a level" : "No mistakes saved yet";
+    }
+    if (els.homeLevelMistakesBtn) {
+      els.homeLevelMistakesBtn.classList.toggle("empty", count === 0);
+      els.homeLevelMistakesBtn.title = count ? "Use saved mistakes as a level" : "No mistakes saved yet";
+    }
+    if (els.clearMistakesBtn) els.clearMistakesBtn.disabled = count === 0;
+  }
+  function recordMistake(note) {
+    const n = normaliseMistakeNote(note);
+    if (!n) return;
+    const items = loadMistakes();
+    items.unshift(n);
+    saveMistakes(items);
+  }
+  function removeMistake(note) {
+    const key = mistakeKey(normaliseMistakeNote(note));
+    if (!key) return;
+    saveMistakes(loadMistakes().filter(item => mistakeKey(item) !== key));
+  }
+  function clearMistakes() {
+    try { localStorage.removeItem(MISTAKE_KEY); } catch {}
+    updateMistakePracticeUI();
+    if (els.feedback) {
+      els.feedback.textContent = "Mistakes cleared";
+      els.feedback.className = "feedback";
+    }
+  }
+  function setMistakeLevel(applyNow = false) {
+    if (!mistakeCount()) {
+      state.mistakePractice = false;
+      updateMistakePracticeUI();
+      updateModeControls();
+      if (els.feedback) {
+        els.feedback.textContent = "No mistakes saved yet";
+        els.feedback.className = "feedback";
+      }
+      if (els.mistakeTopNote) els.mistakeTopNote.textContent = "No mistakes saved yet";
+      if (els.homeSetupText) els.homeSetupText.textContent = "No mistakes saved yet";
+      return;
+    }
+    state.mistakePractice = true;
+    state.gameMode = "multi";
+    state.inputMode = state.inputMode === "fullpiano" ? "fullpiano" : "real";
+    state.clef = "grand";
+    state.accidentalMode = "off";
+    state.multiCount = Math.min(5, Math.max(1, mistakeCount() || 5));
+    updateRangeLabels();
+    updateModeControls();
+    updateSummary();
+    updateMistakePracticeUI();
+    if (applyNow) startMistakePractice();
+  }
+  function startMistakePractice() {
+    const mistakes = loadMistakes();
+    if (!mistakes.length) {
+      if (els.mistakeCountValue) els.mistakeCountValue.textContent = "None yet";
+      if (els.mistakeTopNote) els.mistakeTopNote.textContent = "No mistakes saved yet";
+      if (els.feedback) {
+        els.feedback.textContent = "No mistakes saved yet";
+        els.feedback.className = "feedback";
+      }
+      updateMistakePracticeUI();
+      return;
+    }
+    resetTestState();
+    state.mistakePractice = true;
+    state.gameMode = "multi";
+    state.inputMode = "real";
+    state.clef = "grand";
+    state.accidentalMode = "off";
+    state.multiCount = Math.min(5, Math.max(1, mistakes.length));
+    updateRangeLabels();
+    updateModeControls();
+    updateSummary();
+    if (els.resultBox) els.resultBox.classList.add("hidden");
+    updateTestControls();
+    ensureAudio();
+    els.overlay.style.display = "none";
+    state.started = true;
+    resetSession();
+    state.mistakePractice = true;
+    closeSettings();
+    nextQuestion(false);
+  }
+  function oneLedgerPracticePool() {
+    const previousAbove = state.aboveLedgers;
+    const previousBelow = state.belowLedgers;
+    const previousFocus = state.ledgerFocusPercent;
+    state.aboveLedgers = 1;
+    state.belowLedgers = 1;
+    state.ledgerFocusPercent = 100;
+    const pool = activeNotePool().filter(isLedgerNote);
+    state.aboveLedgers = previousAbove;
+    state.belowLedgers = previousBelow;
+    state.ledgerFocusPercent = previousFocus;
+    return pool.length ? pool : activeNotePool();
+  }
+  function pickFreshMistakeLevelNote(existingNotes = []) {
+    const pool = oneLedgerPracticePool();
+    const existing = new Set(existingNotes.map(n => `${n.staff}:${n.note}`));
+    let raw = weightedPick(pool, note => itemWeight(noteLearningKey(note)));
+    let guard = 0;
+    while (raw && existing.has(`${raw.staff}:${raw.note}`) && guard < 12) {
+      raw = weightedPick(pool, note => itemWeight(noteLearningKey(note)));
+      guard += 1;
+    }
+    return normaliseMistakeNote(raw);
+  }
+  function pickMistakeQuestion() {
+    const mistakes = shuffle(loadMistakes());
+    if (!mistakes.length) {
+      state.mistakePractice = false;
+      updateMistakePracticeUI();
+      return { type: "empty", choices: [] };
+    }
+    const total = Math.max(2, Math.min(state.multiCount || 5, 5));
+    const mistakeTarget = Math.max(1, Math.ceil(total / 2));
+    const freshTarget = Math.max(1, total - mistakeTarget);
+    const notes = mistakes.slice(0, Math.min(mistakeTarget, mistakes.length)).map(normaliseMistakeNote);
+    while (notes.length < mistakeTarget && mistakes.length) {
+      notes.push(normaliseMistakeNote(mistakes[notes.length % mistakes.length]));
+    }
+    for (let i = 0; i < freshTarget; i++) {
+      const fresh = pickFreshMistakeLevelNote(notes);
+      if (fresh) notes.push(fresh);
+    }
+    const mixed = shuffle(notes.filter(Boolean)).slice(0, total);
+    const chromatic = mixed.some(n => n.answer && n.answer.length > 1);
+    const choices = chromatic ? ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"] : LETTERS;
+    return addQuestionChoiceLabels({
+      type: "multi",
+      mistakePractice: true,
+      notes: mixed,
+      answerSequence: mixed.map(n => chromatic ? n.answer : n.letter),
+      choices: shuffle(choices)
+    });
+  }
+
   function pickQuestion() {
+    if (state.mistakePractice) return pickMistakeQuestion();
     if (state.gameMode === "chord") return pickChordQuestion();
     if (state.gameMode === "multi") return pickMultiQuestion();
     return pickNoteQuestion();
@@ -2371,24 +2985,29 @@
     return weightedPick(focused, note => itemWeight(noteLearningKey(note)));
   }
   function pickNoteQuestion() {
-    const note = pickNoteFromPool();
-    const distractors = shuffle(LETTERS.filter(l => l !== note.letter)).slice(0, 5);
-    const choices = shuffle([note.letter, ...distractors]);
-    return { type: "note", ...note, answer: note.letter, choices };
+    const keySig = pickKeySignature();
+    const raw = pickNoteFromPool();
+    const note = applyKeyToNote(raw, keySig);
+    const choices = keySig ? noteAnswerChoices(note.answer, note) : shuffle([note.letter, ...shuffle(LETTERS.filter(l => l !== note.letter)).slice(0, 5)]);
+    return addQuestionChoiceLabels({ type: "note", ...note, keySig, answer: keySig ? note.answer : note.letter, choices });
   }
   function pickMultiQuestion() {
+    const keySig = pickKeySignature();
     const notes = [];
     for (let i = 0; i < state.multiCount; i++) {
-      let note = pickNoteFromPool();
+      let raw = pickNoteFromPool();
       if (i > 0) {
         let guard = 0;
-        while (note && note.note === notes[i - 1].note && note.staff === notes[i - 1].staff && guard < 8) {
-          note = pickNoteFromPool(); guard += 1;
+        while (raw && raw.note === notes[i - 1].sourceNote && raw.staff === notes[i - 1].staff && guard < 8) {
+          raw = pickNoteFromPool(); guard += 1;
         }
       }
+      const note = applyKeyToNote(raw, keySig);
+      note.sourceNote = raw.note;
       notes.push(note);
     }
-    return { type: "multi", notes, answerSequence: notes.map(n => n.letter), choices: shuffle(LETTERS) };
+    const answers = keySig ? ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"] : LETTERS;
+    return addQuestionChoiceLabels({ type: "multi", notes, keySig, answerSequence: notes.map(n => keySig ? n.answer : n.letter), choices: shuffle(answers) });
   }
   function pickChordQuestion() {
     const pool = activeChordPool();
@@ -2483,6 +3102,27 @@
     const y = fLineY + 644 * scale;
     html.push(`<path d="${BASS_CLEF_PATH}" transform="translate(${x} ${y}) scale(${scale} ${-scale})" fill="var(--staff-ink)"/>`);
   }
+
+  function drawAccidentalGlyph(html, symbol, x, y, ink = "var(--staff-ink)", size = 27) {
+    html.push(`<text x="${x}" y="${y + size * 0.34}" text-anchor="middle" font-size="${size}" font-family="Georgia, 'Times New Roman', serif" font-weight="900" fill="${ink}">${symbol}</text>`);
+  }
+  function drawKeySignature(html, staff, layout, keySig) {
+    if (!keySig) return;
+    const order = keySig.family === "sharp" ? SHARP_ORDER : FLAT_ORDER;
+    const symbol = keySig.family === "sharp" ? "♯" : "♭";
+    const steps = KEY_SIG_STEPS[staff]?.[keySig.family] || {};
+    const size = Math.max(21, Math.min(28, layout.gap * 2.05));
+    order.slice(0, keySig.count).forEach((letter, i) => {
+      const y = yForStaffStep(layout, steps[letter]);
+      const x = 112 + i * 12;
+      drawAccidentalGlyph(html, symbol, x, y, "var(--staff-ink)", size);
+    });
+  }
+  function drawNoteAccidental(html, note, x, y, ink) {
+    if (!note.printedAccidental) return;
+    const symbol = note.printedAccidental === "natural" ? "♮" : note.printedAccidental === "sharp" ? "♯" : "♭";
+    drawAccidentalGlyph(html, symbol, x - 28, y, ink, 28);
+  }
   function drawStaffLines(html, staff, layout, grand) {
     for (let i = 0; i < 5; i++) {
       const y = layout.topY + i * layout.gap;
@@ -2514,6 +3154,7 @@
     const step = noteStep(note);
     const metrics = musicMetrics(state.clef === "grand");
     drawLedgerLines(html, note, x, layout);
+    drawNoteAccidental(html, note, x, y, ink);
     drawNoteHead(html, x, y, ink);
     const stemUp = step < 4;
     const stemX = stemUp ? x + 10.5 : x - 10.5;
@@ -2536,6 +3177,7 @@
       const y = noteY(note, layout);
       const adjacent = prevStep !== null && Math.abs(step - prevStep) === 1;
       const nx = adjacent ? x + (stemUp ? -11 : 11) : x;
+      drawNoteAccidental(html, note, nx, y, ink);
       drawNoteHead(html, nx, y, ink);
       prevStep = step;
     });
@@ -2548,7 +3190,11 @@
     els.svg.setAttribute("viewBox", `0 0 430 ${viewH}`);
     const html = [];
     const staffs = grand ? ["treble", "bass"] : [state.clef];
-    staffs.forEach(staff => drawStaffLines(html, staff, staffLayout(staff, grand), grand));
+    staffs.forEach(staff => {
+      const layout = staffLayout(staff, grand);
+      drawStaffLines(html, staff, layout, grand);
+      drawKeySignature(html, staff, layout, question?.keySig || null);
+    });
     if (!question || question.type === "empty") {
       html.push(`<text x="255" y="${viewH / 2}" text-anchor="middle" font-size="16" font-weight="900" fill="var(--muted)">No question available</text>`);
       els.svg.innerHTML = html.join(""); return;
@@ -2558,7 +3204,7 @@
       drawChord(html, question, 258, layout, revealCorrect ? "var(--green)" : "var(--staff-ink)");
     } else if (question.type === "multi") {
       const count = question.notes.length;
-      const startX = count <= 3 ? 188 : 164;
+      const startX = question.keySig ? (count <= 3 ? 205 : 190) : (count <= 3 ? 188 : 164);
       const endX = 365;
       question.notes.forEach((note, i) => {
         const x = count === 1 ? 258 : startX + (endX - startX) * (i / (count - 1));
@@ -2580,8 +3226,11 @@
     if (revealCorrect && question.type !== "empty") {
       let label = "";
       if (question.type === "chord") label = `${question.answer} (${question.inversion})`;
-      else if (question.type === "multi") label = `Next: ${question.answerSequence[state.multiIndex]}`;
-      else label = `${question.answer}${state.showSolfege ? " / " + SOLFEGE[question.answer] : ""}`;
+      else if (question.type === "multi") {
+        const next = question.notes[state.multiIndex];
+        label = `Next: ${next ? noteDisplayName(next) : question.answerSequence[state.multiIndex]}`;
+      }
+      else label = `${question.displayName || displayChoiceValue(question.answer)}${state.showSolfege ? " / " + (SOLFEGE[(question.displayName || question.answer)[0]] || "") : ""}`;
       html.push(`<text x="255" y="${grand ? viewH - 18 : 158}" text-anchor="middle" font-size="13" font-weight="900" fill="var(--green)">Correct: ${label}</text>`);
     }
     els.svg.innerHTML = html.join("");
@@ -2790,17 +3439,20 @@
       state.totalCorrectMs += elapsed;
       state.streak += 1;
       state.best = Math.max(state.best, state.streak);
-      state.score += state.current.type === "chord" ? 16 + Math.min(state.streak, 12) : 10 + Math.min(state.streak, 10);
+      awardRushPoint(1);
       els.feedback.textContent = state.streak >= 5 ? `Correct — ${state.streak} streak` : "Correct";
       els.feedback.className = "feedback good";
       playCorrect();
       updateStats();
       setTimeout(() => nextQuestion(false), 520);
     } else {
+      recordMistake(state.current);
+      awardRushPoint(-1);
       state.streak = 0;
       const exactAnswer = usesFullPianoAnswer() && state.current.type === "note" ? state.current.note : state.current.answer;
-      const extra = state.current.type === "chord" ? ` (${state.current.inversion})` : (!usesFullPianoAnswer() && state.showSolfege ? " / " + SOLFEGE[state.current.answer] : "");
-      els.feedback.textContent = `Wrong — it was ${exactAnswer}${extra}`;
+      const shownExact = state.current.type === "chord" ? exactAnswer : (state.current.displayName || displayChoiceValue(exactAnswer));
+      const extra = state.current.type === "chord" ? ` (${state.current.inversion})` : (!usesFullPianoAnswer() && state.showSolfege ? " / " + (SOLFEGE[shownExact[0]] || "") : "");
+      els.feedback.textContent = `Wrong — it was ${shownExact}${extra}`;
       els.feedback.className = "feedback bad";
       drawStaff(state.current, true);
       playWrong();
@@ -2816,6 +3468,8 @@
     const expected = usesFullPianoAnswer() ? currentNote.note : state.current.answerSequence[state.multiIndex];
     const elapsedStep = performance.now() - state.stepStartedAt;
     const isCorrect = value === expected;
+    if (!isCorrect) recordMistake(currentNote);
+    awardRushPoint(isCorrect ? 1 : -1);
     markAnswerButtons(value, expected, isCorrect);
     updateNoteLearning(currentNote, isCorrect, elapsedStep);
 
@@ -2843,7 +3497,9 @@
     if (!isCorrect) {
       state.multiHadMistake = true;
       state.streak = 0;
-      const expectedLabel = usesFullPianoAnswer() ? expected : `${expected}${state.showSolfege ? " / " + SOLFEGE[expected] : ""}`;
+      const currentStepNote = state.current.notes[state.multiIndex];
+      const shownExpected = currentStepNote ? noteDisplayName(currentStepNote) : displayChoiceValue(expected);
+      const expectedLabel = usesFullPianoAnswer() ? shownExpected : `${shownExpected}${state.showSolfege ? " / " + (SOLFEGE[shownExpected[0]] || "") : ""}`;
       els.feedback.textContent = `Wrong — #${state.multiIndex + 1} was ${expectedLabel}`;
       els.feedback.className = "feedback bad";
       drawStaff(state.current, false);
@@ -2885,11 +3541,13 @@
       els.noteInfo.textContent = "No chord fits this range. Add ledger lines above/below.";
       return;
     }
+    const keyText = state.current?.keySig ? ` · key ${state.current.keySig.name}` : "";
     if (state.gameMode === "chord") {
       const seventhText = state.includeSevenths ? "triads + 7ths" : "triads";
       els.noteInfo.textContent = `Choose chord · ${clefPart}${seventhText} · inv: ${inversionLabel()} · ${rangeLabel}${focusText} · ${smartText}`;
     } else if (state.gameMode === "multi") {
-      els.noteInfo.textContent = `Read left to right · ${state.multiCount} notes · ${clefPart}${rangeLabel}${focusText} · ${smartText}`;
+      const mistakeText = state.mistakePractice ? `Mistake level · 50% mistakes + 50% ±1 ledger · ${mistakeCount()} saved · ` : "";
+      els.noteInfo.textContent = `${mistakeText}Read left to right · ${state.current.notes.length} notes${keyText} · ${clefPart}${rangeLabel}${focusText} · ${smartText}`;
       els.feedback.textContent = `0/${state.current.notes.length}`;
     } else {
       const baseText = state.inputMode === "piano" ? "Tap ABC / press A–G"
@@ -2897,7 +3555,7 @@
         : state.inputMode === "fullpiano" ? "Click/play exact 88 key"
         : (state.showSolfege ? "Choose note / press A–G" : "Choose note / press A–G");
       const midiText = state.midiAccess ? ` · MIDI: ${state.midiStatus}` : "";
-      els.noteInfo.textContent = `${baseText} · ${clefPart}${rangeLabel}${focusText} · ${smartText}${midiText}`;
+      els.noteInfo.textContent = `${baseText}${keyText} · ${clefPart}${rangeLabel}${focusText} · ${smartText}${midiText}`;
     }
     renderTestStatus();
     if (playSound) playQuestionSound();
@@ -2913,6 +3571,7 @@
     return ["easy", "intermediate", "hard"].includes(level) ? level : "intermediate";
   }
   function setHomeLevel(level, applyNow = false) {
+    state.mistakePractice = false;
     state.homeLevel = homeLevelPreset(level);
     updateHomeLevelControls();
     updateHomeSetup();
@@ -2932,14 +3591,20 @@
   }
   function updateHomeLevelControls() {
     const level = homeLevelPreset();
-    if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.classList.toggle("active", level === "easy");
-    if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.classList.toggle("active", level === "intermediate");
-    if (els.homeLevelHardBtn) els.homeLevelHardBtn.classList.toggle("active", level === "hard");
-    if (els.settingsLevelEasyBtn) els.settingsLevelEasyBtn.classList.toggle("active", level === "easy");
-    if (els.settingsLevelNormalBtn) els.settingsLevelNormalBtn.classList.toggle("active", level === "intermediate");
-    if (els.settingsLevelHardBtn) els.settingsLevelHardBtn.classList.toggle("active", level === "hard");
+    if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.classList.toggle("active", !state.mistakePractice && level === "easy");
+    if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.classList.toggle("active", !state.mistakePractice && level === "intermediate");
+    if (els.homeLevelHardBtn) els.homeLevelHardBtn.classList.toggle("active", !state.mistakePractice && level === "hard");
+    if (els.homeLevelMistakesBtn) {
+      els.homeLevelMistakesBtn.classList.toggle("active", state.mistakePractice);
+      els.homeLevelMistakesBtn.classList.toggle("empty", mistakeCount() === 0);
+      els.homeLevelMistakesBtn.title = mistakeCount() ? "Use saved mistakes as a level" : "No mistakes saved yet";
+    }
+    if (els.settingsLevelEasyBtn) els.settingsLevelEasyBtn.classList.toggle("active", !state.mistakePractice && level === "easy");
+    if (els.settingsLevelNormalBtn) els.settingsLevelNormalBtn.classList.toggle("active", !state.mistakePractice && level === "intermediate");
+    if (els.settingsLevelHardBtn) els.settingsLevelHardBtn.classList.toggle("active", !state.mistakePractice && level === "hard");
+    if (els.settingsLevelMistakesBtn) els.settingsLevelMistakesBtn.classList.toggle("active", state.mistakePractice);
     if (els.homeLevelValue) els.homeLevelValue.textContent = homeLevelLabel(level);
-    if (els.settingsLevelValue) els.settingsLevelValue.textContent = homeLevelLabel(level);
+    if (els.settingsLevelValue) els.settingsLevelValue.textContent = state.mistakePractice ? "Mistakes" : homeLevelLabel(level);
   }
 
   function inputModeLabel() {
@@ -2955,13 +3620,17 @@
   function updateHomeSetup() {
     updateHomeLevelControls();
     if (!els.homeSetupText) return;
+    if (state.mistakePractice) {
+      els.homeSetupText.textContent = `Mistakes · 50% saved + 50% ±1 ledger · ${mistakeCount()} saved`;
+      return;
+    }
     const preset = PRESETS[homeLevelPreset()] || PRESETS.intermediate;
     const clef = preset.clef === "grand" ? "Grand" : preset.clef === "treble" ? "Treble" : "Bass";
     const range = preset.aboveLedgers || preset.belowLedgers ? `${preset.belowLedgers}↓ ${preset.aboveLedgers}↑` : "staff only";
     els.homeSetupText.textContent = `${homeLevelLabel()} · 5 notes · ${clef} · Piano · ${range}`;
   }
   function updateSummary() {
-    const mode = state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
+    const mode = state.mistakePractice ? "Mistakes" : state.gameMode === "chord" ? "Chords" : state.gameMode === "multi" ? "Multiple" : "Notes";
     const clef = state.clef === "grand" ? "Grand" : state.clef === "treble" ? "Treble" : "Bass";
     const input = inputModeLabel();
     const showPianoLabelsSummary = state.gameMode !== "chord" && (state.inputMode === "real" || state.inputMode === "fullpiano");
@@ -2972,15 +3641,31 @@
     const smart = state.smartPractice ? "smart" : "random";
     const timer = state.timerMode ? ` · ${state.timerSeconds}s timer` : "";
     const correction = ` · correction ${correctionLabel().toLowerCase()}`;
-    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keyboardText}${midiText} · ${range} · ${smart}${timer}${correction}`;
+    const accidentals = state.accidentalMode !== "off" && state.gameMode !== "chord" ? ` · ${accidentalModeLabel().toLowerCase()}` : "";
+    els.summaryText.innerHTML = `<strong>${mode}</strong> · ${clef} · ${input}${realLabels}${keyboardText}${midiText} · ${range} · ${smart}${timer}${accidentals}${correction}`;
     updateHomeSetup();
   }
   function updateStats() {
-    els.score.textContent = state.score;
+    els.score.textContent = Math.max(0, Math.round(state.score));
     els.streak.textContent = state.streak;
     els.best.textContent = state.best;
     els.avg.textContent = state.correctCount === 0 ? "–" : (state.totalCorrectMs / state.correctCount / 1000).toFixed(1) + "s";
     if (els.testModeName && isTesting()) els.testModeName.textContent = testModeDisplayName();
+  }
+
+  function showScoreDelta(delta) {
+    if (!els.scoreStat || state.testMode === "practice") return;
+    const pop = document.createElement("span");
+    pop.className = `score-delta ${delta > 0 ? "plus" : "minus"}`;
+    pop.textContent = delta > 0 ? `+${delta}` : `${delta}`;
+    els.scoreStat.appendChild(pop);
+    setTimeout(() => pop.remove(), 820);
+  }
+  function awardRushPoint(delta) {
+    if (state.testMode === "practice") return;
+    state.score += delta;
+    updateStats();
+    showScoreDelta(delta);
   }
   function ledgerText(value) { return value === 1 ? "1 ledger" : `${value} ledgers`; }
   function updateRangeLabels() {
@@ -3000,6 +3685,7 @@
     if (els.keysDisplayValue) els.keysDisplayValue.textContent = state.keysDisplay === "piano" ? "Piano" : "Letters";
     if (els.midiDisplayValue) els.midiDisplayValue.textContent = state.midiDisplay === "88key" ? "88 Key" : "Panel";
     els.correctionTimeValue.textContent = correctionLabel();
+    if (els.accidentalModeValue) els.accidentalModeValue.textContent = accidentalModeLabel();
   }
   function inversionLabel() {
     const parts = ["root"];
@@ -3021,6 +3707,10 @@
     if (els.notesMainModeBtn) els.notesMainModeBtn.classList.toggle("active", state.gameMode !== "chord");
     if (els.chordsMainModeBtn) els.chordsMainModeBtn.classList.toggle("active", state.gameMode === "chord");
     if (els.noteChordModeValue) els.noteChordModeValue.textContent = state.gameMode === "chord" ? "Chord mode" : "Notes";
+    if (els.accidentalsOffBtn) els.accidentalsOffBtn.classList.toggle("active", state.accidentalMode === "off");
+    if (els.accidentalsSharpBtn) els.accidentalsSharpBtn.classList.toggle("active", state.accidentalMode === "sharp");
+    if (els.accidentalsFlatBtn) els.accidentalsFlatBtn.classList.toggle("active", state.accidentalMode === "flat");
+    if (els.accidentalsRandomBtn) els.accidentalsRandomBtn.classList.toggle("active", state.accidentalMode === "random");
     els.trebleBtn.classList.toggle("active", state.clef === "treble");
     els.bassBtn.classList.toggle("active", state.clef === "bass");
     els.grandBtn.classList.toggle("active", state.clef === "grand");
@@ -3064,6 +3754,7 @@
     if (state.gameMode === "chord") return;
     const allowed = ["choice", "piano", "real", "fullpiano"];
     state.inputMode = allowed.includes(mode) ? mode : "choice";
+    if (state.accidentalMode !== "off" && state.inputMode === "piano") state.inputMode = "real";
     refreshAfterSettingChange();
   }
   function setRealPianoLabels(show) {
@@ -3311,7 +4002,9 @@
       smartPractice: state.smartPractice,
       timerMode: state.timerMode,
       timerSeconds: state.timerSeconds,
-      theme: state.theme
+      theme: state.theme,
+      accidentalMode: state.accidentalMode,
+      mistakePractice: Boolean(state.mistakePractice)
     };
   }
   function cleanPresetData(data) {
@@ -3334,6 +4027,14 @@
     out.includeSevenths = Boolean(out.includeSevenths);
     out.correctionTime = out.correctionTime === "slow" ? "slow" : "default";
     out.theme = validTheme(out.theme) ? out.theme : state.theme;
+    out.accidentalMode = ["off", "sharp", "flat", "random"].includes(out.accidentalMode) ? out.accidentalMode : "off";
+    out.mistakePractice = Boolean(out.mistakePractice);
+    if (out.mistakePractice) {
+      out.gameMode = "multi";
+      out.inputMode = out.inputMode === "fullpiano" ? "fullpiano" : "real";
+      out.clef = "grand";
+      out.accidentalMode = "off";
+    }
     return out;
   }
   function loadCustomPresets() {
@@ -3348,13 +4049,14 @@
   }
   function presetSummary(settings) {
     const s = cleanPresetData(settings);
-    const mode = s.gameMode === "chord" ? "Chords" : s.gameMode === "multi" ? `${s.multiCount} notes` : "Single notes";
+    const mode = s.mistakePractice ? "Mistakes level" : s.gameMode === "chord" ? "Chords" : s.gameMode === "multi" ? `${s.multiCount} notes` : "Single notes";
     const clef = s.clef === "grand" ? "Grand" : s.clef === "treble" ? "Treble" : "Bass";
     const display = s.gameMode === "chord" ? "Choices" : s.inputMode === "piano" ? "ABC" : s.inputMode === "fullpiano" ? "88 Key" : s.inputMode === "real" ? "Piano" : "Choices";
     const range = s.aboveLedgers || s.belowLedgers ? `${s.belowLedgers}↓ ${s.aboveLedgers}↑ · ${s.ledgerFocusPercent}% ledger` : "staff only";
     const timer = s.timerMode ? ` · ${s.timerSeconds}s timer` : "";
     const look = s.theme && s.theme !== "emoji" ? ` · ${themeLabel(s.theme)}` : "";
-    return `${mode} · ${clef} · ${display} · ${range}${timer}${look}`;
+    const acc = s.accidentalMode && s.accidentalMode !== "off" ? ` · ${accidentalModeLabel(s.accidentalMode)}` : "";
+    return `${mode} · ${clef} · ${display} · ${range}${timer}${look}${acc}`;
   }
   function renderCustomPresets() {
     const presets = loadCustomPresets();
@@ -3507,6 +4209,36 @@
     catch {}
   }
 
+  let resetHighscoresConfirm = false;
+  let resetHighscoresTimer = null;
+  function resetHighscoresButtonState() {
+    if (!els.resetHighscoresBtn) return;
+    resetHighscoresConfirm = false;
+    els.resetHighscoresBtn.textContent = "Reset highscores";
+    els.resetHighscoresBtn.classList.remove("confirm");
+    if (els.resetHighscoresValue) els.resetHighscoresValue.textContent = "Saved locally";
+  }
+  function handleResetHighscores() {
+    if (!els.resetHighscoresBtn) return;
+    if (!resetHighscoresConfirm) {
+      resetHighscoresConfirm = true;
+      els.resetHighscoresBtn.textContent = "Are you sure? Tap again";
+      els.resetHighscoresBtn.classList.add("confirm");
+      if (els.resetHighscoresValue) els.resetHighscoresValue.textContent = "Confirm reset";
+      if (resetHighscoresTimer) clearTimeout(resetHighscoresTimer);
+      resetHighscoresTimer = setTimeout(resetHighscoresButtonState, 4500);
+      return;
+    }
+    try { localStorage.removeItem(SCORE_KEY); } catch {}
+    resetHighscoresButtonState();
+    updateHighScoreUI();
+    if (els.homeHighscoresPanel) renderHomeHighscores();
+    if (els.resultBox) {
+      els.resultBox.innerHTML = `<strong>Highscores reset</strong><span>Rush personal records were cleared on this device.</span>`;
+      els.resultBox.classList.remove("hidden");
+    }
+  }
+
   function updateHighScoreUI() {
     const scores = loadScores();
     document.querySelectorAll("[data-highscore]").forEach(el => {
@@ -3541,8 +4273,10 @@
   }
 
   function startPractice(presetName = null) {
+    const keepMistakeLevel = state.mistakePractice && !presetName;
     resetTestState();
     if (presetName) applyPreset(presetName);
+    else state.mistakePractice = keepMistakeLevel;
     if (els.resultBox) els.resultBox.classList.add("hidden");
     updateTestControls();
     els.playAgainBtn.disabled = false;
@@ -3552,10 +4286,18 @@
     els.overlay.style.display = "none";
     state.started = true;
     resetSession();
+    if (state.mistakePractice && !mistakeCount()) {
+      state.started = false;
+      els.overlay.style.display = "flex";
+      openSettings();
+      updateMistakePracticeUI();
+      return;
+    }
     nextQuestion(false);
   }
 
   function startTest(mode) {
+    state.mistakePractice = false;
     const test = TEST_PRESETS[mode];
     if (!test) return;
     resetTestState();
@@ -3619,7 +4361,7 @@
     const test = TEST_PRESETS[state.testMode];
     if (test?.durationMs) {
       const seconds = Math.max(0, Math.ceil((state.testEndsAt - performance.now()) / 1000));
-      return `${test.label} · ${seconds}s left · score ${state.score} · ${testAccuracy()}%`;
+      return `${test.label} · ${seconds}s left · ${testAccuracy()}% accuracy`;
     }
     return "";
   }
@@ -3648,6 +4390,43 @@
     return false;
   }
 
+
+  function hidePartyRecord() {
+    if (!els.partyOverlay) return;
+    els.partyOverlay.classList.add("hidden");
+    els.partyOverlay.classList.remove("party-run");
+    if (els.partyBurst) els.partyBurst.innerHTML = "";
+  }
+  function goAgainAfterRecord() {
+    const mode = state.lastCompletedTestMode;
+    hidePartyRecord();
+    if (mode && TEST_PRESETS[mode]) startTest(mode);
+  }
+  window.noteSprintHideParty = hidePartyRecord;
+  window.noteSprintGoAgain = goAgainAfterRecord;
+  function triggerPartyRecord(label, score) {
+    if (!els.partyOverlay || !els.partyBurst) return;
+    els.partyText.textContent = `${label} · ${score} points`;
+    els.partyBurst.innerHTML = "";
+    const pieces = ["🎉", "✨", "⭐", "🎵", "🏆", "⚡", "🎶", "🥳"];
+    for (let i = 0; i < 42; i++) {
+      const piece = document.createElement("span");
+      piece.textContent = pieces[i % pieces.length];
+      piece.style.setProperty("--x", `${(Math.random() * 280 - 140).toFixed(0)}px`);
+      piece.style.setProperty("--y", `${(Math.random() * -220 - 35).toFixed(0)}px`);
+      piece.style.setProperty("--r", `${(Math.random() * 720 - 360).toFixed(0)}deg`);
+      piece.style.setProperty("--d", `${(Math.random() * 0.24).toFixed(2)}s`);
+      piece.style.left = `${48 + Math.random() * 4}%`;
+      piece.style.top = `${58 + Math.random() * 5}%`;
+      els.partyBurst.appendChild(piece);
+    }
+    els.partyOverlay.classList.remove("hidden");
+    els.partyOverlay.classList.remove("party-run");
+    void els.partyOverlay.offsetWidth;
+    els.partyOverlay.classList.add("party-run");
+  }
+
+
   function endTest(reason) {
     if (state.testMode === "practice") return;
     const mode = state.testMode;
@@ -3659,9 +4438,9 @@
     disableAnswers(true);
 
     const accuracy = testAccuracy();
-    const detail = `${state.testCorrectNotes}/${state.testAnsweredNotes} correct`;
+    const detail = `${state.testCorrectNotes} good · ${state.testWrongNotes} faulty`;
     const scores = loadScores();
-    const finalScore = Math.max(0, Math.round(state.score + state.testCorrectNotes * 2 - state.testWrongNotes * 3));
+    const finalScore = Math.max(0, Math.round(state.score));
     const old = scores[mode];
     const isBest = !old || finalScore > old.score;
     if (isBest) {
@@ -3675,6 +4454,7 @@
       els.resultBox.classList.remove("hidden");
     }
 
+    state.lastCompletedTestMode = mode;
     state.testMode = "practice";
     updateTestControls();
     els.playAgainBtn.disabled = false;
@@ -3685,6 +4465,7 @@
     closeSettings();
     closeCheatSheet();
     els.overlay.style.display = "flex";
+    if (isBest) setTimeout(() => triggerPartyRecord(label, finalScore), 180);
   }
 
   function stopTimer(hide = true) {
@@ -3783,12 +4564,12 @@
       state.totalCorrectMs += elapsed;
       state.streak += 1;
       state.best = Math.max(state.best, state.streak);
-      state.score += 18 + (total * 5) + Math.min(state.streak, 12);
+      if (state.testMode !== "practice") state.score += 0;
       els.feedback.textContent = state.streak >= 5 ? `Correct sequence — ${state.streak} streak` : "Correct sequence";
       els.feedback.className = "feedback good";
       playCorrect();
     } else {
-      state.score += correctSoFar * 3;
+      if (state.testMode !== "practice") state.score += 0;
       els.feedback.textContent = `${correctSoFar}/${total} correct · ${wrongSoFar} red`;
       els.feedback.className = "feedback bad";
     }
@@ -3891,8 +4672,13 @@
   function closeCheatSheet() { els.cheatBackdrop.classList.add("hidden"); }
 
   function openSettings() { if (isTesting()) return; els.settingsBackdrop.classList.remove("hidden"); }
-  function closeSettings() { els.settingsBackdrop.classList.add("hidden"); }
+  function closeSettings() {
+    resetHighscoresButtonState();
+    els.settingsBackdrop.classList.add("hidden");
+  }
   function showHome() {
+    hidePartyRecord();
+    state.mistakePractice = false;
     stopTimer();
     resetTestState();
     updateTestControls();
@@ -3930,14 +4716,20 @@
   if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy"));
   if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate"));
   if (els.homeLevelHardBtn) els.homeLevelHardBtn.addEventListener("click", () => setHomeLevel("hard"));
+  if (els.homeLevelMistakesBtn) els.homeLevelMistakesBtn.addEventListener("click", () => setMistakeLevel(false));
   if (els.settingsLevelEasyBtn) els.settingsLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy", true));
   if (els.settingsLevelNormalBtn) els.settingsLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate", true));
   if (els.settingsLevelHardBtn) els.settingsLevelHardBtn.addEventListener("click", () => setHomeLevel("hard", true));
+  if (els.settingsLevelMistakesBtn) els.settingsLevelMistakesBtn.addEventListener("click", () => setMistakeLevel(false));
   if (els.practiceBackBtn) els.practiceBackBtn.addEventListener("click", showHomeStart);
   if (els.testBackBtn) els.testBackBtn.addEventListener("click", showHomeStart);
   if (els.continuePracticeBtn) els.continuePracticeBtn.addEventListener("click", () => startPractice());
   if (els.customPathBtn) els.customPathBtn.addEventListener("click", startCustom);
   if (els.customTestBtn) els.customTestBtn.addEventListener("click", () => startTest("custom"));
+  if (els.clearMistakesBtn) els.clearMistakesBtn.addEventListener("click", clearMistakes);
+  if (els.partyCloseBtn) els.partyCloseBtn.addEventListener("click", hidePartyRecord);
+  if (els.partyGoAgainBtn) els.partyGoAgainBtn.addEventListener("click", goAgainAfterRecord);
+  if (els.resetHighscoresBtn) els.resetHighscoresBtn.addEventListener("click", handleResetHighscores);
   if (els.personalHighscoresBtn) els.personalHighscoresBtn.addEventListener("click", togglePersonalHighscores);
   if (els.savePresetBtn) els.savePresetBtn.addEventListener("click", saveCurrentAsCustomPreset);
   if (els.savePresetHomeBtn) els.savePresetHomeBtn.addEventListener("click", saveCurrentAsCustomPreset);
@@ -3962,6 +4754,7 @@
   if (els.homeLevelEasyBtn) els.homeLevelEasyBtn.addEventListener("click", () => setHomeLevel("easy"));
   if (els.homeLevelNormalBtn) els.homeLevelNormalBtn.addEventListener("click", () => setHomeLevel("intermediate"));
   if (els.homeLevelHardBtn) els.homeLevelHardBtn.addEventListener("click", () => setHomeLevel("hard"));
+  if (els.homeLevelMistakesBtn) els.homeLevelMistakesBtn.addEventListener("click", () => setMistakeLevel(false));
   if (els.homePracticeModeBtn) els.homePracticeModeBtn.addEventListener("click", startHomePractice);
   if (els.homeRush30Btn) els.homeRush30Btn.addEventListener("click", () => startHomeRush(30));
   if (els.homeRush60Btn) els.homeRush60Btn.addEventListener("click", () => startHomeRush(60));
@@ -3977,6 +4770,10 @@
   els.chordModeBtn.addEventListener("click", () => setGameMode("chord"));
   if (els.notesMainModeBtn) els.notesMainModeBtn.addEventListener("click", () => setGameMode("multi"));
   if (els.chordsMainModeBtn) els.chordsMainModeBtn.addEventListener("click", () => setGameMode("chord"));
+  if (els.accidentalsOffBtn) els.accidentalsOffBtn.addEventListener("click", () => setAccidentalMode("off"));
+  if (els.accidentalsSharpBtn) els.accidentalsSharpBtn.addEventListener("click", () => setAccidentalMode("sharp"));
+  if (els.accidentalsFlatBtn) els.accidentalsFlatBtn.addEventListener("click", () => setAccidentalMode("flat"));
+  if (els.accidentalsRandomBtn) els.accidentalsRandomBtn.addEventListener("click", () => setAccidentalMode("random"));
   els.choiceInputBtn.addEventListener("click", () => setInputMode("choice"));
   els.pianoInputBtn.addEventListener("click", () => setInputMode("piano"));
   els.realInputBtn.addEventListener("click", () => setInputMode("real"));
@@ -4021,6 +4818,7 @@
   updateRangeLabels();
   updateSummary();
   updateHighScoreUI();
+  updateMistakePracticeUI();
   updateTestControls();
   renderCustomPresets();
   updateHomeLevelControls();
